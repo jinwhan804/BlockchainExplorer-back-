@@ -5,6 +5,7 @@ import { sigJudgemetTest } from "./analyzer/getMatch_signiel";
 import { Queue } from "./queue/getQueue";
 import { analyzeData } from "./analyzer/analyzeData";
 import BlockServices from "../../Blocks/Block.services";
+import { getTokeninfo } from "./token/getToken_info";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
 const RPC_URL =
   "wss://sepolia.infura.io/ws/v3/d22607d7f58545f99e3c0eadcbf00eb4";
@@ -63,6 +64,9 @@ export const subscribetest = async () => {
         }
       }
     });
+    setInterval(async () => {
+      await getTokeninfo();
+    }, 300000);
   } catch (error) {
     console.error("Error:", error);
   }
@@ -71,20 +75,21 @@ async function processDataQueue() {
   console.log("processDataQueue실행되었음!");
   const data = myQueue.dequeue();
 
-  if (data !== undefined) {
+  if (data !== undefined && data !== null) {
     // blockData가 정의되었을 때 수행할 작업
     // 예: blockData를 사용하는 로직
     await BlockServices.createBlocktest(data);
+    return await analyzeData(data);
   } else {
     // blockData가 정의되지 않았을 때 수행할 작업
+    console.log("블록데이터가없다. 다시 대가상태로만들어주기");
+    return true;
   }
 
   // 데이터 분석을 비동기적으로 수행
-  if (data) {
-    return await analyzeData(data);
-  } else {
-    return false;
-  }
+  // if (data) {
+  // } else {
+  // }
 }
 
 // setInterval(() => {

@@ -19,7 +19,7 @@ dotenv.config();
 const app = express();
 app.use(cors());
 
-db.sync({ force: true })
+db.sync({ force: false })
   .then(() => {
     console.log("connect on");
   })
@@ -41,7 +41,6 @@ app.use("/ca", CARouter);
 
 app.listen(8080, async () => {
   console.log("server open");
-  console.log(process.env.RPC_URL);
 
   if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
     CollectStart_http();

@@ -31,4 +31,14 @@ const createCATest = async (data: CAData) => {
   }
 };
 
-export default { createCA, createCATest };
+const findCAtype = async () => {
+  try {
+    const result = await db.models.CA.findAll({});
+
+    return result;
+  } catch (error) {
+    console.log("findCAtype", error);
+  }
+};
+
+export default { createCA, createCATest, findCAtype };

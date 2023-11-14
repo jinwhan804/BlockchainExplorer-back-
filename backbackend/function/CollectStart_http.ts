@@ -66,7 +66,7 @@ export const CollectStart_http = async () => {
 async function processDataQueue() {
   console.log("processDataQueue실행되었음!");
   const data = myQueue.dequeue();
-
+  // console.log(myQueue);
   if (data !== undefined) {
     // blockData가 정의되었을 때 수행할 작업
     // 예: blockData를 사용하는 로직

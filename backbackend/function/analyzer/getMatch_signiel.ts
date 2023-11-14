@@ -48,7 +48,6 @@ export async function sigJudgemetTest(
       const toAddress = "0x" + transaction.input.slice(34, 74); // 0x 뒤의 주소 부분
       // 전송하는 토큰의 양 (amount)
       const value = web3.utils.toBigInt("0x" + transaction.input.slice(74)); // 0x 뒤의 값 부분
-      console.log(transaction);
       console.log(`ERC-20 public ${signiturenameERC20public[i]} Detected:`);
       console.log("To Address:", toAddress);
       console.log("Value:", web3.utils.fromWei(value, "ether"), "ETH"); // 값을 ETH로 변환

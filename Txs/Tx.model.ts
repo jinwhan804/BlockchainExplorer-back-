@@ -49,7 +49,7 @@ export class Tx extends Model implements TxData {
 
   @Column({
     type: DataType.BIGINT,
-    allowNull: false,
+    allowNull: true,
   })
   chainId!: bigint;
 
