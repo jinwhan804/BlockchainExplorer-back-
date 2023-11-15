@@ -13,6 +13,7 @@ import cors from "cors"; // cors 패키지 추가
 import { CollectStart_http } from "./backbackend/function/CollectStart_http";
 import { subscribetest } from "./backbackend/function/CollectStart_websocket";
 import { getRPC_URLtest } from "./backbackend/function/config";
+import { getnftinfo } from "./backbackend/function/nft/getnft_info";
 
 dotenv.config();
 
@@ -41,7 +42,8 @@ app.use("/ca", CARouter);
 
 app.listen(8080, async () => {
   console.log("server open");
-
+  await getnftinfo();
+  console.log("테스트 구문 끝");
   if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
     CollectStart_http();
   } else {
