@@ -42,8 +42,8 @@ app.use("/ca", CARouter);
 
 app.listen(8080, async () => {
   console.log("server open");
-  await getnftinfo();
   console.log("테스트 구문 끝");
+  await getnftinfo();
   if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
     CollectStart_http();
   } else {

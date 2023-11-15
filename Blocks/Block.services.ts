@@ -73,7 +73,7 @@ const createBlocktest = async (data: BlockData) => {
     nonce,
     mixHash,
   } = data;
-  await db.models.Block.create({
+  const value = await db.models.Block.create({
     number,
     hash,
     parentHash,
@@ -93,5 +93,6 @@ const createBlocktest = async (data: BlockData) => {
     nonce,
     mixHash,
   });
+  console.log("밸류밸류밸류밸류", value);
 };
 export default { createBlock, createBlocktest };
