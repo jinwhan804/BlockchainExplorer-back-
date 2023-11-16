@@ -1,7 +1,7 @@
 import { getBlockInfo, EthereumBlock } from "./getBlockInfo";
 import { determineAddressType } from "./getCode";
 import { sigJudgemetTest } from "./getMatch_signiel";
-import Txservice from "../../../Txs/Tx.services";
+import Txservice from "../../../Txs/Tx.service";
 import { TxData } from "../../../Txs/Tx.model";
 let hahah: any;
 export async function analyzeData(data: any): Promise<boolean> {

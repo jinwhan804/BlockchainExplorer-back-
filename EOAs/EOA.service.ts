@@ -1,4 +1,4 @@
-import EOADTO from "./EOA.dtos";
+import EOADTO from "./EOA.dto";
 import db from "../database";
 import { EOAData } from "./EOA.model";
 

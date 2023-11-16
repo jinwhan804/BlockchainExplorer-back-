@@ -1,5 +1,5 @@
-import CoinDTO from "./Coin.dtos";
-import CoinServices from "./Coin.services";
+import CoinDTO from "./Coin.dto";
+import CoinServices from "./Coin.service";
 import { Request, Response } from "express";
 
 const CreateCoin = async (req : Request, res : Response) => {

@@ -1,15 +1,13 @@
-import CADTO from "./CA.dtos";
+import CADTO from "./CA.dto";
 import db from "../database";
 import { CAData } from "./CA.model";
 
 const createCA = async (data: CADTO) => {
   try {
-    const { address, abiSigniture, signitureNames } = data;
-
     await db.models.CA.create({
-      address,
-      abiSigniture,
-      signitureNames,
+      address : data.address,
+      abiSigniture : data.abiSigniture,
+      signitureNames : data.signitureNames,
     });
   } catch (error) {
     console.log("CA 서비스에서 CA 데이터 추가하다 에러남");

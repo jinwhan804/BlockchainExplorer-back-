@@ -1,4 +1,4 @@
-import NFTDTO from "./NFT.dtos";
+import NFTDTO from "./NFT.dto";
 import db from "../database";
 import { NFTData } from "./NFT.model";
 

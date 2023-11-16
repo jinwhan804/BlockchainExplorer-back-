@@ -1,10 +1,10 @@
-import TxDTO from "./Tx.dtos";
+import TxDTO from "./Tx.dto";
 import db from "../database";
 import { TxData } from "./Tx.model";
 
 import { getAddresstype } from "../backbackend/function/txns/getAddresstype";
-import CAServices from "../CAs/CA.services";
-import EOAServices from "../EOAs/EOA.services";
+import CAServices from "../CAs/CA.service";
+import EOAServices from "../EOAs/EOA.service";
 
 const createTx = async (data: TxDTO) => {
   try {

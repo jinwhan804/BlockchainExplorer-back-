@@ -1,5 +1,5 @@
 import express from "express";
-import NFTControllers from "./NFT.controllers";
+import CoinControllers from "./Coin.controller";
 
 const router = express.Router();
 

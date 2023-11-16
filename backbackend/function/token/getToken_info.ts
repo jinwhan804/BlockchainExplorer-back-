@@ -10,8 +10,8 @@ import {
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
 import { readjson } from "../collector/getAbiAndAddress";
 import { getProvider } from "../config";
-import CAservice from "../../../CAs/CA.services";
-import Tokenservice from "../../../Tokens/Token.services";
+import CAservice from "../../../CAs/CA.service";
+import Tokenservice from "../../../Tokens/Token.service";
 import { TokenData } from "../../../Tokens/Token.model";
 
 export const getTokeninfo = async () => {

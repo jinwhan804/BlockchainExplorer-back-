@@ -4,8 +4,8 @@ import { determineAddressType } from "./analyzer/getCode";
 import { sigJudgemetTest } from "./analyzer/getMatch_signiel";
 import { Queue } from "./queue/getQueue";
 import { analyzeData } from "./analyzer/analyzeData";
-import BlockServices from "../../Blocks/Block.services";
-import BlockDTO from "../../Blocks/Block.dtos";
+import BlockServices from "../../Blocks/Block.service";
+import BlockDTO from "../../Blocks/Block.dto";
 import { getRPC_URLtest } from "./config";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
 const RPC_URL = "https://network.bouncecode.net/";

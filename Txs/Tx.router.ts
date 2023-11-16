@@ -1,5 +1,5 @@
 import express from "express";
-import CoinControllers from "./Coin.controllers";
+import TxControllers from "./Tx.controller";
 
 const router = express.Router();
 

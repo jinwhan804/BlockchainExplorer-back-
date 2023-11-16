@@ -1,5 +1,5 @@
-import CADTO from "./CA.dtos";
-import CAServices from "./CA.services";
+import CADTO from "./CA.dto";
+import CAServices from "./CA.service";
 import { Request, Response } from "express";
 
 const CreateCA = async (req : Request, res : Response) => {

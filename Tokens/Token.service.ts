@@ -1,4 +1,4 @@
-import TokenDTO from "./Token.dtos";
+import TokenDTO from "./Token.dto";
 import db from "../database";
 import { TokenData } from "./Token.model";
 

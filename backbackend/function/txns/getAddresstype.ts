@@ -1,7 +1,7 @@
 import { hash } from "bcrypt";
 import db from "../../../database";
-import CAServices from "../../../CAs/CA.services";
-import EOAServices from "../../../EOAs/EOA.services";
+import CAServices from "../../../CAs/CA.service";
+import EOAServices from "../../../EOAs/EOA.service";
 import { CAData } from "../../../CAs/CA.model";
 import { EOAData } from "../../../EOAs/EOA.model";
 import {

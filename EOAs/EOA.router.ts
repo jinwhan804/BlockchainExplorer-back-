@@ -1,5 +1,5 @@
 import express from "express";
-import TokenControllers from "./Token.controllers";
+import EOAControllers from "./EOA.controller";
 
 const router = express.Router();
 

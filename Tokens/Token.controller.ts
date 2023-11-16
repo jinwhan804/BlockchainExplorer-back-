@@ -1,5 +1,5 @@
-import TokenDTO from "./Token.dtos";
-import TokenServices from "./Token.services";
+import TokenDTO from "./Token.dto";
+import TokenServices from "./Token.service";
 import { Request, Response } from "express";
 
 const CreateToken = async (req : Request, res : Response) => {

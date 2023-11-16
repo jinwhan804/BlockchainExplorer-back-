@@ -1,5 +1,5 @@
-import EOADTO from "./EOA.dtos";
-import EOAServices from "./EOA.services";
+import EOADTO from "./EOA.dto";
+import EOAServices from "./EOA.service";
 import { Request, Response } from "express";
 
 const CreateEOA = async (req : Request, res : Response) => {

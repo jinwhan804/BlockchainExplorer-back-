@@ -1,5 +1,5 @@
-import NFTDTO from "./NFT.dtos";
-import NFTServices from "./NFT.services";
+import NFTDTO from "./NFT.dto";
+import NFTServices from "./NFT.service";
 import { Request, Response } from "express";
 
 const CreateNFT = async (req : Request, res : Response) => {

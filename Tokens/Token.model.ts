@@ -7,7 +7,7 @@ export interface TokenData {
   symbol: string;
   owner_address: string;
   decimal: number;
-  circulating_supply: string;
+  circulating_supply: number;
 }
 
 @Table({
@@ -54,7 +54,7 @@ export class Token extends Model implements TokenData {
     type: DataType.TEXT,
     allowNull: false,
   })
-  circulating_supply!: string;
+  circulating_supply!: number;
 
   // foreign key 연결 구간
   @HasMany(() => Tx, "token_id")

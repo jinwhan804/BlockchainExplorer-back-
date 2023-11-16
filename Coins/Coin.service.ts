@@ -1,4 +1,4 @@
-import CoinDTO from "./Coin.dtos";
+import CoinDTO from "./Coin.dto";
 import db from "../database";
 
 const createCoin = async (data : CoinDTO) => {
