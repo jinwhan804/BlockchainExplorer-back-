@@ -93,6 +93,6 @@ const createBlocktest = async (data: BlockData) => {
     nonce,
     mixHash,
   });
-  console.log("밸류밸류밸류밸류", value);
+  return value;
 };
 export default { createBlock, createBlocktest };

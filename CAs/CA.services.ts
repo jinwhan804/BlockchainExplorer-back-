@@ -20,12 +20,13 @@ const createCA = async (data: CADTO) => {
 const createCATest = async (data: CAData) => {
   try {
     const { address, abiSigniture, signitureNames, CAtype } = data;
-    await db.models.CA.create({
+    const result = await db.models.CA.create({
       address,
       CAtype,
       abiSigniture,
       signitureNames,
     });
+    return result;
   } catch (error) {
     console.log("createCATest에서 오류발생", error);
   }

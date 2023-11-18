@@ -4,7 +4,7 @@ import { sigJudgemetTest } from "./getMatch_signiel";
 import Txservice from "../../../Txs/Tx.services";
 import { TxData } from "../../../Txs/Tx.model";
 let hahah: any;
-export async function analyzeData(data: any): Promise<boolean> {
+export async function analyzeData(data: any, bolocknum: any): Promise<boolean> {
   let transaction: TxData;
   hahah = await getBlockInfo(data.blockNumber);
 
@@ -41,7 +41,8 @@ export async function analyzeData(data: any): Promise<boolean> {
           reusltFromType,
           reusltToType,
           sigEvaluateresult,
-          data?.timestamp
+          data?.timestamp,
+          bolocknum
         );
       } catch (error) {
         console.log(error);
