@@ -66,22 +66,43 @@ export const CollectStart_http = async () => {
 async function processDataQueue() {
   console.log("processDataQueue실행되었음!");
   const data = myQueue.dequeue();
-  // console.log(myQueue);
-  if (data !== undefined) {
+
+  if (data !== undefined && data !== null) {
     // blockData가 정의되었을 때 수행할 작업
     // 예: blockData를 사용하는 로직
-    await BlockServices.createBlocktest(data);
+    const relationshipinfo = await BlockServices.createBlocktest(data);
+    console.log("relationship", relationshipinfo);
+    return await analyzeData(data, relationshipinfo.dataValues.id);
   } else {
     // blockData가 정의되지 않았을 때 수행할 작업
+    console.log("블록데이터가없다. 다시 대가상태로만들어주기");
+    return true;
   }
 
   // 데이터 분석을 비동기적으로 수행
-  if (data) {
-    return await analyzeData(data);
-  } else {
-    return false;
-  }
+  // if (data) {
+  // } else {
+  // }
 }
+// async function processDataQueue() {
+//   console.log("processDataQueue실행되었음!");
+//   const data = myQueue.dequeue();
+//   // console.log(myQueue);
+//   if (data !== undefined) {
+//     // blockData가 정의되었을 때 수행할 작업
+//     // 예: blockData를 사용하는 로직
+//     await BlockServices.createBlocktest(data);
+//   } else {
+//     // blockData가 정의되지 않았을 때 수행할 작업
+//   }
+
+//   // 데이터 분석을 비동기적으로 수행
+//   if (data) {
+//     return await analyzeData(data);
+//   } else {
+//     return false;
+//   }
+// }
 
 // setInterval(() => {
 //   processDataQueue();

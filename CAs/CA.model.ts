@@ -1,4 +1,12 @@
-import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  HasMany,
+  BelongsToMany,
+} from "sequelize-typescript";
+import { TxCA } from "../TxCA/TxCA.model";
 import { Tx } from "../Txs/Tx.model";
 
 export interface CAData {
@@ -50,5 +58,7 @@ export class CA extends Model implements CAData {
 
   // foreign key 연결 구간
   @HasMany(() => Tx, "CA_id")
-  txs!: Tx[];
+  transactions!: Tx[];
+  @BelongsToMany(() => Tx, () => TxCA, "caId", "txId")
+  transactionAssociations!: Tx[];
 }

@@ -36,7 +36,7 @@ const myQueue = new Queue<BlockData>();
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RPC_URL));
 let hahah: any;
 export const subscribetest = async () => {
-  let analyzeDatajudgement: boolean[] = new Array(5).fill(true);
+  let analyzeDatajudgement: boolean[] = new Array(10).fill(true);
   let tmpblock: BlockData;
 
   try {
@@ -78,8 +78,9 @@ async function processDataQueue() {
   if (data !== undefined && data !== null) {
     // blockData가 정의되었을 때 수행할 작업
     // 예: blockData를 사용하는 로직
-    await BlockServices.createBlocktest(data);
-    return await analyzeData(data);
+    const relationshipinfo = await BlockServices.createBlocktest(data);
+    // console.log("relationship", relationshipinfo);
+    return await analyzeData(data, relationshipinfo.dataValues.id);
   } else {
     // blockData가 정의되지 않았을 때 수행할 작업
     console.log("블록데이터가없다. 다시 대가상태로만들어주기");

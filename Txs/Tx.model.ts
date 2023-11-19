@@ -4,11 +4,16 @@ import {
   Column,
   DataType,
   BelongsTo,
+  BelongsToMany,
 } from "sequelize-typescript";
 import { NFT } from "../NFTs/NFT.model";
 import { Coin } from "../Coins/Coin.model";
 import { Token } from "../Tokens/Token.model";
 import { Block } from "../Blocks/Block.model";
+import { TxCA } from "../TxCA/TxCA.model";
+import { TxEOA } from "../TxEOA/TxEOA.model";
+import { CA } from "../CAs/CA.model";
+import { EOA } from "../EOAs/EOA.model";
 
 export interface TxData {
   accessList: string[];
@@ -26,7 +31,7 @@ export interface TxData {
   transactionIndex: bigint;
   type: bigint;
   v: bigint;
-  value: bigint;
+  value: string;
   Method: string;
   Timestamp: bigint;
 }
@@ -132,10 +137,10 @@ export class Tx extends Model implements TxData {
   v!: bigint;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.TEXT,
     allowNull: false,
   })
-  value!: bigint;
+  value!: string;
 
   @Column({
     type: DataType.TEXT,
@@ -161,4 +166,8 @@ export class Tx extends Model implements TxData {
 
   @BelongsTo(() => Block, "block_id")
   block!: Block;
+  @BelongsToMany(() => CA, () => TxCA)
+  cas!: CA[];
+  @BelongsToMany(() => EOA, () => TxEOA)
+  eoas!: EOA[];
 }

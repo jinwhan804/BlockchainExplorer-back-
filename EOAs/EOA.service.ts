@@ -20,11 +20,12 @@ const createEOA = async (data: EOADTO) => {
 const createEOATest = async (data: EOAData) => {
   try {
     const { address, token, ethBalance } = data;
-    await db.models.EOA.create({
+    const result = await db.models.EOA.create({
       address,
       token,
       ethBalance,
     });
+    return result;
   } catch (error) {
     console.log("createEOATest", error);
   }

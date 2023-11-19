@@ -1,5 +1,13 @@
-import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  HasMany,
+  BelongsToMany,
+} from "sequelize-typescript";
 import { Tx } from "../Txs/Tx.model";
+import { TxEOA } from "../TxEOA/TxEOA.model";
 
 export interface EOAData {
   address: string;
@@ -37,5 +45,8 @@ export class EOA extends Model implements EOAData {
 
   // foreign key 연결 구간
   @HasMany(() => Tx, "eoa_id")
-  txs!: Tx[];
+  transactions!: Tx[];
+  // N:M 관계 설정
+  @BelongsToMany(() => Tx, () => TxEOA)
+  transactionAssociations!: Tx[];
 }

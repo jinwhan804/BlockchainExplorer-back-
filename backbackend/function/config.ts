@@ -1,10 +1,12 @@
 import Web3 from "web3";
+import dotenv from "dotenv";
 import "dotenv/config";
 
 export const getRPC_URLtest = async () => {
-  // dotenv.config();
+  dotenv.config();
 
-  const RPC_RRLtest = process.env.RPC_RRL || "테스트";
+  const RPC_RRLtest = process.env.RPC_RRL || "RPC_RRLtest값이 읽히지않음";
+  // console.log(RPC_RRLtest);
   return RPC_RRLtest;
 };
 export const getProvider = async () => {
