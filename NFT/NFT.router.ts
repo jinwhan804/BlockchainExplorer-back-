@@ -1,8 +1,6 @@
 import express from "express";
-import NFTControllers from "./NFT.controllers";
+import NFTControllers from "./NFT.controller";
 
 const router = express.Router();
-
-
 
 export default router;

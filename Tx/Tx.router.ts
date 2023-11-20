@@ -1,8 +1,6 @@
 import express from "express";
-import TxControllers from "./Tx.controllers";
+import TxControllers from "./Tx.controller";
 
 const router = express.Router();
-
-
 
 export default router;
