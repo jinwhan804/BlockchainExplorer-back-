@@ -5,7 +5,11 @@ import { sigJudgemetTest } from "./analyzer/getMatch_signiel";
 import { Queue } from "./queue/getQueue";
 import { analyzeData } from "./analyzer/analyzeData";
 import BlockServices from "../../Block/Block.service";
+<<<<<<< HEAD:backbackend/function/CollectStart_http.ts
 import BlockDTO from "../../Block/Block.dto";
+=======
+import BlockDTO from "../../Block/Block.dtos";
+>>>>>>> tmp:information-system/function/CollectStart_http.ts
 import { getRPC_URLtest } from "./config";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
 const RPC_URL = "https://network.bouncecode.net/";

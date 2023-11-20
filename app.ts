@@ -10,10 +10,10 @@ import blockRouter from "./Block/Block.router";
 import EOARouter from "./EOA/EOA.router";
 import CARouter from "./CA/CA.router";
 import cors from "cors"; // cors 패키지 추가
-import { CollectStart_http } from "./backbackend/function/CollectStart_http";
-import { subscribetest } from "./backbackend/function/CollectStart_websocket";
-import { getRPC_URLtest } from "./backbackend/function/config";
-import { getnftinfo } from "./backbackend/function/nft/getnft_info";
+import { CollectStart_http } from "./information-system/function/CollectStart_http";
+import { subscribetest } from "./information-system/function/CollectStart_websocket";
+import { getRPC_URLtest } from "./information-system/function/config";
+import { getnftinfo } from "./information-system/function/nft/getnft_info";
 import { ErrorFn } from "./database/errorExcept";
 
 dotenv.config();

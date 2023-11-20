@@ -31,7 +31,7 @@ export interface TxData {
   transactionIndex: bigint;
   type: bigint;
   v: bigint;
-  value: string;
+  value: bigint;
   Method: string;
   Timestamp: bigint;
 }
@@ -137,10 +137,10 @@ export class Tx extends Model implements TxData {
   v!: bigint;
 
   @Column({
-    type: DataType.TEXT,
+    type: DataType.BIGINT,
     allowNull: false,
   })
-  value!: string;
+  value!: bigint;
 
   @Column({
     type: DataType.TEXT,
