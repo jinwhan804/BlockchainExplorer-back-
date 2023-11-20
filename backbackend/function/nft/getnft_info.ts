@@ -1,8 +1,8 @@
 import { getProvider } from "../config";
 import { readjson } from "../collector/getAbiAndAddress";
-import CAservice from "../../../CAs/CA.service";
-import { NFTData } from "../../../NFTs/NFT.model";
-import NFTservice from "../../../NFTs/NFT.service";
+import CAservice from "../../../CA/CA.service";
+import { NFTData } from "../../../NFT/NFT.model";
+import NFTservice from "../../../NFT/NFT.service";
 import { EventLog } from "web3";
 
 export const getnftinfo = async () => {

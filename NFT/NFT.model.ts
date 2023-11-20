@@ -1,5 +1,5 @@
 import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
-import { Tx } from "../Txs/Tx.model";
+import { Tx } from "../Tx/Tx.model";
 
 export interface NFTData {
   token_id: string;

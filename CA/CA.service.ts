@@ -1,8 +1,9 @@
 import CADTO from "./CA.dto";
 import db from "../database";
 import { CAData } from "./CA.model";
+import { NextFunction } from "express";
 
-const createCA = async (data: CADTO) => {
+const createCA = async (data: CADTO, next : NextFunction) => {
   try {
     await db.models.CA.create({
       address : data.address,
@@ -10,8 +11,7 @@ const createCA = async (data: CADTO) => {
       signitureNames : data.signitureNames,
     });
   } catch (error) {
-    console.log("CA 서비스에서 CA 데이터 추가하다 에러남");
-    console.log(error);
+    next(error);
   }
 };
 
@@ -40,4 +40,14 @@ const findCAtype = async () => {
   }
 };
 
-export default { createCA, createCATest, findCAtype };
+const viewOneCA = async (id : number, next : NextFunction) => {
+  try {
+    const ca = await db.models.CA.findOne({where : {id}});
+
+    return ca;
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { createCA, createCATest, findCAtype, viewOneCA };

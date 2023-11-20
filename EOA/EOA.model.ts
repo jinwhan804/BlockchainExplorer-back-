@@ -6,7 +6,7 @@ import {
   HasMany,
   BelongsToMany,
 } from "sequelize-typescript";
-import { Tx } from "../Txs/Tx.model";
+import { Tx } from "../Tx/Tx.model";
 import { TxEOA } from "../TxEOA/TxEOA.model";
 
 export interface EOAData {

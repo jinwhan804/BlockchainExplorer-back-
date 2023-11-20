@@ -4,7 +4,7 @@ import { determineAddressType } from "./analyzer/getCode";
 import { sigJudgemetTest } from "./analyzer/getMatch_signiel";
 import { Queue } from "./queue/getQueue";
 import { analyzeData } from "./analyzer/analyzeData";
-import BlockServices from "../../Blocks/Block.service";
+import BlockServices from "../../Block/Block.service";
 import { getTokeninfo } from "./token/getToken_info";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
 const RPC_URL =

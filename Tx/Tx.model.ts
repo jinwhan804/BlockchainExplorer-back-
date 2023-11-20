@@ -6,14 +6,14 @@ import {
   BelongsTo,
   BelongsToMany,
 } from "sequelize-typescript";
-import { NFT } from "../NFTs/NFT.model";
-import { Coin } from "../Coins/Coin.model";
-import { Token } from "../Tokens/Token.model";
-import { Block } from "../Blocks/Block.model";
+import { NFT } from "../NFT/NFT.model";
+import { Coin } from "../Coin/Coin.model";
+import { Token } from "../Token/Token.model";
+import { Block } from "../Block/Block.model";
 import { TxCA } from "../TxCA/TxCA.model";
 import { TxEOA } from "../TxEOA/TxEOA.model";
-import { CA } from "../CAs/CA.model";
-import { EOA } from "../EOAs/EOA.model";
+import { CA } from "../CA/CA.model";
+import { EOA } from "../EOA/EOA.model";
 
 export interface TxData {
   accessList: string[];

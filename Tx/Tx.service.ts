@@ -4,8 +4,8 @@ import { TxData } from "./Tx.model";
 import { NextFunction } from "express";
 
 import { getAddresstype } from "../backbackend/function/txns/getAddresstype";
-import CAServices from "../CAs/CA.service";
-import EOAServices from "../EOAs/EOA.service";
+import CAServices from "../CA/CA.service";
+import EOAServices from "../EOA/EOA.service";
 
 const createTx = async (data: TxDTO, next : NextFunction) => {
   try {
@@ -138,9 +138,9 @@ const CreateTxTest = async (
 
 const viewAllTxs = async (next : NextFunction) => {
   try {
-    const blocks = await db.models.Tx.findAll({});
+    const txs = await db.models.Tx.findAll({});
 
-    return blocks;
+    return txs;
   } catch (error) {    
     next(error);
   }
@@ -148,9 +148,9 @@ const viewAllTxs = async (next : NextFunction) => {
 
 const viewOneTx = async (id : number, next : NextFunction) => {
   try {
-    const block = await db.models.Tx.findOne({where : {id}})
+    const tx = await db.models.Tx.findOne({where : {id}})
 
-    return block;
+    return tx;
   } catch (error) {
     next(error);
   }
