@@ -1,20 +1,38 @@
 import TxDTO from "./Tx.dto";
 import TxServices from "./Tx.service";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-const CreateTx = async (req: Request, res: Response) => {
+const CreateTx = async (req: Request, res: Response, next : NextFunction) => {
   try {
     const reqDTO = new TxDTO(req.body);
 
-    await TxServices.createTx(reqDTO);
+    await TxServices.createTx(reqDTO, next);
 
     res.send();
   } catch (error) {
-    console.log(
-      "트랜잭션 데이터 컨트롤러에서 트랜잭션 데이터 추가하다가 에러남"
-    );
-    console.log(error);
+    next(error);
   }
 };
 
-export default { CreateTx };
+const ViewAllTxs = async (req : Request, res : Response, next : NextFunction) => {
+  try {
+    const data = await TxServices.viewAllTxs(next);
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+}
+
+const ViewOneTx = async (req : Request, res : Response, next : NextFunction) => {
+  try {
+    const id = Number(req.params)
+    const data = await TxServices.viewOneTx(id, next);
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { CreateTx, ViewAllTxs, ViewOneTx };

@@ -1,12 +1,13 @@
 import TxDTO from "./Tx.dto";
 import db from "../database";
 import { TxData } from "./Tx.model";
+import { NextFunction } from "express";
 
 import { getAddresstype } from "../backbackend/function/txns/getAddresstype";
 import CAServices from "../CAs/CA.service";
 import EOAServices from "../EOAs/EOA.service";
 
-const createTx = async (data: TxDTO) => {
+const createTx = async (data: TxDTO, next : NextFunction) => {
   try {
     const {
       accessList,
@@ -50,8 +51,7 @@ const createTx = async (data: TxDTO) => {
       Timestamp,
     });
   } catch (error) {
-    console.log("트랜잭션 서비스에서 트랜잭션 데이터 추가하다 에러남");
-    console.log(error);
+    next(error);
   }
 };
 
@@ -136,4 +136,24 @@ const CreateTxTest = async (
   }
 };
 
-export default { createTx, CreateTxTest };
+const viewAllTxs = async (next : NextFunction) => {
+  try {
+    const blocks = await db.models.Tx.findAll({});
+
+    return blocks;
+  } catch (error) {    
+    next(error);
+  }
+};
+
+const viewOneTx = async (id : number, next : NextFunction) => {
+  try {
+    const block = await db.models.Tx.findOne({where : {id}})
+
+    return block;
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { createTx, CreateTxTest, viewAllTxs, viewOneTx };

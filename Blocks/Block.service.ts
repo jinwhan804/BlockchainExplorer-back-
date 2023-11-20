@@ -86,12 +86,14 @@ const viewAllBlocks = async (next : NextFunction) => {
   }
 };
 
-const viewOneBlock = async (data : BlockDTO, next : NextFunction) => {
+const viewOneBlock = async (id : number, next : NextFunction) => {
   try {
-    const block = await db.models.Block.findOne({})
+    const block = await db.models.Block.findOne({where : {id}})
+
+    return block;
   } catch (error) {
-    
+    next(error);
   }
 }
 
-export default { createBlock, createBlocktest, viewAllBlocks };
+export default { createBlock, createBlocktest, viewAllBlocks, viewOneBlock };

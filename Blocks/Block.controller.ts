@@ -14,7 +14,7 @@ const CreateBlock = async (req : Request, res : Response, next : NextFunction) =
     }
 }
 
-const ViewAllBlock = async (req : Request, res : Response, next : NextFunction) => {
+const ViewAllBlocks = async (req : Request, res : Response, next : NextFunction) => {
     try {
         const data = await BlockServices.viewAllBlocks(next);
 
@@ -24,4 +24,15 @@ const ViewAllBlock = async (req : Request, res : Response, next : NextFunction) 
     }
 }
 
-export default { CreateBlock, ViewAllBlock };
+const ViewOneBlock = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const data = await BlockServices.viewOneBlock(id, next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateBlock, ViewAllBlocks, ViewOneBlock };
