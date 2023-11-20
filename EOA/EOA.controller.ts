@@ -1,18 +1,26 @@
 import EOADTO from "./EOA.dto";
 import EOAServices from "./EOA.service";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-const CreateEOA = async (req : Request, res : Response) => {
+const CreateEOA = async (req : Request, res : Response, next : NextFunction) => {
     try {
         const reqDTO = new EOADTO(req.body);
 
-        await EOAServices.createEOA(reqDTO);
+        await EOAServices.createEOA(reqDTO, next);
 
         res.send();
     } catch (error) {
-        console.log('EOA 데이터 컨트롤러에서 EOA 데이터 추가하다가 에러남');
-        console.log(error);
+        next(error);
     }
 }
 
-export default { CreateEOA };
+const ViewOneEOA = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const data = await EOAServices.viewOneEOA(id, next);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateEOA, ViewOneEOA };

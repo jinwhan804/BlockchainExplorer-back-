@@ -1,8 +1,9 @@
 import TokenDTO from "./Token.dto";
 import db from "../database";
 import { TokenData } from "./Token.model";
+import { NextFunction } from "express";
 
-const createToken = async (data: TokenDTO) => {
+const createToken = async (data: TokenDTO, next : NextFunction) => {
   try {
     const {
       contract_address,
@@ -22,10 +23,29 @@ const createToken = async (data: TokenDTO) => {
       circulating_supply,
     });
   } catch (error) {
-    console.log("토큰 서비스에서 토큰 데이터 추가하다 에러남");
-    console.log(error);
+    next(error);
   }
 };
+
+const viewAllTokens = async (next : NextFunction) => {
+  try {
+    const tokens = await db.models.Token.findAll();
+
+    return tokens;
+  } catch (error) {
+    next(error);
+  }
+}
+
+const viewOneToken = async (id : number, next : NextFunction) => {
+  try {
+    const token = await db.models.Token.findOne({where : {id}});
+
+    return token;
+  } catch (error) {
+    next(error);
+  }
+}
 
 const createTokentest = async (data: TokenData) => {
   try {
@@ -64,4 +84,4 @@ const isExist = async (address: string) => {
   }
 };
 
-export default { createToken, createTokentest, isExist };
+export default { createToken, createTokentest, isExist, viewAllTokens, viewOneToken };

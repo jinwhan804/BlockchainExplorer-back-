@@ -15,21 +15,6 @@ const createCA = async (data: CADTO, next : NextFunction) => {
   }
 };
 
-const createCATest = async (data: CAData) => {
-  try {
-    const { address, abiSigniture, signitureNames, CAtype } = data;
-    const result = await db.models.CA.create({
-      address,
-      CAtype,
-      abiSigniture,
-      signitureNames,
-    });
-    return result;
-  } catch (error) {
-    console.log("createCATest에서 오류발생", error);
-  }
-};
-
 const findCAtype = async () => {
   try {
     const result = await db.models.CA.findAll({});
@@ -49,5 +34,20 @@ const viewOneCA = async (id : number, next : NextFunction) => {
     next(error);
   }
 }
+
+const createCATest = async (data: CAData) => {
+  try {
+    const { address, abiSigniture, signitureNames, CAtype } = data;
+    const result = await db.models.CA.create({
+      address,
+      CAtype,
+      abiSigniture,
+      signitureNames,
+    });
+    return result;
+  } catch (error) {
+    console.log("createCATest에서 오류발생", error);
+  }
+};
 
 export default { createCA, createCATest, findCAtype, viewOneCA };

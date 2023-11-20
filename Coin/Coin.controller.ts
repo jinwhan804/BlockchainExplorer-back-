@@ -1,18 +1,38 @@
 import CoinDTO from "./Coin.dto";
 import CoinServices from "./Coin.service";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-const CreateCoin = async (req : Request, res : Response) => {
+const CreateCoin = async (req : Request, res : Response, next : NextFunction) => {
     try {
         const reqDTO = new CoinDTO(req.body);
 
-        await CoinServices.createCoin(reqDTO);
+        await CoinServices.createCoin(reqDTO, next);
 
         res.send();
     } catch (error) {
-        console.log('코인 데이터 컨트롤러에서 코인 데이터 추가하다가 에러남');
-        console.log(error);
+        next(error);
     }
 }
 
-export default { CreateCoin };
+const ViewAllCoins = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const data = await CoinServices.viewAllCoins(next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const ViewOneCoin = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const data = await CoinServices.viewOneCoin(id, next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateCoin, ViewAllCoins, ViewOneCoin };

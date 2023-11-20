@@ -1,7 +1,8 @@
 import CoinDTO from "./Coin.dto";
 import db from "../database";
+import { NextFunction } from "express";
 
-const createCoin = async (data : CoinDTO) => {
+const createCoin = async (data : CoinDTO, next : NextFunction) => {
     try {
         const { symbol, total_supply } = data;
 
@@ -10,9 +11,28 @@ const createCoin = async (data : CoinDTO) => {
             total_supply
         })
     } catch (error) {
-        console.log('코인 서비스에서 코인 데이터 추가하다 에러남');
-        console.log(error);
+        next(error);
     }
 }
 
-export default { createCoin };
+const viewAllCoins = async (next : NextFunction) => {
+    try {
+        const coins = await db.models.Coin.findAll({});
+
+        return coins;
+    } catch (error) {
+        next(error);
+    }
+}
+
+const viewOneCoin = async (id : number, next : NextFunction) => {
+    try {
+        const coin = await db.models.Coin.findOne({where : {id}});
+
+        return coin;
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { createCoin, viewAllCoins, viewOneCoin };
