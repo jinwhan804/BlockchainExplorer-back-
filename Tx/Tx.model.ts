@@ -8,7 +8,7 @@ import {
 } from "sequelize-typescript";
 import { NFT } from "../NFT/NFT.model";
 import { Coin } from "../Coin/Coin.model";
-import { Token } from "../Tokens/Token.model";
+import { Token } from "../Token/Token.model";
 import { Block } from "../Block/Block.model";
 import { TxCA } from "../TxCA/TxCA.model";
 import { TxEOA } from "../TxEOA/TxEOA.model";

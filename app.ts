@@ -4,7 +4,7 @@ import db from "./database";
 import Web3 from "web3";
 import coinRouter from "./Coin/Coin.routers";
 import nftRouter from "./NFT/NFT.routers";
-import tokenRouter from "./Tokens/Token.routers";
+import tokenRouter from "./Token/Token.routers";
 import txRouter from "./Tx/Tx.routers";
 import blockRouter from "./Block/Block.routers";
 import EOARouter from "./EOA/EOA.routers";
