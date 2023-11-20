@@ -2,18 +2,18 @@ import express from "express";
 import dotenv from "dotenv";
 import db from "./database";
 import Web3 from "web3";
-import coinRouter from "./Coins/Coin.routers";
-import nftRouter from "./NFTs/NFT.routers";
+import coinRouter from "./Coin/Coin.routers";
+import nftRouter from "./NFT/NFT.routers";
 import tokenRouter from "./Tokens/Token.routers";
-import txRouter from "./Txs/Tx.routers";
-import blockRouter from "./Blocks/Block.routers";
-import EOARouter from "./EOAs/EOA.routers";
-import CARouter from "./CAs/CA.routers";
+import txRouter from "./Tx/Tx.routers";
+import blockRouter from "./Block/Block.routers";
+import EOARouter from "./EOA/EOA.routers";
+import CARouter from "./CA/CA.routers";
 import cors from "cors"; // cors 패키지 추가
-import { CollectStart_http } from "./backbackend/function/CollectStart_http";
-import { subscribetest } from "./backbackend/function/CollectStart_websocket";
-import { getRPC_URLtest } from "./backbackend/function/config";
-import { getnftinfo } from "./backbackend/function/nft/getnft_info";
+import { CollectStart_http } from "./information-system/function/CollectStart_http";
+import { subscribetest } from "./information-system/function/CollectStart_websocket";
+import { getRPC_URLtest } from "./information-system/function/config";
+import { getnftinfo } from "./information-system/function/nft/getnft_info";
 
 dotenv.config();
 

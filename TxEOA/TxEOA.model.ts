@@ -1,6 +1,6 @@
 import { Table, Model, Column, ForeignKey } from "sequelize-typescript";
-import { Tx } from "../Txs/Tx.model";
-import { EOA } from "../EOAs/EOA.model";
+import { Tx } from "../Tx/Tx.model";
+import { EOA } from "../EOA/EOA.model";
 
 @Table({
   timestamps: false,

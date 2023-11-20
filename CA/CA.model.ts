@@ -7,7 +7,7 @@ import {
   BelongsToMany,
 } from "sequelize-typescript";
 import { TxCA } from "../TxCA/TxCA.model";
-import { Tx } from "../Txs/Tx.model";
+import { Tx } from "../Tx/Tx.model";
 
 export interface CAData {
   address: string;

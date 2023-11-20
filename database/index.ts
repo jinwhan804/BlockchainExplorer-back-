@@ -1,12 +1,12 @@
 import { Sequelize } from "sequelize-typescript";
 import config from "./config";
-import { Coin } from "../Coins/Coin.model";
-import { NFT } from "../NFTs/NFT.model";
+import { Coin } from "../Coin/Coin.model";
+import { NFT } from "../NFT/NFT.model";
 import { Token } from "../Tokens/Token.model";
-import { Tx } from "../Txs/Tx.model";
-import { EOA } from "../EOAs/EOA.model";
-import { Block } from "../Blocks/Block.model";
-import { CA } from "../CAs/CA.model";
+import { Tx } from "../Tx/Tx.model";
+import { EOA } from "../EOA/EOA.model";
+import { Block } from "../Block/Block.model";
+import { CA } from "../CA/CA.model";
 import { TxCA } from "../TxCA/TxCA.model";
 import { TxEOA } from "../TxEOA/TxEOA.model";
 

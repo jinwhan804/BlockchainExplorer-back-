@@ -2,11 +2,11 @@ import TxDTO from "./Tx.dtos";
 import db from "../database";
 import { TxData } from "./Tx.model";
 
-import { getAddresstype } from "../backbackend/function/txns/getAddresstype";
+import { getAddresstype } from "../information-system/function/txns/getAddresstype";
 import TxCAService from "../TxCA/TxCA.service";
 import TxEOAService from "../TxEOA/TxEOA.service";
-import CAServices from "../CAs/CA.services";
-import EOAServices from "../EOAs/EOA.services";
+import CAServices from "../CA/CA.service";
+import EOAServices from "../EOA/EOA.service";
 import { get } from "http";
 
 const createTx = async (data: TxDTO) => {

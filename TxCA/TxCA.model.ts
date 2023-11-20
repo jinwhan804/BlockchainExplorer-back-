@@ -1,6 +1,6 @@
 import { Table, Model, Column, ForeignKey } from "sequelize-typescript";
-import { Tx } from "../Txs/Tx.model";
-import { CA } from "../CAs/CA.model";
+import { Tx } from "../Tx/Tx.model";
+import { CA } from "../CA/CA.model";
 
 @Table({
   timestamps: false,

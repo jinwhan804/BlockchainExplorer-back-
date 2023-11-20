@@ -1,5 +1,5 @@
 import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
-import { Tx } from "../Txs/Tx.model";
+import { Tx } from "../Tx/Tx.model";
 
 export interface BlockData {
   number: bigint;

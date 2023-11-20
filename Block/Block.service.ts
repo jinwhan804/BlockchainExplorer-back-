@@ -1,7 +1,7 @@
 import BlockDTO from "./Block.dtos";
 import db from "../database";
 // import { BlockData } from "./Block.model";
-import { BlockData } from "../backbackend/function/CollectStart_websocket";
+import { BlockData } from "../information-system/function/CollectStart_websocket";
 
 const createBlock = async (data: BlockDTO) => {
   try {

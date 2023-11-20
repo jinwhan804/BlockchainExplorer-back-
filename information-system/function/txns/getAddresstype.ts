@@ -1,9 +1,9 @@
 import { hash } from "bcrypt";
 import db from "../../../database";
-import CAServices from "../../../CAs/CA.services";
-import EOAServices from "../../../EOAs/EOA.services";
-import { CAData } from "../../../CAs/CA.model";
-import { EOAData } from "../../../EOAs/EOA.model";
+import CAServices from "../../../CA/CA.service";
+import EOAServices from "../../../EOA/EOA.service";
+import { CAData } from "../../../CA/CA.model";
+import { EOAData } from "../../../EOA/EOA.model";
 import {
   signitureERC20public,
   signiturenameERC20public,

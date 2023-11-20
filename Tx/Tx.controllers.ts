@@ -1,5 +1,5 @@
 import TxDTO from "./Tx.dtos";
-import TxServices from "./Tx.services";
+import TxServices from "./Tx.service";
 import { Request, Response } from "express";
 
 const CreateTx = async (req: Request, res: Response) => {
