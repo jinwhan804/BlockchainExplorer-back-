@@ -27,7 +27,7 @@ export class Token extends Model implements TokenData {
   contract_address!: string;
 
   @Column({
-    type: DataType.STRING(20),
+    type: DataType.STRING(50),
     allowNull: false,
   })
   name!: string;

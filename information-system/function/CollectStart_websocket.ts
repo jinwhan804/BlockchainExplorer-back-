@@ -64,6 +64,8 @@ export const subscribetest = async () => {
         }
       }
     });
+    await getTokeninfo();
+
     setInterval(async () => {
       await getTokeninfo();
     }, 300000);

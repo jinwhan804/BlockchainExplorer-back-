@@ -1,30 +1,30 @@
 import BlockDTO from "./Block.dto";
 import db from "../database";
 // import { BlockData } from "./Block.model";
-import { BlockData } from "../backbackend/function/CollectStart_websocket";
+import { BlockData } from "../information-system/function/CollectStart_websocket";
 import { NextFunction } from "express";
 
-const createBlock = async (data: BlockDTO, next : NextFunction ) => {
+const createBlock = async (data: BlockDTO, next: NextFunction) => {
   try {
     await db.models.Block.create({
-      number : data.number,
-      hash : data.hash,
-      parentHash : data.parentHash,
-      sha3Uncles : data.sha3Uncles,
-      logsBloom : data.logsBloom,
-      transactionsRoot : data.transactionsRoot,
-      stateRoot : data.stateRoot,
-      receiptsRoot : data.receiptsRoot,
-      miner : data.miner,
-      difficulty : data.difficulty,
-      extraData : data.extraData,
-      gasLimit : data.gasLimit,
-      gasUsed : data.gasUsed,
-      timestamp : data.timestamp,
-      baseFeePerGas : data.baseFeePerGas,
-      withdrawalsRoot : data.withdrawalsRoot,
-      nonce : data.nonce,
-      mixHash : data.mixHash,
+      number: data.number,
+      hash: data.hash,
+      parentHash: data.parentHash,
+      sha3Uncles: data.sha3Uncles,
+      logsBloom: data.logsBloom,
+      transactionsRoot: data.transactionsRoot,
+      stateRoot: data.stateRoot,
+      receiptsRoot: data.receiptsRoot,
+      miner: data.miner,
+      difficulty: data.difficulty,
+      extraData: data.extraData,
+      gasLimit: data.gasLimit,
+      gasUsed: data.gasUsed,
+      timestamp: data.timestamp,
+      baseFeePerGas: data.baseFeePerGas,
+      withdrawalsRoot: data.withdrawalsRoot,
+      nonce: data.nonce,
+      mixHash: data.mixHash,
     });
   } catch (error) {
     next(error);
@@ -73,27 +73,28 @@ const createBlocktest = async (data: BlockData) => {
     nonce,
     mixHash,
   });
-  console.log("밸류밸류밸류밸류", value);
+  // console.log("밸류밸류밸류밸류", value);
+  return value;
 };
 
-const viewAllBlocks = async (next : NextFunction) => {
+const viewAllBlocks = async (next: NextFunction) => {
   try {
     const blocks = await db.models.Block.findAll({});
 
     return blocks;
-  } catch (error) {    
+  } catch (error) {
     next(error);
   }
 };
 
-const viewOneBlock = async (id : number, next : NextFunction) => {
+const viewOneBlock = async (id: number, next: NextFunction) => {
   try {
-    const block = await db.models.Block.findOne({where : {id}})
+    const block = await db.models.Block.findOne({ where: { id } });
 
     return block;
   } catch (error) {
     next(error);
   }
-}
+};
 
 export default { createBlock, createBlocktest, viewAllBlocks, viewOneBlock };
