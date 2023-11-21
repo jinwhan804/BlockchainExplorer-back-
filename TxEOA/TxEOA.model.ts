@@ -1,4 +1,10 @@
-import { Table, Model, Column, ForeignKey } from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  ForeignKey,
+  BelongsTo,
+} from "sequelize-typescript";
 import { Tx } from "../Tx/Tx.model";
 import { EOA } from "../EOA/EOA.model";
 
@@ -18,4 +24,9 @@ export class TxEOA extends Model {
   @ForeignKey(() => EOA)
   @Column
   eoaId!: number;
+  @BelongsTo(() => Tx)
+  tx!: Tx;
+
+  @BelongsTo(() => EOA)
+  eoa!: EOA;
 }

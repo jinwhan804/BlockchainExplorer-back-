@@ -49,4 +49,7 @@ export class EOA extends Model implements EOAData {
   // N:M 관계 설정
   @BelongsToMany(() => Tx, () => TxEOA)
   transactionAssociations!: Tx[];
+
+  @BelongsToMany(() => Tx, () => TxEOA)
+  txs!: Tx[];
 }

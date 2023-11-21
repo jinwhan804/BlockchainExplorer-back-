@@ -61,4 +61,6 @@ export class CA extends Model implements CAData {
   transactions!: Tx[];
   @BelongsToMany(() => Tx, () => TxCA, "caId", "txId")
   transactionAssociations!: Tx[];
+  @BelongsToMany(() => Tx, () => TxCA)
+  txs!: Tx[];
 }

@@ -169,11 +169,13 @@ const CreateTxTest = async (
   }
 };
 
-const getFindone = async (tmp: any) => {
+const getFindone = async (tmp: string) => {
   try {
+    const tmpdata = tmp.toLocaleLowerCase();
+
     const result = await db.models.Tx.findOne({
       where: {
-        [Op.or]: [{ from: tmp }, { to: tmp }],
+        [Op.or]: [{ from: tmpdata }, { to: tmpdata }],
       },
     });
     return result;

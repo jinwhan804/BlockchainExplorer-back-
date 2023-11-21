@@ -37,7 +37,7 @@ const myQueue = new Queue<BlockData>();
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RPC_URL));
 let hahah: any;
 export const subscribetest = async () => {
-  let analyzeDatajudgement: boolean[] = new Array(1).fill(true);
+  let analyzeDatajudgement: boolean[] = new Array(5).fill(true);
   let tmpblock: BlockData;
 
   try {

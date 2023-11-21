@@ -1,4 +1,10 @@
-import { Table, Model, Column, ForeignKey } from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  ForeignKey,
+  BelongsTo,
+} from "sequelize-typescript";
 import { Tx } from "../Tx/Tx.model";
 import { CA } from "../CA/CA.model";
 
@@ -18,4 +24,9 @@ export class TxCA extends Model {
   @ForeignKey(() => CA)
   @Column // 여기서 field를 사용하여 외래 키의 컬럼명을 명시
   caId!: number;
+  @BelongsTo(() => Tx)
+  tx!: Tx;
+
+  @BelongsTo(() => CA)
+  ca!: CA;
 }

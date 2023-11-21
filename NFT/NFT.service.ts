@@ -40,7 +40,7 @@ const viewOneNFT = async (id: number, next: NextFunction) => {
   }
 };
 
-const createNFTTest = async (data: NFTData, txData: any) => {
+const createNFTTest = async (data: NFTData, txDataid?: any) => {
   try {
     const {
       token_id,
@@ -60,10 +60,11 @@ const createNFTTest = async (data: NFTData, txData: any) => {
       creator_address,
       Owner,
     });
-    await db.models.Tx.update(
-      { nft_id: result.dataValues.id },
-      { where: { id: txData.id } }
+    const asd = await db.models.Tx.update(
+      { NFT_id: result.dataValues.id },
+      { where: { id: txDataid } }
     );
+    console.log("asdasdsad", asd);
   } catch (error) {
     console.log("NFT 서비스에서 NFT 데이터 추가하다 에러남");
     console.log(error);
