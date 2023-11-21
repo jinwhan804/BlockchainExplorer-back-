@@ -1,6 +1,5 @@
 import { Sequelize } from "sequelize-typescript";
 import config from "./config";
-import { Coin } from "../Coin/Coin.model";
 import { NFT } from "../NFT/NFT.model";
 import { Token } from "../Token/Token.model";
 import { Tx } from "../Tx/Tx.model";
@@ -17,7 +16,7 @@ const db = new Sequelize(
   {
     host: config.dev.host,
     dialect: "postgres",
-    models: [Tx, Coin, NFT, Token, EOA, CA, Block, TxCA, TxEOA],
+    models: [Tx, NFT, Token, EOA, CA, Block, TxCA, TxEOA],
   }
 );
 

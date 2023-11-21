@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import db from "./database";
 import Web3 from "web3";
-import coinRouter from "./Coin/Coin.router";
 import nftRouter from "./NFT/NFT.router";
 import tokenRouter from "./Token/Token.router";
 import txRouter from "./Tx/Tx.router";
@@ -19,7 +18,9 @@ import { ErrorFn } from "./database/errorExcept";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin : "https://bouncexplorer.site"
+}));
 
 db.sync({ force: false })
   .then(() => {
@@ -33,7 +34,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
 
-app.use("/coin", coinRouter);
 app.use("/nft", nftRouter);
 app.use("/token", tokenRouter);
 app.use("/tx", txRouter);
