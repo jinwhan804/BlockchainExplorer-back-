@@ -5,4 +5,6 @@ const router = express.Router();
 
 router.get('/', CAControllers.ViewOneCA);
 
+router.put('/:id', CAControllers.UpdateCA);
+
 export default router;

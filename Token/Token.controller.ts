@@ -1,18 +1,38 @@
 import TokenDTO from "./Token.dto";
 import TokenServices from "./Token.service";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-const CreateToken = async (req : Request, res : Response) => {
+const CreateToken = async (req : Request, res : Response, next : NextFunction) => {
     try {
         const reqDTO = new TokenDTO(req.body);
 
-        await TokenServices.createToken(reqDTO);
+        await TokenServices.createToken(reqDTO, next);
 
         res.send();
     } catch (error) {
-        console.log('토큰 데이터 컨트롤러에서 토큰 데이터 추가하다가 에러남');
-        console.log(error);
+        next(error);
     }
 }
 
-export default { CreateToken };
+const ViewAllTokens = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const data = await TokenServices.viewAllTokens(next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const ViewOneToken = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const data = await TokenServices.viewOneToken(id, next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateToken, ViewAllTokens, ViewOneToken };

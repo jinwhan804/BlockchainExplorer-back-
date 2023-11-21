@@ -1,8 +1,9 @@
 import EOADTO from "./EOA.dto";
 import db from "../database";
 import { EOAData } from "./EOA.model";
+import { NextFunction } from "express";
 
-const createEOA = async (data: EOADTO) => {
+const createEOA = async (data: EOADTO, next : NextFunction) => {
   try {
     const { address, token, ethBalance } = data;
 
@@ -12,10 +13,19 @@ const createEOA = async (data: EOADTO) => {
       ethBalance,
     });
   } catch (error) {
-    console.log("EOA 서비스에서 EOA 데이터 추가하다 에러남");
-    console.log(error);
+    next(error);
   }
 };
+
+const viewOneEOA = async (id : number, next : NextFunction) => {
+  try {
+    const eoa = await db.models.EOA.findOne({where : {id}});
+
+    return eoa;
+  } catch (error) {
+    next(error);
+  }
+}
 
 const createEOATest = async (data: EOAData) => {
   try {
@@ -31,4 +41,4 @@ const createEOATest = async (data: EOAData) => {
   }
 };
 
-export default { createEOA, createEOATest };
+export default { createEOA, createEOATest, viewOneEOA };

@@ -18,7 +18,9 @@ import { ErrorFn } from "./database/errorExcept";
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin : "https://bouncexplorer.site"
+}));
 
 db.sync({ force: false })
   .then(() => {

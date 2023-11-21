@@ -1,18 +1,38 @@
 import NFTDTO from "./NFT.dto";
 import NFTServices from "./NFT.service";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 
-const CreateNFT = async (req : Request, res : Response) => {
+const CreateNFT = async (req : Request, res : Response, next : NextFunction) => {
     try {
         const reqDTO = new NFTDTO(req.body);
 
-        await NFTServices.createNFT(reqDTO);
+        await NFTServices.createNFT(reqDTO, next);
 
         res.send();
     } catch (error) {
-        console.log('NFT 데이터 컨트롤러에서 NFT 데이터 추가하다가 에러남');
-        console.log(error);
+        next(error);
     }
 }
 
-export default { CreateNFT };
+const ViewAllNFTs = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const data = await NFTServices.viewAllNFTs(next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+const ViewOneNFT = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params)
+        const data = await NFTServices.viewOneNFT(id, next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateNFT, ViewAllNFTs, ViewOneNFT };

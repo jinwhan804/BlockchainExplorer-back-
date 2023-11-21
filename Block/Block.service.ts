@@ -31,6 +31,26 @@ const createBlock = async (data: BlockDTO, next: NextFunction) => {
   }
 };
 
+const viewAllBlocks = async (next : NextFunction) => {
+  try {
+    const blocks = await db.models.Block.findAll({});
+
+    return blocks;
+  } catch (error) {    
+    next(error);
+  }
+};
+
+const viewOneBlock = async (id : number, next : NextFunction) => {
+  try {
+    const block = await db.models.Block.findOne({where : {id}})
+
+    return block;
+  } catch (error) {
+    next(error);
+  }
+}
+
 const createBlocktest = async (data: BlockData) => {
   console.log("createBlocktest");
   const {
@@ -75,26 +95,6 @@ const createBlocktest = async (data: BlockData) => {
   });
   // console.log("밸류밸류밸류밸류", value);
   return value;
-};
-
-const viewAllBlocks = async (next: NextFunction) => {
-  try {
-    const blocks = await db.models.Block.findAll({});
-
-    return blocks;
-  } catch (error) {
-    next(error);
-  }
-};
-
-const viewOneBlock = async (id: number, next: NextFunction) => {
-  try {
-    const block = await db.models.Block.findOne({ where: { id } });
-
-    return block;
-  } catch (error) {
-    next(error);
-  }
 };
 
 export default { createBlock, createBlocktest, viewAllBlocks, viewOneBlock };
