@@ -2,12 +2,12 @@ import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import { Tx } from "../Tx/Tx.model";
 
 export interface NFTData {
-  token_id?: string;
-  name?: string;
-  description?: string;
-  image_url?: string;
-  creator_address?: string;
-  Owner?: string;
+  token_id: string;
+  name: string;
+  description: string;
+  image_url: string;
+  creator_address: string;
+  Owner: string;
   num?: number;
 }
 

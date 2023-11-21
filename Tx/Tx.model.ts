@@ -7,7 +7,6 @@ import {
   BelongsToMany,
 } from "sequelize-typescript";
 import { NFT } from "../NFT/NFT.model";
-import { Coin } from "../Coin/Coin.model";
 import { Token } from "../Token/Token.model";
 import { Block } from "../Block/Block.model";
 import { TxCA } from "../TxCA/TxCA.model";
@@ -157,9 +156,6 @@ export class Tx extends Model implements TxData {
   // foreign key 연결 구간
   @BelongsTo(() => NFT, "NFT_id")
   nft!: NFT;
-
-  @BelongsTo(() => Coin, "coin_id")
-  coin!: Coin;
 
   @BelongsTo(() => Token, "token_id")
   token!: Token;
