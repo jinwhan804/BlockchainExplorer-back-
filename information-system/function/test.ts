@@ -1,4 +1,5 @@
 import Web3 from "web3";
+import * as path from "path";
 
 const testfun = async () => {
   const RPC_URL =
@@ -20,6 +21,16 @@ const testfun = async () => {
   } else {
     console.log("This transaction does not include ERC-721 token transfer.");
   }
+
+  const originalPath =
+    "/Users/jeonghyeon-ug/Desktop/lastlastlastproject/back/information-system/function/token/back/information-system/JSON/erc20.json";
+  const targetPath =
+    "/Users/jeonghyeon-ug/Desktop/lastlastlastproject/back/information-system/JSON/erc20.json";
+
+  // 상대 경로 계산
+  const relativePath = path.relative(targetPath, originalPath);
+
+  console.log("상대 경로:", relativePath);
 };
 
 testfun();

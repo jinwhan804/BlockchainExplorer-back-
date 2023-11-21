@@ -13,6 +13,8 @@ import { getProvider } from "../config";
 import CAservice from "../../../CA/CA.service";
 import Tokenservice from "../../../Token/Token.service";
 import { TokenData } from "../../../Token/Token.model";
+import * as path from "path";
+import { DIRNAME } from "../../JSON";
 
 export const getTokeninfo = async () => {
   const web3 = await getProvider();
@@ -32,9 +34,10 @@ export const getTokeninfo = async () => {
       if (result[i].dataValues.CAtype == ``) {
         continue;
       } else if (result[i].dataValues.CAtype == `erc-20`) {
-        jsonData = await readjson(
-          "/Users/jeonghyeon-ug/Desktop/lastprojectunion/back/backbackend/JSON/erc20.json"
-        );
+        const jsonFilePath = path.join(DIRNAME, "erc20.json");
+
+        const jsonData = await readjson(jsonFilePath);
+
         tmparr.push({
           index: i,
           address: address,
@@ -43,9 +46,10 @@ export const getTokeninfo = async () => {
           // 추가 필요한 다른 속성도 여기에 추가할 수 있음
         });
       } else if (result[i].dataValues.CAtype == `erc-721`) {
-        jsonData = await readjson(
-          "/Users/jeonghyeon-ug/Desktop/lastprojectunion/back/backbackend/JSON/erc721.json"
-        );
+        const jsonFilePath = path.join(DIRNAME, "erc721.json");
+
+        const jsonData = await readjson(jsonFilePath);
+
         tmparr.push({
           index: i,
           address: address,
@@ -55,9 +59,10 @@ export const getTokeninfo = async () => {
           // 추가 필요한 다른 속성도 여기에 추가할 수 있음
         });
       } else if (result[i].dataValues.CAtype == `erc-1155`) {
-        jsonData = await readjson(
-          "/Users/jeonghyeon-ug/Desktop/lastprojectunion/back/backbackend/JSON/erc1155.json"
-        );
+        const jsonFilePath = path.join(DIRNAME, "erc1155.json");
+
+        const jsonData = await readjson(jsonFilePath);
+
         tmparr.push({
           index: i,
           address: address,

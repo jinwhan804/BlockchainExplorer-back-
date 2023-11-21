@@ -5,23 +5,22 @@ import { Tx } from "../Tx/Tx.model";
 import { Sequelize } from "sequelize-typescript";
 import { NextFunction } from "express";
 
-const createNFT = async (data: NFTDTO, next : NextFunction) => {
+const createNFT = async (data: NFTDTO, next: NextFunction) => {
   try {
     await db.models.NFT.create({
-      token_id : data.token_id,
-      name : data.name,
-      description : data.description,
-      image_url : data.image_url,
-      creator_address : data.creator_address,
-      Owner : data.Owner,
+      token_id: data.token_id,
+      name: data.name,
+      description: data.description,
+      image_url: data.image_url,
+      creator_address: data.creator_address,
+      Owner: data.Owner,
     });
-  
   } catch (error) {
     next(error);
   }
 };
 
-const viewAllNFTs = async (next : NextFunction) => {
+const viewAllNFTs = async (next: NextFunction) => {
   try {
     const nfts = await db.models.NFT.findAll();
 
@@ -29,17 +28,17 @@ const viewAllNFTs = async (next : NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
-const viewOneNFT = async (id : number, next : NextFunction) => {
+const viewOneNFT = async (id: number, next: NextFunction) => {
   try {
-    const nft = await db.models.NFT.findOne({where : {id}});
+    const nft = await db.models.NFT.findOne({ where: { id } });
 
     return nft;
   } catch (error) {
     next(error);
   }
-}
+};
 
 const createNFTTest = async (data: NFTData, txData: any) => {
   try {
@@ -89,4 +88,11 @@ const isExist = async (token_id: number) => {
   }
 };
 
-export default { createNFT, createNFTTest, isExist, viewAllNFTs, viewOneNFT };
+export default {
+  createNFT,
+  createNFTTest,
+  isExist,
+  viewAllNFTs,
+  viewOneNFT,
+  NFTtabledestroy,
+};
