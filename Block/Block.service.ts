@@ -4,27 +4,27 @@ import db from "../database";
 import { BlockData } from "../information-system/function/CollectStart_websocket";
 import { NextFunction } from "express";
 
-const createBlock = async (data: BlockDTO, next : NextFunction ) => {
+const createBlock = async (data: BlockDTO, next: NextFunction) => {
   try {
     await db.models.Block.create({
-      number : data.number,
-      hash : data.hash,
-      parentHash : data.parentHash,
-      sha3Uncles : data.sha3Uncles,
-      logsBloom : data.logsBloom,
-      transactionsRoot : data.transactionsRoot,
-      stateRoot : data.stateRoot,
-      receiptsRoot : data.receiptsRoot,
-      miner : data.miner,
-      difficulty : data.difficulty,
-      extraData : data.extraData,
-      gasLimit : data.gasLimit,
-      gasUsed : data.gasUsed,
-      timestamp : data.timestamp,
-      baseFeePerGas : data.baseFeePerGas,
-      withdrawalsRoot : data.withdrawalsRoot,
-      nonce : data.nonce,
-      mixHash : data.mixHash,
+      number: data.number,
+      hash: data.hash,
+      parentHash: data.parentHash,
+      sha3Uncles: data.sha3Uncles,
+      logsBloom: data.logsBloom,
+      transactionsRoot: data.transactionsRoot,
+      stateRoot: data.stateRoot,
+      receiptsRoot: data.receiptsRoot,
+      miner: data.miner,
+      difficulty: data.difficulty,
+      extraData: data.extraData,
+      gasLimit: data.gasLimit,
+      gasUsed: data.gasUsed,
+      timestamp: data.timestamp,
+      baseFeePerGas: data.baseFeePerGas,
+      withdrawalsRoot: data.withdrawalsRoot,
+      nonce: data.nonce,
+      mixHash: data.mixHash,
     });
   } catch (error) {
     next(error);
@@ -93,7 +93,8 @@ const createBlocktest = async (data: BlockData) => {
     nonce,
     mixHash,
   });
-  console.log("밸류밸류밸류밸류", value);
+  // console.log("밸류밸류밸류밸류", value);
+  return value;
 };
 
 export default { createBlock, createBlocktest, viewAllBlocks, viewOneBlock };

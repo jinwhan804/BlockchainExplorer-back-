@@ -23,7 +23,9 @@ export const getTokeninfo = async () => {
   if (result !== undefined) {
     for (let i = 0; i < result.length; i++) {
       address = result[i].dataValues.address;
-      if (await Tokenservice.isExist(address)) {
+      const db_result = await Tokenservice.isExist(address);
+      // console.log(db_result);
+      if (db_result !== undefined && db_result !== null ? true : false) {
         console.log("이미있는 토큰인데수웅");
         continue;
       }
@@ -37,6 +39,7 @@ export const getTokeninfo = async () => {
           index: i,
           address: address,
           jsonData: jsonData,
+          contract_Adress: db_result?.dataValues.contract_address,
           // 추가 필요한 다른 속성도 여기에 추가할 수 있음
         });
       } else if (result[i].dataValues.CAtype == `erc-721`) {
@@ -47,6 +50,8 @@ export const getTokeninfo = async () => {
           index: i,
           address: address,
           jsonData: jsonData,
+          contract_Adress: db_result?.dataValues.contract_address,
+
           // 추가 필요한 다른 속성도 여기에 추가할 수 있음
         });
       } else if (result[i].dataValues.CAtype == `erc-1155`) {
@@ -57,6 +62,8 @@ export const getTokeninfo = async () => {
           index: i,
           address: address,
           jsonData: jsonData,
+          contract_Adress: db_result?.dataValues.contract_address,
+
           // 추가 필요한 다른 속성도 여기에 추가할 수 있음
         });
       }
@@ -74,7 +81,7 @@ export const getTokeninfo = async () => {
         decimal: await contract.methods.decimals().call(),
         circulating_supply: await contract.methods.totalSupply().call(),
       };
-      Tokenservice.createTokentest(data);
+      Tokenservice.createTokentest(data, value.contract_Adress);
     } catch (error) {
       console.error(" 오류 발생:", error);
     }
