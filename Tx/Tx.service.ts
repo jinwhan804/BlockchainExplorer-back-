@@ -8,9 +8,8 @@ import TxCAService from "../TxCA/TxCA.service";
 import TxEOAService from "../TxEOA/TxEOA.service";
 import CAServices from "../CA/CA.service";
 import EOAServices from "../EOA/EOA.service";
-import { get } from "http";
-
-const createTx = async (data: TxDTO, next : NextFunction) => {
+import { Op } from "sequelize";
+const createTx = async (data: TxDTO, next: NextFunction) => {
   try {
     const {
       accessList,
@@ -170,24 +169,36 @@ const CreateTxTest = async (
   }
 };
 
-const viewAllTxs = async (next : NextFunction) => {
+const getFindone = async (tmp: any) => {
+  try {
+    const result = await db.models.Tx.findOne({
+      where: {
+        [Op.or]: [{ from: tmp }, { to: tmp }],
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
+const viewAllTxs = async (next: NextFunction) => {
   try {
     const txs = await db.models.Tx.findAll({});
 
     return txs;
-  } catch (error) {    
+  } catch (error) {
     next(error);
   }
 };
 
-const viewOneTx = async (id : number, next : NextFunction) => {
+const viewOneTx = async (id: number, next: NextFunction) => {
   try {
-    const tx = await db.models.Tx.findOne({where : {id}})
+    const tx = await db.models.Tx.findOne({ where: { id } });
 
     return tx;
   } catch (error) {
     next(error);
   }
-}
+};
 
-export default { createTx, CreateTxTest, viewAllTxs, viewOneTx };
+export default { createTx, CreateTxTest, viewAllTxs, viewOneTx, getFindone };

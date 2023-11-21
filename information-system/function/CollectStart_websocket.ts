@@ -6,6 +6,7 @@ import { Queue } from "./queue/getQueue";
 import { analyzeData } from "./analyzer/analyzeData";
 import BlockServices from "../../Block/Block.service";
 import { getTokeninfo } from "./token/getToken_info";
+import { getnftinfo } from "./nft/getnft_info";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
 const RPC_URL =
   "wss://sepolia.infura.io/ws/v3/d22607d7f58545f99e3c0eadcbf00eb4";
@@ -36,7 +37,7 @@ const myQueue = new Queue<BlockData>();
 const web3 = new Web3(new Web3.providers.WebsocketProvider(RPC_URL));
 let hahah: any;
 export const subscribetest = async () => {
-  let analyzeDatajudgement: boolean[] = new Array(10).fill(true);
+  let analyzeDatajudgement: boolean[] = new Array(1).fill(true);
   let tmpblock: BlockData;
 
   try {
@@ -64,7 +65,6 @@ export const subscribetest = async () => {
         }
       }
     });
-    await getTokeninfo();
 
     setInterval(async () => {
       await getTokeninfo();

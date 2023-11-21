@@ -4,13 +4,15 @@ import CAservice from "../../../CA/CA.service";
 import { NFTData } from "../../../NFT/NFT.model";
 import NFTservice from "../../../NFT/NFT.service";
 import { EventLog } from "web3";
+import TxService from "../../../Tx/Tx.service";
 
 export const getnftinfo = async () => {
   const web3 = await getProvider();
   const jsonData = await readjson(
-    "/Users/jeonghyeon-ug/Desktop/lastlastlastproject/back/backbackend/JSON/erc721public.json"
+    "/Users/jeonghyeon-ug/Desktop/lastlastlastproject/back/information-system/JSON/erc721public.json"
   );
   const result = await CAservice.findCAtype();
+  await NFTservice.NFTtabledestroy();
 
   if (result !== undefined) {
     const tmparr: NFTData[] = [];
@@ -57,6 +59,7 @@ export const getnftinfo = async () => {
             image_url: metadata.image_data,
             creator_address: value.creator,
             Owner: value.owner,
+            num: ca.dataValues.id,
           };
           tmparr.push(data);
         }
@@ -66,11 +69,17 @@ export const getnftinfo = async () => {
     if (tmparr.length > 0) {
       // tmparr에 데이터가 있다면 추가 작업 수행
       for (const value of tmparr) {
-        NFTservice.createNFTTest(value);
+        const result = await TxService.getFindone(value.creator_address);
+        console.log("!@#!@#@!", result);
+        try {
+          await NFTservice.createNFTTest(value, result?.dataValues.id);
+        } catch (error) {
+          console.log("getnftinfo", error);
+        }
       }
     }
 
-    console.log("tmparr", tmparr);
+    // console.log("tmparr", tmparr);
   }
 
   console.log("문제 없나..?");
