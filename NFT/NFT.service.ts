@@ -1,6 +1,8 @@
 import NFTDTO from "./NFT.dto";
 import db from "../database";
-import { NFTData } from "./NFT.model";
+import { NFT, NFTData } from "./NFT.model";
+import { Tx } from "../Tx/Tx.model";
+import { Sequelize } from "sequelize-typescript";
 
 const createNFT = async (data: NFTDTO) => {
   try {
@@ -21,12 +23,19 @@ const createNFT = async (data: NFTDTO) => {
   }
 };
 
-const createNFTTest = async (data: NFTData) => {
+const createNFTTest = async (data: NFTData, txData: any) => {
   try {
-    const { token_id, name, description, image_url, creator_address, Owner } =
-      data;
+    const {
+      token_id,
+      name,
+      description,
+      image_url,
+      creator_address,
+      Owner,
+      num,
+    } = data;
 
-    await db.models.NFT.create({
+    const result = await db.models.NFT.create({
       token_id,
       name,
       description,
@@ -34,10 +43,20 @@ const createNFTTest = async (data: NFTData) => {
       creator_address,
       Owner,
     });
+    await db.models.Tx.update(
+      { nft_id: result.dataValues.id },
+      { where: { id: txData.id } }
+    );
   } catch (error) {
     console.log("NFT 서비스에서 NFT 데이터 추가하다 에러남");
     console.log(error);
   }
+};
+const NFTtabledestroy = async () => {
+  await db.models.NFT.destroy({
+    where: {},
+    truncate: true,
+  });
 };
 const isExist = async (token_id: number) => {
   try {
@@ -52,4 +71,4 @@ const isExist = async (token_id: number) => {
   }
 };
 
-export default { createNFT, createNFTTest, isExist };
+export default { createNFT, createNFTTest, isExist, NFTtabledestroy };

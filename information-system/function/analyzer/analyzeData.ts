@@ -6,6 +6,7 @@ import { TxData } from "../../../Tx/Tx.model";
 let hahah: any;
 export async function analyzeData(data: any, bolocknum: any): Promise<boolean> {
   let transaction: TxData;
+  // let tmpnum: number = 4734754;
   hahah = await getBlockInfo(data.blockNumber);
 
   console.log("냐용");

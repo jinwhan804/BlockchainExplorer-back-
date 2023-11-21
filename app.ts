@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from "express";
 import dotenv from "dotenv";
 import db from "./database";
 import Web3 from "web3";
-import coinRouter from "./Coin/Coin.router";
 import nftRouter from "./NFT/NFT.router";
 import tokenRouter from "./Token/Token.router";
 import txRouter from "./Tx/Tx.router";
@@ -33,7 +32,6 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
 
-app.use("/coin", coinRouter);
 app.use("/nft", nftRouter);
 app.use("/token", tokenRouter);
 app.use("/tx", txRouter);
@@ -44,7 +42,6 @@ app.use(ErrorFn); // 예외처리 미들웨어
 
 app.listen(8080, async () => {
   console.log("server open");
-
   if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
     CollectStart_http();
   } else {
