@@ -25,4 +25,16 @@ const ViewOneCA = async (req : Request, res : Response, next : NextFunction) => 
     }
 }
 
-export default { CreateCA, ViewOneCA };
+const UpdateCA = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const data = new CADTO(req.body);
+        await CAServices.updateCA(id, data, next);
+
+        res.send();
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateCA, ViewOneCA, UpdateCA };
