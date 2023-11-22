@@ -1,5 +1,3 @@
-import Web3 from "web3";
-import { CA } from "../../etc/testCA";
 import * as fs from "fs";
 import {
   pokemonstestabi,
@@ -12,10 +10,8 @@ import {
 } from "../../Sig_abi_Arrary/testabiinfo";
 import { ContractABI } from "../../Interface/CA_Interface";
 import { getProvider } from "../config";
-
-const contractAddress2 = "0x1D41745c4f64e60b7c77FFaf613a3D0330ae4e79";
-
-let jsonData: any;
+import { DIRNAME } from "../../JSON";
+import path from "path";
 
 export const readjson = async (filePath: string): Promise<any> => {
   return new Promise((resolve, reject) => {
@@ -39,11 +35,14 @@ export const readjson = async (filePath: string): Promise<any> => {
 };
 
 const saveABIandAddress = async () => {
+  const contractAddress2 = "0x1D41745c4f64e60b7c77FFaf613a3D0330ae4e79";
+
   const web3 = await getProvider();
   const newcontract = new web3.eth.Contract(erc20abi, contractAddress2);
-  const jsonData = await readjson(
-    "/Users/jeonghyeon-ug/Desktop/lastprojectunion/back/ztest/erc721public.json"
-  );
+  const jsonFilePath = path.join(DIRNAME, "erc721public.json");
+
+  const jsonData = await readjson(jsonFilePath);
+
   // console.log(jsonData);
 
   const arr = [];
