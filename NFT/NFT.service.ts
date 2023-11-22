@@ -58,7 +58,6 @@ const createNFTTest = async (data: NFTData, txDataid?: any) => {
       imageUrl,
       creatorAddress,
       Owner,
-      num,
     } = data;
 
     const result = await db.models.NFT.create({
@@ -164,6 +163,6 @@ export default {
   viewAllNFTs,
   viewOneNFT,
   NFTtabledestroy,
-  updateNFT
+  updateNFT,
   isDuplicateNFT,
 };
