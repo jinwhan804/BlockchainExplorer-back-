@@ -8,11 +8,11 @@ import { NextFunction } from "express";
 const createNFT = async (data: NFTDTO, next: NextFunction) => {
   try {
     await db.models.NFT.create({
-      token_id: data.token_id,
+      tokenId: data.tokenId,
       name: data.name,
       description: data.description,
-      image_url: data.image_url,
-      creator_address: data.creator_address,
+      imageUrl: data.imageUrl,
+      creatorAddress: data.creatorAddress,
       Owner: data.Owner,
     });
   } catch (error) {
@@ -40,24 +40,32 @@ const viewOneNFT = async (id: number, next: NextFunction) => {
   }
 };
 
+const updateNFT = async (id : number, data : NFTDTO, next : NextFunction) => {
+  try {
+    await db.models.NFT.update({Owner : data.Owner},{where : {id}})
+  } catch (error) {
+    next(error);
+  }
+}
+
 const createNFTTest = async (data: NFTData, txDataid?: any) => {
   try {
     const {
-      token_id,
+      tokenId,
       name,
       description,
-      image_url,
-      creator_address,
+      imageUrl,
+      creatorAddress,
       Owner,
       num,
     } = data;
 
     const result = await db.models.NFT.create({
-      token_id,
+      tokenId,
       name,
       description,
-      image_url,
-      creator_address,
+      imageUrl,
+      creatorAddress,
       Owner,
     });
     const asd = await db.models.Tx.update(
@@ -76,11 +84,11 @@ const NFTtabledestroy = async () => {
     truncate: true,
   });
 };
-const isExist = async (token_id: number) => {
+const isExist = async (tokenId: number) => {
   try {
     const result = await db.models.NFT.findOne({
       where: {
-        token_id: token_id,
+        tokenId: tokenId,
       },
     });
     return result !== undefined && result !== null ? true : false;
@@ -96,4 +104,5 @@ export default {
   viewAllNFTs,
   viewOneNFT,
   NFTtabledestroy,
+  updateNFT
 };

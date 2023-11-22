@@ -203,4 +203,12 @@ const viewOneTx = async (id: number, next: NextFunction) => {
   }
 };
 
-export default { createTx, CreateTxTest, viewAllTxs, viewOneTx, getFindone };
+const updateTx = async (id : number, data : TxDTO, next : NextFunction) => {
+  try {
+    await db.models.Tx.update({Method : data.Method},{where : {id}});
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { createTx, CreateTxTest, viewAllTxs, viewOneTx, getFindone, updateTx };

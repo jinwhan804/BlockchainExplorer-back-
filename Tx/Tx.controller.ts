@@ -35,4 +35,14 @@ const ViewOneTx = async (req : Request, res : Response, next : NextFunction) => 
   }
 }
 
-export default { CreateTx, ViewAllTxs, ViewOneTx };
+const UpdateTx = async (req : Request, res : Response, next : NextFunction) => {
+  try {
+    const id = Number(req.params);
+    const reqDTO = new TxDTO(req.body);
+    await TxServices.updateTx(id, reqDTO, next);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { CreateTx, ViewAllTxs, ViewOneTx, UpdateTx };

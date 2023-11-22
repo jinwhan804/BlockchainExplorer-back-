@@ -20,6 +20,7 @@ export interface BlockData {
   withdrawalsRoot?: string; // 'withdrawalsRoot'를 선택적으로 변경
   nonce: bigint;
   mixHash: string;
+  txNumber: number;
 }
 
 @Table({
@@ -139,6 +140,12 @@ export class Block extends Model implements BlockData {
     allowNull: false,
   })
   mixHash!: string;
+
+  @Column({
+    type : DataType.INTEGER,
+    defaultValue : 0
+  })
+  txNumber!: number;
 
   // foreign key 연결 구간
   @HasMany(() => Tx, "block_id")
