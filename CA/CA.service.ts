@@ -45,7 +45,7 @@ const findCAtype = async () => {
 const findTxByCAType = async (caType: string) => {
   try {
     // CA 타입이 'erc721'인 CA 정보 가져오기
-    const ca = await db.models.CA.findOne({
+    const ca = await db.models.CA.findAll({
       where: { CAtype: caType },
       include: [
         {
@@ -53,7 +53,7 @@ const findTxByCAType = async (caType: string) => {
         },
       ],
     });
-
+    console.log("findTxByCAType", ca);
     if (!ca) {
       console.log(`CA with type ${caType} not found.`);
       return null;

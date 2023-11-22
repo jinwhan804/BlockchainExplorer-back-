@@ -4,6 +4,7 @@ import { NFT, NFTData } from "./NFT.model";
 import { Tx } from "../Tx/Tx.model";
 import { Sequelize } from "sequelize-typescript";
 import { NextFunction } from "express";
+import { Op } from "sequelize";
 
 const createNFT = async (data: NFTDTO, next: NextFunction) => {
   try {
@@ -42,15 +43,8 @@ const viewOneNFT = async (id: number, next: NextFunction) => {
 
 const createNFTTest = async (data: NFTData, txDataid?: any) => {
   try {
-    const {
-      token_id,
-      name,
-      description,
-      image_url,
-      creator_address,
-      Owner,
-      num,
-    } = data;
+    const { token_id, name, description, image_url, creator_address, Owner } =
+      data;
 
     const result = await db.models.NFT.create({
       token_id,
@@ -90,31 +84,58 @@ const isExist = async (token_id: number) => {
 };
 // NFT.service.ts
 
+// const isDuplicateNFT = async (
+//   tokenId: string,
+//   newOwner: string
+// ): Promise<boolean> => {
+//   try {
+//     console.log("tokenID,newOwner", tokenId, newOwner);
+//     const tokenID = tokenId;
+//     const existingNFT: any = await db.models.NFT.findOne({
+//       where: {
+//         token_id: tokenID,
+//       },
+//     });
+
+//     if (existingNFT) {
+//       // NFT가 이미 존재하는 경우
+
+//       if (existingNFT.Owner !== newOwner) {
+//         // 소유자가 변경된 경우에만 업데이트
+//         await existingNFT.update({ owner: newOwner });
+//       }
+
+//       return true; // 이미 존재하는 NFT
+//     }
+
+//     return false; // 존재하지 않는 NFT
+//   } catch (error) {
+//     console.log("isDuplicateNFT", error);
+//     return false; // 오류 발생 시 중복으로 처리하지 않도록 false 반환
+//   }
+// };
 const isDuplicateNFT = async (
-  tokenId: string,
+  id: string,
+  name: string,
   newOwner: string
 ): Promise<boolean> => {
   try {
-    console.log("tokenID,newOwner", tokenId, newOwner);
-    const tokenID = tokenId;
-    const existingNFT: any = await db.models.NFT.findOne({
+    console.log("id, name, newOwner", id, name, newOwner);
+    // 동일한 ID 또는 이름을 가진 NFT 중에서 소유자가 변경된 경우에만 업데이트
+    const existingNFTs: any[] = await db.models.NFT.findAll({
       where: {
-        token_id: tokenID,
+        [Op.or]: [{ token_id: id }, { name: name }],
       },
     });
 
-    if (existingNFT) {
-      // NFT가 이미 존재하는 경우
-
+    for (const existingNFT of existingNFTs) {
       if (existingNFT.Owner !== newOwner) {
         // 소유자가 변경된 경우에만 업데이트
-        await existingNFT.update({ owner: newOwner });
+        await existingNFT.update({ Owner: newOwner });
       }
-
-      return true; // 이미 존재하는 NFT
     }
 
-    return false; // 존재하지 않는 NFT
+    return existingNFTs.length > 0; // 존재하는 NFT 여부 반환
   } catch (error) {
     console.log("isDuplicateNFT", error);
     return false; // 오류 발생 시 중복으로 처리하지 않도록 false 반환

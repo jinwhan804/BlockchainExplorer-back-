@@ -175,9 +175,10 @@ const getFindone = async (tmp: string) => {
 
     const result = await db.models.Tx.findOne({
       where: {
-        [Op.or]: [{ from: tmpdata }, { to: tmpdata }],
+        hash: tmpdata,
       },
     });
+    console.log("getFindone", result);
     return result;
   } catch (error) {
     console.log(error);

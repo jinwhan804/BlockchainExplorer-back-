@@ -37,6 +37,7 @@ export const getnftinfo = async () => {
         });
 
         const tmparr2: { [tokenId: string]: NFTInfo } = {};
+        console.log(pastEvents);
 
         for (const pastEvent of pastEvents) {
           const tokenId = pastEvent.returnValues.tokenId;
@@ -46,6 +47,7 @@ export const getnftinfo = async () => {
                 tokenId,
                 creator: pastEvent.returnValues.to,
                 owner: pastEvent.returnValues.to,
+                transactionhash: pastEvent.transactionHash,
               };
               console.log("2", tmparr2[tokenId]);
             } else {
@@ -70,10 +72,15 @@ export const getnftinfo = async () => {
             image_url: metadata.image_data || metadata.image,
             creator_address: value.creator,
             Owner: value.owner,
-            num: ca.dataValues.id,
+            transactionhash: value.transactionhash,
           };
+          // const isDuplicate = await NFTService.isDuplicateNFT(
+          //   data.token_id.toString(),
+          //   data.Owner
+          // );
           const isDuplicate = await NFTService.isDuplicateNFT(
             data.token_id.toString(),
+            data.name,
             data.Owner
           );
 
@@ -86,13 +93,14 @@ export const getnftinfo = async () => {
 
     if (tmparr.length > 0) {
       // tmparr에 데이터가 있다면 추가 작업 수행
-      for (const value of tmparr) {
-        const result = await TxService.getFindone(value.creator_address);
-
-        try {
-          await NFTservice.createNFTTest(value, result?.dataValues.id);
-        } catch (error) {
-          console.log("getnftinfo", error);
+      for (const data of tmparr) {
+        if (data.transactionhash !== undefined) {
+          const txDataid = await TxService.getFindone(data.transactionhash);
+          try {
+            await NFTservice.createNFTTest(data, txDataid?.dataValues.id);
+          } catch (error) {
+            console.log("getnftinfo", error);
+          }
         }
       }
     }
@@ -107,4 +115,5 @@ interface NFTInfo {
   tokenId: string; // 토큰 ID
   creator: string; // 생성자 소유자
   owner: string; // 현재 소유자
+  transactionhash: string; //
 }

@@ -8,7 +8,7 @@ export interface NFTData {
   image_url: string;
   creator_address: string;
   Owner: string;
-  num?: number;
+  transactionhash?: string;
 }
 
 @Table({
