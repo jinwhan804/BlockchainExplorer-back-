@@ -27,6 +27,18 @@ const viewOneEOA = async (id : number, next : NextFunction) => {
   }
 }
 
+const updateEOA = async (id : number, data : EOADTO, next : NextFunction) => {
+  try {
+    await db.models.EOA.update({
+      address : data.address,
+      token : data.token,
+      ethbalance : data.ethBalance
+    },{where : {id}});
+  } catch (error) {
+    next(error);
+  }
+}
+
 const createEOATest = async (data: EOAData) => {
   try {
     const { address, token, ethBalance } = data;
@@ -41,4 +53,4 @@ const createEOATest = async (data: EOAData) => {
   }
 };
 
-export default { createEOA, createEOATest, viewOneEOA };
+export default { createEOA, createEOATest, viewOneEOA, updateEOA };

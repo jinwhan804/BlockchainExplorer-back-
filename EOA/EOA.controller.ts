@@ -18,9 +18,23 @@ const ViewOneEOA = async (req : Request, res : Response, next : NextFunction) =>
     try {
         const id = Number(req.params);
         const data = await EOAServices.viewOneEOA(id, next);
+
+        res.json(data);
     } catch (error) {
         next(error);
     }
 }
 
-export default { CreateEOA, ViewOneEOA };
+const UpdateEOA = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const reqDTO = new EOADTO(req.body);
+        await EOAServices.updateEOA(id, reqDTO ,next);
+
+        res.send();
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateEOA, ViewOneEOA, UpdateEOA };
