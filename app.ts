@@ -14,6 +14,7 @@ import { subscribetest } from "./information-system/function/CollectStart_websoc
 import { getRPC_URLtest } from "./information-system/function/config";
 import { getnftinfo } from "./information-system/function/nft/getnft_info";
 import { ErrorFn } from "./database/errorExcept";
+import { getEoainfo } from "./information-system/function/eoa/getEoa_info";
 
 dotenv.config();
 
@@ -46,7 +47,7 @@ app.use(ErrorFn); // 예외처리 미들웨어
 
 app.listen(8080, async () => {
   console.log("server open");
-
+  // await getEoainfo();
   if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
     CollectStart_http();
   } else {
