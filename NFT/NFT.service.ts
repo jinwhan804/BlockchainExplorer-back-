@@ -88,6 +88,38 @@ const isExist = async (token_id: number) => {
     console.log("isExist", error);
   }
 };
+// NFT.service.ts
+
+const isDuplicateNFT = async (
+  tokenId: string,
+  newOwner: string
+): Promise<boolean> => {
+  try {
+    console.log("tokenID,newOwner", tokenId, newOwner);
+    const tokenID = tokenId;
+    const existingNFT: any = await db.models.NFT.findOne({
+      where: {
+        token_id: tokenID,
+      },
+    });
+
+    if (existingNFT) {
+      // NFT가 이미 존재하는 경우
+
+      if (existingNFT.Owner !== newOwner) {
+        // 소유자가 변경된 경우에만 업데이트
+        await existingNFT.update({ owner: newOwner });
+      }
+
+      return true; // 이미 존재하는 NFT
+    }
+
+    return false; // 존재하지 않는 NFT
+  } catch (error) {
+    console.log("isDuplicateNFT", error);
+    return false; // 오류 발생 시 중복으로 처리하지 않도록 false 반환
+  }
+};
 
 export default {
   createNFT,
@@ -96,4 +128,5 @@ export default {
   viewAllNFTs,
   viewOneNFT,
   NFTtabledestroy,
+  isDuplicateNFT,
 };

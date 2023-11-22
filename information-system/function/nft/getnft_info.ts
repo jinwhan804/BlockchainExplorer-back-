@@ -3,15 +3,18 @@ import { readjson } from "../collector/getAbiAndAddress";
 import CAservice from "../../../CA/CA.service";
 import { NFTData } from "../../../NFT/NFT.model";
 import NFTservice from "../../../NFT/NFT.service";
-import { EventLog } from "web3";
 import TxService from "../../../Tx/Tx.service";
 import TxCAService from "../../../TxCA/TxCA.service";
+import { DIRNAME } from "../../JSON";
+import path from "path";
+import NFTService from "../../../NFT/NFT.service";
 
 export const getnftinfo = async () => {
   const web3 = await getProvider();
-  const jsonData = await readjson(
-    "/Users/jeonghyeon-ug/Desktop/lastlastlastproject/back/information-system/JSON/erc721public.json"
-  );
+  const jsonFilePath = path.join(DIRNAME, "erc721public.json");
+
+  const jsonData = await readjson(jsonFilePath);
+
   // const result = await CAservice.findCAtype();
   // await NFTservice.NFTtabledestroy();
   const result = await CAservice.findCAtype();
@@ -69,7 +72,14 @@ export const getnftinfo = async () => {
             Owner: value.owner,
             num: ca.dataValues.id,
           };
-          tmparr.push(data);
+          const isDuplicate = await NFTService.isDuplicateNFT(
+            data.token_id.toString(),
+            data.Owner
+          );
+
+          if (!isDuplicate) {
+            tmparr.push(data);
+          }
         }
       }
     }
@@ -87,10 +97,10 @@ export const getnftinfo = async () => {
       }
     }
 
-    console.log("tmparr", tmparr);
+    // console.log("tmparr", tmparr);
   }
 
-  console.log("문제 없나..?");
+  // console.log("문제 없나..?");
 };
 
 interface NFTInfo {

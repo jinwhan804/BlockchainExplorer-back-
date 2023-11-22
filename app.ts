@@ -46,7 +46,6 @@ app.use(ErrorFn); // 예외처리 미들웨어
 
 app.listen(8080, async () => {
   console.log("server open");
-
   if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
     CollectStart_http();
   } else {
