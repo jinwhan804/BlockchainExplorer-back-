@@ -66,20 +66,20 @@ export const getnftinfo = async () => {
           console.log(metadata);
 
           const data: NFTData = {
-            token_id: value.tokenId,
+            tokenId: value.tokenId,
             name: metadata.name,
             description: metadata.description,
-            image_url: metadata.image_data || metadata.image,
-            creator_address: value.creator,
+            imageUrl: metadata.image_data || metadata.image,
+            creatorAddress: value.creator,
             Owner: value.owner,
             transactionhash: value.transactionhash,
           };
           // const isDuplicate = await NFTService.isDuplicateNFT(
-          //   data.token_id.toString(),
+          //   data.tokenId.toString(),
           //   data.Owner
           // );
           const isDuplicate = await NFTService.isDuplicateNFT(
-            data.token_id.toString(),
+            data.tokenId.toString(),
             data.name,
             data.Owner
           );
