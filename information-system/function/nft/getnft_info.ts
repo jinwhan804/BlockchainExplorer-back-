@@ -37,7 +37,7 @@ export const getnftinfo = async () => {
         });
 
         const tmparr2: { [tokenId: string]: NFTInfo } = {};
-        console.log(pastEvents);
+        // console.log(pastEvents);
 
         for (const pastEvent of pastEvents) {
           const tokenId = pastEvent.returnValues.tokenId;
@@ -49,7 +49,7 @@ export const getnftinfo = async () => {
                 owner: pastEvent.returnValues.to,
                 transactionhash: pastEvent.transactionHash,
               };
-              console.log("2", tmparr2[tokenId]);
+              // console.log("2", tmparr2[tokenId]);
             } else {
               tmparr2[tokenId].owner = pastEvent.returnValues.to;
             }
@@ -58,34 +58,63 @@ export const getnftinfo = async () => {
 
         const tmparr3 = Object.values(tmparr2);
 
-        console.log("3", tmparr3);
+        // console.log("3", tmparr3);
         for (const value of tmparr3) {
-          const tokenURI = await cm.tokenURI(value.tokenId).call();
-          const response = await fetch(tokenURI);
-          const metadata = await response.json();
-          console.log(metadata);
+          try {
+            const tokenURI: any = await cm.tokenURI(value.tokenId).call();
+            let metadata: any;
+            const ipfsHash = tokenURI.replace(/^ipfs:\/\//, "");
+            const hash = tokenURI.split("/")[2];
 
-          const data: NFTData = {
-            tokenId: value.tokenId,
-            name: metadata.name,
-            description: metadata.description,
-            imageUrl: metadata.image_data || metadata.image,
-            creatorAddress: value.creator,
-            Owner: value.owner,
-            transactionhash: value.transactionhash,
-          };
-          // const isDuplicate = await NFTService.isDuplicateNFT(
-          //   data.tokenId.toString(),
-          //   data.Owner
-          // );
-          const isDuplicate = await NFTService.isDuplicateNFT(
-            data.tokenId.toString(),
-            data.name,
-            data.Owner
-          );
+            const ipfsGateway = "https://ipfs.io/ipfs/";
+            const httpURI = ipfsGateway + ipfsHash;
+            console.log(httpURI);
 
-          if (!isDuplicate) {
-            tmparr.push(data);
+            const response = await fetch(httpURI);
+            if (!response.ok) {
+              console.error(
+                "Failed to fetch from IPFS:",
+                response.status,
+                response.statusText
+              );
+              return;
+            }
+            metadata = await response.json();
+            console.log(metadata);
+
+            // if (tokenURI.startsWith("ipfs://")) {
+            //   const hash = tokenURI.split("/")[2];
+            //   const response = await fetch(hash);
+            //   metadata = await response.json();
+            // } else {
+            //   const response = await fetch(tokenURI);
+            //   metadata = await response.json();
+            // }
+            // console.log(metadata);
+
+            const data: NFTData = {
+              tokenId: value.tokenId || metadata.edition,
+              name: metadata.name,
+              description: metadata.description,
+              imageUrl: metadata.image_data || metadata.image,
+              creatorAddress: value.creator,
+              Owner: value.owner,
+              transactionhash: value.transactionhash,
+            };
+            // const isDuplicate = await NFTService.isDuplicateNFT(
+            //   data.tokenId.toString(),
+            //   data.Owner
+            // );
+            const isDuplicate = await NFTService.isDuplicateNFT(
+              data.tokenId.toString(),
+              data.name,
+              data.Owner
+            );
+            if (!isDuplicate) {
+              tmparr.push(data);
+            }
+          } catch (error) {
+            console.log("getnftinfo", error);
           }
         }
       }

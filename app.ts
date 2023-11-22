@@ -22,7 +22,7 @@ const app = express();
 app.use(
   cors({
     // origin: "https://bouncexplorer.site",
-    origin : "*"
+    origin: "*",
   })
 );
 
@@ -48,7 +48,9 @@ app.use(ErrorFn); // 예외처리 미들웨어
 
 app.listen(8080, async () => {
   console.log("server open");
-  // await getEoainfo();
+  // await getnftinfo();
+
+  await getEoainfo();
   if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
     CollectStart_http();
   } else {

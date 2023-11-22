@@ -45,11 +45,11 @@ const findCAtype = async () => {
 const findTxByCAType = async (caType: string) => {
   try {
     // CA 타입이 'erc721'인 CA 정보 가져오기
-    const ca = await db.models.CA.findAll({
+    const ca: any = await db.models.CA.findAll({
       where: { CAtype: caType },
       include: [
         {
-          model: db.models.TxCA, // Tx 정보도 함께 가져오기
+          model: db.models.Tx, // Tx 정보도 함께 가져오기
         },
       ],
     });
@@ -61,7 +61,6 @@ const findTxByCAType = async (caType: string) => {
 
     // CA에 연결된 Tx 정보 출력
     console.log(`Tx information for CA with type ${caType}`);
-    console.log(ca);
 
     return ca; // 반환할 때는 연결된 Tx 정보를 반환하거나 다른 방식으로 활용할 수 있습니다.
   } catch (error) {
