@@ -80,11 +80,11 @@ export const getTokeninfo = async () => {
     try {
       const data: TokenData = {
         name: await contract.methods.name().call(),
-        contract_address: value.address,
+        contractAddress: value.address,
         symbol: await contract.methods.symbol().call(),
-        owner_address: "",
+        ownerAddress: "",
         decimal: await contract.methods.decimals().call(),
-        circulating_supply: await contract.methods.totalSupply().call(),
+        circulatingSupply: await contract.methods.totalSupply().call(),
       };
       Tokenservice.createTokentest(data, value.contract_Adress);
     } catch (error) {
