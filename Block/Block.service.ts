@@ -51,6 +51,14 @@ const viewOneBlock = async (id : number, next : NextFunction) => {
   }
 }
 
+const updateTxNum = async (id : number, txnum : number, next : NextFunction) => {
+  try {
+    await db.models.Block.update({txNumber : txnum},{where : {id}});
+  } catch (error) {
+    next(error);
+  }
+}
+
 const createBlocktest = async (data: BlockData) => {
   console.log("createBlocktest");
   const {
@@ -97,4 +105,4 @@ const createBlocktest = async (data: BlockData) => {
   return value;
 };
 
-export default { createBlock, createBlocktest, viewAllBlocks, viewOneBlock };
+export default { createBlock, createBlocktest, viewAllBlocks, viewOneBlock, updateTxNum };

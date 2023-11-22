@@ -6,21 +6,21 @@ import { NextFunction } from "express";
 const createToken = async (data: TokenDTO, next : NextFunction) => {
   try {
     const {
-      contract_address,
+      contractAddress,
       name,
       symbol,
-      owner_address,
+      ownerAddress,
       decimal,
-      circulating_supply,
+      circulatingSupply,
     } = data;
 
     await db.models.Token.create({
-      contract_address,
+      contractAddress,
       name,
       symbol,
-      owner_address,
+      ownerAddress,
       decimal,
-      circulating_supply,
+      circulatingSupply,
     });
   } catch (error) {
     next(error);
@@ -47,35 +47,35 @@ const viewOneToken = async (id : number, next : NextFunction) => {
   }
 }
 
-const createTokentest = async (data: TokenData, contract_address: any) => {
+const createTokentest = async (data: TokenData, contractAddress: any) => {
   try {
     const {
-      contract_address,
+      contractAddress,
       name,
       symbol,
-      owner_address,
+      ownerAddress,
       decimal,
-      circulating_supply,
+      circulatingSupply,
     } = data;
 
     const result = await db.models.Token.create({
-      contract_address,
+      contractAddress,
       name,
       symbol,
-      owner_address,
+      ownerAddress,
       decimal,
-      circulating_supply,
+      circulatingSupply,
     });
     // 'from' 열의 값을 찾아서 'token_id' 업데이트
     await db.models.Tx.update(
       { token_id: result.dataValues.id }, // 업데이트할 값
-      { where: { from: contract_address } } // 조건
+      { where: { from: contractAddress } } // 조건
     );
 
     // 'to' 열의 값을 찾아서 'token_id' 업데이트
     await db.models.Tx.update(
       { token_id: result.dataValues.id }, // 업데이트할 값
-      { where: { to: contract_address } } // 조건
+      { where: { to: contractAddress } } // 조건
     );
   } catch (error) {
     console.log("토큰 서비스에서 토큰 데이터 추가하다 에러남");
@@ -86,7 +86,7 @@ const isExist = async (address: string) => {
   try {
     const result = await db.models.Token.findOne({
       where: {
-        contract_address: address,
+        contractAddress: address,
       },
     });
     return result;
@@ -95,4 +95,12 @@ const isExist = async (address: string) => {
   }
 };
 
-export default { createToken, createTokentest, isExist, viewAllTokens, viewOneToken };
+const updateToken = async (id : number, data : TokenDTO, next : NextFunction) => {
+  try {
+    await db.models.Token.update({circulatingSupply : data.circulatingSupply},{where : {id}})
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { createToken, createTokentest, isExist, viewAllTokens, viewOneToken, updateToken };

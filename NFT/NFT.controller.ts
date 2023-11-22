@@ -35,4 +35,14 @@ const ViewOneNFT = async (req : Request, res : Response, next : NextFunction) =>
     }
 }
 
-export default { CreateNFT, ViewAllNFTs, ViewOneNFT };
+const UpdateNFT = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const reqDTO = new NFTDTO(req.body);
+        await NFTServices.updateNFT(id, reqDTO, next);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateNFT, ViewAllNFTs, ViewOneNFT, UpdateNFT };

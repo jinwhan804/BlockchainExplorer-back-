@@ -57,8 +57,6 @@ export class CA extends Model implements CAData {
   abi!: Record<string, any>;
 
   // foreign key 연결 구간
-  @HasMany(() => Tx, "CA_id")
-  transactions!: Tx[];
   @BelongsToMany(() => Tx, () => TxCA, "caId", "txId")
   transactionAssociations!: Tx[];
   @BelongsToMany(() => Tx, () => TxCA)

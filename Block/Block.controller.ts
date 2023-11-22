@@ -35,4 +35,17 @@ const ViewOneBlock = async (req : Request, res : Response, next : NextFunction) 
     }
 }
 
-export default { CreateBlock, ViewAllBlocks, ViewOneBlock };
+const UpdateTxNum = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const reqDTO = new BlockDTO(req.body);
+        const txnum = reqDTO.txNumber;
+        await BlockServices.updateTxNum(id,txnum,next);
+
+        res.send();
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateBlock, ViewAllBlocks, ViewOneBlock, UpdateTxNum };

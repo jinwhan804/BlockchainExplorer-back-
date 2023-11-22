@@ -20,6 +20,7 @@ export default class BlockDTO extends BaseDTO implements BlockData {
   public withdrawalsRoot?: string; // 'withdrawalsRoot'를 선택적으로 변경
   public nonce: bigint;
   public mixHash: string;
+  public txNumber: number;
 
   constructor(body: BlockData) {
     super();
@@ -40,6 +41,7 @@ export default class BlockDTO extends BaseDTO implements BlockData {
     this.baseFeePerGas = body.baseFeePerGas;
     this.nonce = body.nonce;
     this.mixHash = body.mixHash;
+    this.txNumber = body.txNumber;
     this.createDTO(this);
   }
 }

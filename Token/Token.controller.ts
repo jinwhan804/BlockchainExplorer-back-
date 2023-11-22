@@ -12,7 +12,7 @@ const CreateToken = async (req : Request, res : Response, next : NextFunction) =
     } catch (error) {
         next(error);
     }
-}
+};
 
 const ViewAllTokens = async (req : Request, res : Response, next : NextFunction) => {
     try {
@@ -22,7 +22,7 @@ const ViewAllTokens = async (req : Request, res : Response, next : NextFunction)
     } catch (error) {
         next(error);
     }
-}
+};
 
 const ViewOneToken = async (req : Request, res : Response, next : NextFunction) => {
     try {
@@ -33,6 +33,16 @@ const ViewOneToken = async (req : Request, res : Response, next : NextFunction) 
     } catch (error) {
         next(error);
     }
-}
+};
 
-export default { CreateToken, ViewAllTokens, ViewOneToken };
+const UpdateToken = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const id = Number(req.params);
+        const reqDTO = new TokenDTO(req.body);
+        await TokenServices.updateToken(id, reqDTO, next);
+    } catch (error) {
+        next(error);
+    }
+};
+
+export default { CreateToken, ViewAllTokens, ViewOneToken, UpdateToken };

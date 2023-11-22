@@ -2,13 +2,13 @@ import { Model, Table, Column, DataType, HasMany } from "sequelize-typescript";
 import { Tx } from "../Tx/Tx.model";
 
 export interface NFTData {
-  token_id: string;
+  tokenId: string;
   name: string;
   description: string;
-  image_url: string;
-  creator_address: string;
+  imageUrl: string;
+  creatorAddress: string;
   Owner: string;
-  num?: number;
+  transactionhash?: string;
 }
 
 @Table({
@@ -25,7 +25,7 @@ export class NFT extends Model implements NFTData {
     type: DataType.STRING(150),
     allowNull: true,
   })
-  token_id!: string;
+  tokenId!: string;
 
   @Column({
     type: DataType.STRING(200),
@@ -43,13 +43,13 @@ export class NFT extends Model implements NFTData {
     type: DataType.TEXT,
     allowNull: true,
   })
-  image_url!: string;
+  imageUrl!: string;
 
   @Column({
     type: DataType.STRING(150),
     allowNull: true,
   })
-  creator_address!: string;
+  creatorAddress!: string;
 
   @Column({
     type: DataType.STRING(200),

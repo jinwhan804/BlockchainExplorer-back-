@@ -2,12 +2,12 @@ import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
 import { Tx } from "../Tx/Tx.model";
 
 export interface TokenData {
-  contract_address: string;
+  contractAddress: string;
   name: string;
   symbol: string;
-  owner_address: string;
+  ownerAddress: string;
   decimal: number;
-  circulating_supply: number;
+  circulatingSupply: number;
 }
 
 @Table({
@@ -24,7 +24,7 @@ export class Token extends Model implements TokenData {
     type: DataType.STRING(150),
     allowNull: false,
   })
-  contract_address!: string;
+  contractAddress!: string;
 
   @Column({
     type: DataType.STRING(50),
@@ -42,7 +42,7 @@ export class Token extends Model implements TokenData {
     type: DataType.STRING(150),
     allowNull: false,
   })
-  owner_address!: string;
+  ownerAddress!: string;
 
   @Column({
     type: DataType.INTEGER,
@@ -54,7 +54,7 @@ export class Token extends Model implements TokenData {
     type: DataType.TEXT,
     allowNull: false,
   })
-  circulating_supply!: number;
+  circulatingSupply!: number;
 
   // foreign key 연결 구간
   @HasMany(() => Tx, "token_id")

@@ -44,8 +44,6 @@ export class EOA extends Model implements EOAData {
   ethBalance!: bigint;
 
   // foreign key 연결 구간
-  @HasMany(() => Tx, "eoa_id")
-  transactions!: Tx[];
   // N:M 관계 설정
   @BelongsToMany(() => Tx, () => TxEOA)
   transactionAssociations!: Tx[];

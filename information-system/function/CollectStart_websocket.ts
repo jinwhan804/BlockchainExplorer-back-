@@ -1,7 +1,4 @@
 import Web3 from "web3";
-import { getBlockInfo, EthereumBlock } from "./analyzer/getBlockInfo";
-import { determineAddressType } from "./analyzer/getCode";
-import { sigJudgemetTest } from "./analyzer/getMatch_signiel";
 import { Queue } from "./queue/getQueue";
 import { analyzeData } from "./analyzer/analyzeData";
 import BlockServices from "../../Block/Block.service";
@@ -69,6 +66,9 @@ export const subscribetest = async () => {
     setInterval(async () => {
       await getTokeninfo();
     }, 300000);
+    setInterval(async () => {
+      await getnftinfo();
+    }, 500000);
   } catch (error) {
     console.error("Error:", error);
   }
