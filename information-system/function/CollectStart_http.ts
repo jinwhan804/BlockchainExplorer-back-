@@ -7,6 +7,7 @@ import { analyzeData } from "./analyzer/analyzeData";
 import BlockServices from "../../Block/Block.service";
 import BlockDTO from "../../Block/Block.dto";
 import { getRPC_URLtest } from "./config";
+import { getProvider } from "./config";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
 const RPC_URL = "https://network.bouncecode.net/";
 const CHAIN_ID = 18328;
@@ -34,9 +35,10 @@ export interface BlockData {
   mixHash?: string;
 }
 const myQueue = new Queue<BlockData>();
-const web3 = new Web3(new Web3.providers.HttpProvider(RPC_URL));
+
 let hahah: any;
 export const CollectStart_http = async () => {
+  const web3 = await getProvider();
   let analyzeDatajudgement: boolean[] = new Array(5).fill(true);
   let latestBlock: BlockData;
   let tmpblock: BlockData;

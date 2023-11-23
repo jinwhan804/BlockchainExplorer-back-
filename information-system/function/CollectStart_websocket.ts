@@ -4,9 +4,8 @@ import { analyzeData } from "./analyzer/analyzeData";
 import BlockServices from "../../Block/Block.service";
 import { getTokeninfo } from "./token/getToken_info";
 import { getnftinfo } from "./nft/getnft_info";
+import { getProvider } from "./config";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
-const RPC_URL =
-  "wss://sepolia.infura.io/ws/v3/d22607d7f58545f99e3c0eadcbf00eb4";
 
 // Web3 인스턴스 생성
 
@@ -31,9 +30,10 @@ export interface BlockData {
   mixHash?: string;
 }
 const myQueue = new Queue<BlockData>();
-const web3 = new Web3(new Web3.providers.WebsocketProvider(RPC_URL));
 let hahah: any;
 export const subscribetest = async () => {
+  const web3 = await getProvider();
+
   let analyzeDatajudgement: boolean[] = new Array(5).fill(true);
   let tmpblock: BlockData;
 

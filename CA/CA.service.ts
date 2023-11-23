@@ -36,7 +36,11 @@ const updateCA = async (id: number, data: CADTO, next: NextFunction) => {
 
 const findCAtype = async () => {
   try {
-    const result = await db.models.CA.findAll({});
+    const result = await db.models.CA.findAll({
+      include: {
+        model: db.models.Tx,
+      },
+    });
     return result;
   } catch (error) {
     console.log("findCAtype", error);
