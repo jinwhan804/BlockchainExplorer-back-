@@ -41,24 +41,18 @@ const viewOneNFT = async (id: number, next: NextFunction) => {
   }
 };
 
-const updateNFT = async (id : number, data : NFTDTO, next : NextFunction) => {
+const updateNFT = async (id: number, data: NFTDTO, next: NextFunction) => {
   try {
-    await db.models.NFT.update({Owner : data.Owner},{where : {id}})
+    await db.models.NFT.update({ Owner: data.Owner }, { where: { id } });
   } catch (error) {
     next(error);
   }
-}
+};
 
 const createNFTTest = async (data: NFTData, txDataid?: any) => {
   try {
-    const {
-      tokenId,
-      name,
-      description,
-      imageUrl,
-      creatorAddress,
-      Owner,
-    } = data;
+    const { tokenId, name, description, imageUrl, creatorAddress, Owner } =
+      data;
 
     const result = await db.models.NFT.create({
       tokenId,
@@ -138,7 +132,7 @@ const isDuplicateNFT = async (
     // 동일한 ID 또는 이름을 가진 NFT 중에서 소유자가 변경된 경우에만 업데이트
     const existingNFTs: any[] = await db.models.NFT.findAll({
       where: {
-        [Op.or]: [{ token_id: id }, { name: name }],
+        [Op.or]: [{ tokenId: id }, { name: name }],
       },
     });
 
