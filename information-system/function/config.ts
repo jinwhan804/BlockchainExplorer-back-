@@ -6,7 +6,7 @@ export const getRPC_URLtest = async () => {
   dotenv.config();
 
   const RPC_RRLtest = process.env.RPC_RRL || "RPC_RRLtest값이 읽히지않음";
-  console.log(RPC_RRLtest);
+  // console.log(RPC_RRLtest);
   return RPC_RRLtest;
 };
 export const getProvider = async () => {

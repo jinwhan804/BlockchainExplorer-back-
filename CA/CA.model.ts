@@ -51,7 +51,7 @@ export class CA extends Model implements CAData {
   signitureNames!: string[];
 
   @Column({
-    type: DataType.JSONB, // JSON 데이터를 저장하기 위해 JSONB 타입 사용
+    type: DataType.JSON, // JSON 데이터를 저장하기 위해 JSONB 타입 사용
     allowNull: true,
   })
   abi!: Record<string, any>;

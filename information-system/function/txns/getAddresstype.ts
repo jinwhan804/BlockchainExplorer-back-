@@ -158,7 +158,7 @@ export const getAddresstype = async (
       let eoadata: EOAData = {
         address: hash,
         token: BigInt(0),
-        ethBalance: BigInt(0),
+        ethBalance: "",
       };
       let result2dbinfo: any;
 

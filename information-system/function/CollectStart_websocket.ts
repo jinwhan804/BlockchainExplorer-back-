@@ -5,6 +5,7 @@ import BlockServices from "../../Block/Block.service";
 import { getTokeninfo } from "./token/getToken_info";
 import { getnftinfo } from "./nft/getnft_info";
 import { getProvider } from "./config";
+import { getEoainfo } from "./eoa/getEoa_info";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
 
 // Web3 인스턴스 생성
@@ -69,6 +70,9 @@ export const subscribetest = async () => {
     setInterval(async () => {
       await getnftinfo();
     }, 500000);
+    setInterval(async () => {
+      await getEoainfo();
+    }, 700000);
   } catch (error) {
     console.error("Error:", error);
   }
