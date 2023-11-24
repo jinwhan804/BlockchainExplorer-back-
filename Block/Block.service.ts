@@ -70,7 +70,7 @@ const findOneblock = async (id: number) => {
     console.log("findOneblock", error);
   }
 };
-const createBlocktest = async (data: BlockData) => {
+const createBlocktest = async (data: BlockData, txnscount: number) => {
   console.log("createBlocktest");
   const {
     number,
@@ -111,6 +111,7 @@ const createBlocktest = async (data: BlockData) => {
     withdrawalsRoot: 0,
     nonce,
     mixHash,
+    txcount: txnscount,
   });
   // console.log("밸류밸류밸류밸류", value);
   return value;

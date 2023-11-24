@@ -29,6 +29,7 @@ export interface BlockData {
   withdrawalsRoot?: string; // 'withdrawalsRoot'를 선택적으로 변경
   nonce?: bigint;
   mixHash?: string;
+  tnxsCount?: number;
 }
 const myQueue = new Queue<BlockData>();
 let hahah: any;
@@ -84,9 +85,9 @@ async function processDataQueue() {
   if (data !== undefined && data !== null) {
     // blockData가 정의되었을 때 수행할 작업
     // 예: blockData를 사용하는 로직
-    const relationshipinfo = await BlockServices.createBlocktest(data);
+    // const relationshipinfo = await BlockServices.createBlocktest(data);
     // console.log("relationship", relationshipinfo);
-    return await analyzeData(data, relationshipinfo.dataValues.id);
+    return await analyzeData(data);
   } else {
     // blockData가 정의되지 않았을 때 수행할 작업
     console.log("블록데이터가없다. 다시 대가상태로만들어주기");

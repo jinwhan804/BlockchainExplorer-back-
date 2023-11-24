@@ -3,11 +3,17 @@ import { determineAddressType } from "./getCode";
 import { sigJudgemetTest } from "./getMatch_signiel";
 import Txservice from "../../../Tx/Tx.service";
 import { TxData } from "../../../Tx/Tx.model";
-let hahah: any;
-export async function analyzeData(data: any, bolocknum: any): Promise<boolean> {
+import BlockService from "../../../Block/Block.service";
+let block_with_transaction: any;
+export async function analyzeData(data: any): Promise<boolean> {
   let transaction: TxData;
   // let tmpnum: number = 4734754;
-  hahah = await getBlockInfo(data.blockNumber);
+  block_with_transaction = await getBlockInfo(data.blockNumber);
+  console.log("analyzeData", block_with_transaction.transactions.length);
+  const relationshipinfo = await BlockService.createBlocktest(
+    data,
+    block_with_transaction.transactions.length
+  );
 
   console.log("냐용");
   let tmp: boolean = false;
@@ -15,27 +21,35 @@ export async function analyzeData(data: any, bolocknum: any): Promise<boolean> {
   let reusltToType: string;
   let sigEvaluateresult: string;
   try {
-    for (let i: number = 0; i < hahah.transactions.length - 1; i++) {
-      transaction = hahah.transactions[i];
+    for (
+      let i: number = 0;
+      i < block_with_transaction.transactions.length - 1;
+      i++
+    ) {
+      transaction = block_with_transaction.transactions[i];
       try {
         if (
-          hahah.transactions[i].hash == null ||
-          hahah.transactions[i].hash == undefined
+          block_with_transaction.transactions[i].hash == null ||
+          block_with_transaction.transactions[i].hash == undefined
         ) {
           continue;
         } else {
-          sigEvaluateresult = await sigJudgemetTest(hahah.transactions[i].hash);
+          sigEvaluateresult = await sigJudgemetTest(
+            block_with_transaction.transactions[i].hash
+          );
         }
         if (
-          hahah.transactions[i].to == null ||
-          hahah.transactions[i].to == undefined
+          block_with_transaction.transactions[i].to == null ||
+          block_with_transaction.transactions[i].to == undefined
         ) {
           continue;
         } else {
           reusltFromType = await determineAddressType(
-            hahah.transactions[i].from
+            block_with_transaction.transactions[i].from
           );
-          reusltToType = await determineAddressType(hahah.transactions[i].to);
+          reusltToType = await determineAddressType(
+            block_with_transaction.transactions[i].to
+          );
         }
         await Txservice.CreateTxTest(
           transaction,
@@ -43,7 +57,8 @@ export async function analyzeData(data: any, bolocknum: any): Promise<boolean> {
           reusltToType,
           sigEvaluateresult,
           data?.timestamp,
-          bolocknum
+          relationshipinfo.dataValues.id,
+          block_with_transaction.number
         );
       } catch (error) {
         console.log(error);
