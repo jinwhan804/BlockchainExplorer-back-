@@ -34,7 +34,7 @@ const ViewOneBlock = async (
   next: NextFunction
 ) => {
   try {
-    const id = Number(req.params);
+    const id = Number(req.params.id);
     const data = await BlockServices.viewOneBlock(id, next);
 
     res.json(data);
@@ -45,7 +45,7 @@ const ViewOneBlock = async (
 
 const UpdateTxNum = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = Number(req.params);
+    const id = Number(req.params.id);
     const reqDTO = new BlockDTO(req.body);
     const txcount = reqDTO.txcount;
     await BlockServices.updateTxNum(id, txcount, next);

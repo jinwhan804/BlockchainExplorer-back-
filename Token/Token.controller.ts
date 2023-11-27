@@ -26,7 +26,7 @@ const ViewAllTokens = async (req : Request, res : Response, next : NextFunction)
 
 const ViewOneToken = async (req : Request, res : Response, next : NextFunction) => {
     try {
-        const id = Number(req.params);
+        const id = Number(req.params.id);
         const data = await TokenServices.viewOneToken(id, next);
 
         res.json(data);
@@ -37,7 +37,7 @@ const ViewOneToken = async (req : Request, res : Response, next : NextFunction) 
 
 const UpdateToken = async (req : Request, res : Response, next : NextFunction) => {
     try {
-        const id = Number(req.params);
+        const id = Number(req.params.id);
         const reqDTO = new TokenDTO(req.body);
         await TokenServices.updateToken(id, reqDTO, next);
     } catch (error) {

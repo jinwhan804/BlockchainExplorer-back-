@@ -16,7 +16,7 @@ const CreateCA = async (req: Request, res: Response, next: NextFunction) => {
 
 const ViewOneCA = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const id = Number(req.params);
+    const id = Number(req.params.id);
     const data = await CAServices.viewOneCA(id, next);
 
     res.json(data);
@@ -27,7 +27,7 @@ const ViewOneCA = async (req: Request, res: Response, next: NextFunction) => {
 
 const UpdateCA = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // const id = Number(req.params);
+    // const id = Number(req.params.id);
     const data = new CADTO(req.body);
     await CAServices.updateCA(data, next);
 

@@ -26,7 +26,7 @@ const ViewAllNFTs = async (req : Request, res : Response, next : NextFunction) =
 
 const ViewOneNFT = async (req : Request, res : Response, next : NextFunction) => {
     try {
-        const id = Number(req.params)
+        const id = Number(req.params.id)
         const data = await NFTServices.viewOneNFT(id, next);
 
         res.json(data);
@@ -37,7 +37,7 @@ const ViewOneNFT = async (req : Request, res : Response, next : NextFunction) =>
 
 const UpdateNFT = async (req : Request, res : Response, next : NextFunction) => {
     try {
-        const id = Number(req.params);
+        const id = Number(req.params.id);
         const reqDTO = new NFTDTO(req.body);
         await NFTServices.updateNFT(id, reqDTO, next);
     } catch (error) {
