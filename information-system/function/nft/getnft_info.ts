@@ -8,141 +8,147 @@ import TxCAService from "../../../TxCA/TxCA.service";
 import { DIRNAME } from "../../JSON";
 import path from "path";
 import NFTService from "../../../NFT/NFT.service";
+import BlockService from "../../../Block/Block.service";
+// BlockService.findOneblock 함수에서 반환되는 값에 대한 타입 확인
+interface BlockInfo {
+  blockNumber: number;
+  // 다른 필요한 속성들이 있다면 추가
+}
 
+// getnftinfo 함수 내에서 사용할 타입
+interface NFTInfo {
+  tokenId: string;
+  creator: string;
+  owner: string;
+  transactionhash: string;
+}
+
+// getnftinfo 함수 수정
 export const getnftinfo = async () => {
-  const web3 = await getProvider();
-  const jsonFilePath = path.join(DIRNAME, "erc721public.json");
+  try {
+    let web3: any = await getProvider();
+    const jsonFilePath = path.join(DIRNAME, "erc721public.json");
+    const jsonData = await readjson(jsonFilePath);
+    const result: any = await CAservice.findCAtype();
 
-  const jsonData = await readjson(jsonFilePath);
-
-  // const result = await CAservice.findCAtype();
-  // await NFTservice.NFTtabledestroy();
-  const result = await CAservice.findCAtype();
-  // console.log(result);
-
-  if (result !== undefined && result !== undefined) {
-    const tmparr: NFTData[] = [];
-
-    for (const ca of result) {
-      if (ca.dataValues.CAtype === "erc-721") {
-        console.log("응애");
-        const contract = new web3.eth.Contract(jsonData, ca.dataValues.address);
-        const cm = contract.methods as any;
-        // const asd = await CAservice.findTxByCAType("erc-721");
-        // console.log("!@##!", asd);
-
-        const pastEvents: any = await contract.getPastEvents("allEvents", {
-          fromBlock: 0,
-          toBlock: "latest",
-        });
-
-        const tmparr2: { [tokenId: string]: NFTInfo } = {};
-        // console.log(pastEvents);
-
-        for (const pastEvent of pastEvents) {
-          const tokenId = pastEvent.returnValues.tokenId;
-          if (tokenId !== null && tokenId !== undefined) {
-            if (!tmparr2[tokenId]) {
-              tmparr2[tokenId] = {
-                tokenId,
-                creator: pastEvent.returnValues.to,
-                owner: pastEvent.returnValues.to,
-                transactionhash: pastEvent.transactionHash,
-              };
-              // console.log("2", tmparr2[tokenId]);
-            } else {
-              tmparr2[tokenId].owner = pastEvent.returnValues.to;
-            }
-          }
-        }
-
-        const tmparr3 = Object.values(tmparr2);
-
-        // console.log("3", tmparr3);
-        for (const value of tmparr3) {
-          try {
-            const tokenURI: any = await cm.tokenURI(value.tokenId).call();
-            let metadata: any;
-            const ipfsHash = tokenURI.replace(/^ipfs:\/\//, "");
-            const hash = tokenURI.split("/")[2];
-
-            const ipfsGateway = "https://ipfs.io/ipfs/";
-            const httpURI = ipfsGateway + ipfsHash;
-            console.log(httpURI);
-
-            const response = await fetch(httpURI);
-            if (!response.ok) {
-              console.error(
-                "Failed to fetch from IPFS:",
-                response.status,
-                response.statusText
-              );
-              return;
-            }
-            metadata = await response.json();
-            console.log(metadata);
-
-            // if (tokenURI.startsWith("ipfs://")) {
-            //   const hash = tokenURI.split("/")[2];
-            //   const response = await fetch(hash);
-            //   metadata = await response.json();
-            // } else {
-            //   const response = await fetch(tokenURI);
-            //   metadata = await response.json();
-            // }
-            // console.log(metadata);
-
-            const data: NFTData = {
-              tokenId: value.tokenId || metadata.edition,
-              name: metadata.name,
-              description: metadata.description,
-              imageUrl: metadata.image_data || metadata.image,
-              creatorAddress: value.creator,
-              Owner: value.owner,
-              transactionhash: value.transactionhash,
-            };
-            // const isDuplicate = await NFTService.isDuplicateNFT(
-            //   data.tokenId.toString(),
-            //   data.Owner
-            // );
-            const isDuplicate = await NFTService.isDuplicateNFT(
-              data.tokenId.toString(),
-              data.name,
-              data.Owner
+    if (result) {
+      const tmparr: NFTData[] = [];
+      for await (const ca of result) {
+        if (ca.dataValues.CAtype === "erc-721") {
+          const contract = new web3.eth.Contract(
+            jsonData,
+            ca.dataValues.address
+          );
+          const cm = contract.methods as any;
+          for (let i = 0; i < ca.dataValues.txs.length; i++) {
+            const tmp: any = await BlockService.findOneblock(
+              ca.dataValues.txs[i].dataValues.block_id
             );
-            if (!isDuplicate) {
-              tmparr.push(data);
+
+            let asd = tmp.dataValues.number;
+
+            // let tmparr: NFTData[] = [];
+            const pastEvents: any = await contract.getPastEvents("allEvents", {
+              fromBlock: Number(tmp.dataValues.number) - 100,
+              toBlock: Number(tmp.dataValues.number),
+            });
+            console.log(pastEvents);
+
+            const tmparr2: { [tokenId: string]: NFTInfo } = {};
+            for (const pastEvent of pastEvents) {
+              const tokenId = pastEvent.returnValues.tokenId;
+              if (tokenId) {
+                if (!tmparr2[tokenId]) {
+                  tmparr2[tokenId] = {
+                    tokenId,
+                    creator: pastEvent.returnValues.to,
+                    owner: pastEvent.returnValues.to,
+                    transactionhash: pastEvent.transactionHash,
+                  };
+                } else {
+                  tmparr2[tokenId].owner = pastEvent.returnValues.to;
+                }
+              }
             }
-          } catch (error) {
-            console.log("getnftinfo", error);
+            const tmparr3 = Object.values(tmparr2);
+            for (const value of tmparr3) {
+              try {
+                const tokenURI: any = await cm.tokenURI(value.tokenId).call();
+                let httpURI: string = "";
+                console.log(tokenURI);
+                if (
+                  tokenURI.includes("http://") ||
+                  tokenURI.includes("ipfs:")
+                ) {
+                  const ipfsHash = await tokenURI.replace(/^ipfs:\/\//, "");
+                  const ipfsGateway = "https://ipfs.io/ipfs/";
+                  httpURI = ipfsGateway + ipfsHash;
+                } else {
+                  try {
+                    const regex = /^ipfs:\/\/([^/]+)\/([^/]+)$/;
+                    const match = tokenURI.match(regex);
+                    const hash = match[1];
+                    const filename = match[2];
+                    httpURI = hash;
+                  } catch (error) {
+                    console.log(error);
+                  }
+                }
+
+                const metadata: any = await fetchDataWithDelay(httpURI);
+                const data: NFTData = {
+                  tokenId: value.tokenId || metadata.edition,
+                  name: metadata.name,
+                  description: metadata.description,
+                  imageUrl: metadata.image_data || metadata.image,
+                  creatorAddress: value.creator,
+                  Owner: value.owner,
+                  transactionhash: value.transactionhash,
+                };
+                const isDuplicate = await NFTService.isDuplicateNFT(
+                  data.tokenId.toString(),
+                  data.name,
+                  data.Owner
+                );
+                console.log("중복인가?", isDuplicate, tmparr);
+                if (!isDuplicate) {
+                  tmparr.push(data);
+                }
+              } catch (error) {
+                console.log("getnftinfo", error);
+              }
+            }
+          }
+        }
+      }
+      console.log("!@#!@#!", tmparr);
+      if (tmparr.length > 0) {
+        for (const data of tmparr) {
+          if (data.transactionhash) {
+            const txDataid = await TxService.getFindone(data.transactionhash);
+            try {
+              await NFTservice.createNFTTest(data, txDataid?.dataValues.id);
+            } catch (error) {
+              console.log("getnftinfo", error);
+            }
           }
         }
       }
     }
-
-    if (tmparr.length > 0) {
-      // tmparr에 데이터가 있다면 추가 작업 수행
-      for (const data of tmparr) {
-        if (data.transactionhash !== undefined) {
-          const txDataid = await TxService.getFindone(data.transactionhash);
-          try {
-            await NFTservice.createNFTTest(data, txDataid?.dataValues.id);
-          } catch (error) {
-            console.log("getnftinfo", error);
-          }
-        }
-      }
-    }
-
-    // console.log("tmparr", tmparr);
+  } catch (error) {
+    console.log("getnftinfo", error);
   }
-
-  // console.log("문제 없나..?");
 };
 
-interface NFTInfo {
-  tokenId: string; // 토큰 ID
-  creator: string; // 생성자 소유자
-  owner: string; // 현재 소유자
-  transactionhash: string; //
+async function fetchDataWithDelay(tokenURI: string): Promise<any> {
+  try {
+    console.log("fetchDataWithDelay", tokenURI);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const response = await fetch(tokenURI);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Failed to fetch data:", error);
+    throw error;
+  }
 }

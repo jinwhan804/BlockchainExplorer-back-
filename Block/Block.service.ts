@@ -31,35 +31,46 @@ const createBlock = async (data: BlockDTO, next: NextFunction) => {
   }
 };
 
-const viewAllBlocks = async (next : NextFunction) => {
+const viewAllBlocks = async (next: NextFunction) => {
   try {
     const blocks = await db.models.Block.findAll({order : [[ 'timestamp', 'DESC' ]]});
 
     return blocks;
-  } catch (error) {    
+  } catch (error) {
     next(error);
   }
 };
 
-const viewOneBlock = async (id : number, next : NextFunction) => {
+const viewOneBlock = async (id: number, next: NextFunction) => {
   try {
-    const block = await db.models.Block.findOne({where : {id}})
+    const block = await db.models.Block.findOne({ where: { id } });
 
     return block;
   } catch (error) {
     next(error);
   }
-}
+};
 
-const updateTxNum = async (id : number, txnum : number, next : NextFunction) => {
+const updateTxNum = async (id: number, txnum: number, next: NextFunction) => {
   try {
-    await db.models.Block.update({txNumber : txnum},{where : {id}});
+    await db.models.Block.update({ txNumber: txnum }, { where: { id } });
   } catch (error) {
     next(error);
   }
-}
-
-const createBlocktest = async (data: BlockData) => {
+};
+const findOneblock = async (id: number) => {
+  try {
+    const result = await db.models.Block.findOne({
+      where: {
+        id: id,
+      },
+    });
+    return result;
+  } catch (error) {
+    console.log("findOneblock", error);
+  }
+};
+const createBlocktest = async (data: BlockData, txnscount: number) => {
   console.log("createBlocktest");
   const {
     number,
@@ -100,9 +111,17 @@ const createBlocktest = async (data: BlockData) => {
     withdrawalsRoot: 0,
     nonce,
     mixHash,
+    txcount: txnscount,
   });
   // console.log("밸류밸류밸류밸류", value);
   return value;
 };
 
-export default { createBlock, createBlocktest, viewAllBlocks, viewOneBlock, updateTxNum };
+export default {
+  createBlock,
+  createBlocktest,
+  viewAllBlocks,
+  viewOneBlock,
+  updateTxNum,
+  findOneblock,
+};

@@ -4,9 +4,9 @@ import { analyzeData } from "./analyzer/analyzeData";
 import BlockServices from "../../Block/Block.service";
 import { getTokeninfo } from "./token/getToken_info";
 import { getnftinfo } from "./nft/getnft_info";
+import { getProvider } from "./config";
+import { getEoainfo } from "./eoa/getEoa_info";
 // Sepolia 테스트넷의 WebSocket RPC URL 설정
-const RPC_URL =
-  "wss://sepolia.infura.io/ws/v3/d22607d7f58545f99e3c0eadcbf00eb4";
 
 // Web3 인스턴스 생성
 
@@ -29,11 +29,13 @@ export interface BlockData {
   withdrawalsRoot?: string; // 'withdrawalsRoot'를 선택적으로 변경
   nonce?: bigint;
   mixHash?: string;
+  tnxsCount?: number;
 }
 const myQueue = new Queue<BlockData>();
-const web3 = new Web3(new Web3.providers.WebsocketProvider(RPC_URL));
 let hahah: any;
 export const subscribetest = async () => {
+  const web3 = await getProvider();
+
   let analyzeDatajudgement: boolean[] = new Array(5).fill(true);
   let tmpblock: BlockData;
 
@@ -69,6 +71,9 @@ export const subscribetest = async () => {
     setInterval(async () => {
       await getnftinfo();
     }, 500000);
+    setInterval(async () => {
+      await getEoainfo();
+    }, 700000);
   } catch (error) {
     console.error("Error:", error);
   }
@@ -80,9 +85,9 @@ async function processDataQueue() {
   if (data !== undefined && data !== null) {
     // blockData가 정의되었을 때 수행할 작업
     // 예: blockData를 사용하는 로직
-    const relationshipinfo = await BlockServices.createBlocktest(data);
+    // const relationshipinfo = await BlockServices.createBlocktest(data);
     // console.log("relationship", relationshipinfo);
-    return await analyzeData(data, relationshipinfo.dataValues.id);
+    return await analyzeData(data);
   } else {
     // blockData가 정의되지 않았을 때 수행할 작업
     console.log("블록데이터가없다. 다시 대가상태로만들어주기");

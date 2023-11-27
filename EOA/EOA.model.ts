@@ -12,7 +12,7 @@ import { TxEOA } from "../TxEOA/TxEOA.model";
 export interface EOAData {
   address: string;
   token: bigint;
-  ethBalance: bigint;
+  ethBalance: string;
 }
 
 @Table({
@@ -38,10 +38,10 @@ export class EOA extends Model implements EOAData {
   token!: bigint;
 
   @Column({
-    type: DataType.BIGINT,
+    type: DataType.TEXT,
     allowNull: false,
   })
-  ethBalance!: bigint;
+  ethBalance!: string;
 
   // foreign key 연결 구간
   // N:M 관계 설정

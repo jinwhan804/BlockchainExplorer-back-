@@ -2,7 +2,7 @@ import CADTO from "./CA.dto";
 import db from "../database";
 import { CAData } from "./CA.model";
 import { NextFunction } from "express";
-import sequelize from "sequelize";
+import sequelize, { Op, where } from "sequelize";
 
 const createCA = async (data: CADTO, next: NextFunction) => {
   try {
@@ -26,17 +26,24 @@ const viewOneCA = async (id: number, next: NextFunction) => {
   }
 };
 
-const updateCA = async (id: number, data: CADTO, next: NextFunction) => {
+const updateCA = async (data: CADTO, next: NextFunction) => {
   try {
-    await db.models.CA.update({ abi: data.abi }, { where: { id } });
+    // await db.models.CA.update({ abi: data.abi }, { where: { id } });
+    await postjson(data);
+    await CAtxnsMethodsUpdate(data.address, data);
   } catch (error) {
+    console.log("caservice updateCA error");
     next(error);
   }
 };
 
 const findCAtype = async () => {
   try {
-    const result = await db.models.CA.findAll({});
+    const result = await db.models.CA.findAll({
+      include: {
+        model: db.models.Tx,
+      },
+    });
     return result;
   } catch (error) {
     console.log("findCAtype", error);
@@ -83,6 +90,63 @@ const createCATest = async (data: CAData) => {
   }
 };
 
+const postjson = async (data: any) => {
+  try {
+    const isDuplicate = await db.models.CA.findOne({
+      where: {
+        address: data.address,
+      },
+    });
+    if (isDuplicate) {
+      await db.models.CA.update(
+        {
+          abiSigniture: data.abiSigniture,
+          signitureNames: data.signitureNames,
+          abi: data.abi,
+        },
+        { where: { address: data.address } }
+      );
+    } else {
+      await db.models.CA.create({
+        address: data.address,
+        abiSigniture: data.abiSigniture,
+        signitureNames: data.signitureNames,
+        abi: data.abi,
+      });
+    }
+  } catch (error) {
+    console.log("CAmodel의 postjson", error);
+  }
+};
+
+const CAtxnsMethodsUpdate = async (address: any, data: any) => {
+  try {
+    const transactions = await db.models.Tx.findAll({
+      where: {
+        [Op.or]: [{ from: address }, { to: address }],
+      },
+    });
+
+    await Promise.all(
+      transactions.map(async (value: any) => {
+        console.log(value.dataValues.Method);
+        for (let i = 0; i < data.signitureNames.length; i++) {
+          if (data.signiture[i] === value.dataValues.Method) {
+            await db.models.Tx.update(
+              { method: data.signitureNames[i] },
+              { where: { id: value.id } }
+            );
+          }
+        }
+      })
+    );
+
+    console.log(transactions);
+  } catch (error) {
+    console.log("CAmodel의 CAtxnsMethodsUpdate", error);
+  }
+};
+
 export default {
   createCA,
   createCATest,
@@ -90,4 +154,6 @@ export default {
   viewOneCA,
   updateCA,
   findTxByCAType,
+  postjson,
+  CAtxnsMethodsUpdate,
 };

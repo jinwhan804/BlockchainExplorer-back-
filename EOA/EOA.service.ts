@@ -25,19 +25,22 @@ const viewOneEOA = async (id: number, next: NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
-const updateEOA = async (id : number, data : EOADTO, next : NextFunction) => {
+const updateEOA = async (id: number, data: EOADTO, next: NextFunction) => {
   try {
-    await db.models.EOA.update({
-      address : data.address,
-      token : data.token,
-      ethbalance : data.ethBalance
-    },{where : {id}});
+    await db.models.EOA.update(
+      {
+        address: data.address,
+        token: data.token,
+        ethbalance: data.ethBalance,
+      },
+      { where: { id } }
+    );
   } catch (error) {
     next(error);
   }
-}
+};
 
 const createEOATest = async (data: EOAData) => {
   try {
@@ -60,5 +63,48 @@ const getEoall = async () => {
     console.log("getEoall", error);
   }
 };
+const updateEoaethBalance = async (id: string, balance: string) => {
+  try {
+    await db.models.EOA.update(
+      { ethBalance: balance.toString() },
+      { where: { address: id } }
+    );
+    console.log("실행?");
+  } catch (error) {
+    console.log("updateEoaethBalance", error);
+  }
+};
+const findTxByEOA = async () => {
+  try {
+    // CA 타입이 'erc721'인 CA 정보 가져오기
+    const ca: any = await db.models.EOA.findAll({
+      // where: { CAtype: caType },
+      include: [
+        {
+          model: db.models.Tx, // Tx 정보도 함께 가져오기
+        },
+      ],
+    });
+    console.log("findTxByEOA", ca);
+    if (!ca) {
+      console.log(`EOA with type not found.`);
+      return null;
+    }
 
-export default { createEOA, createEOATest, viewOneEOA, getEoall, updateEOA };
+    console.log(`Tx information for EOA`);
+
+    return ca; // 반환할 때는 연결된 Tx 정보를 반환하거나 다른 방식으로 활용할 수 있습니다.
+  } catch (error) {
+    console.log("findTxByEOA", error);
+  }
+};
+
+export default {
+  createEOA,
+  createEOATest,
+  viewOneEOA,
+  getEoall,
+  updateEOA,
+  updateEoaethBalance,
+  findTxByEOA,
+};

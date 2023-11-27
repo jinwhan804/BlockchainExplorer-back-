@@ -1,6 +1,7 @@
 import Web3 from "web3";
 import dotenv from "dotenv";
 import "dotenv/config";
+let cachedWeb3Instance: any;
 
 export const getRPC_URLtest = async () => {
   dotenv.config();
@@ -9,13 +10,22 @@ export const getRPC_URLtest = async () => {
   // console.log(RPC_RRLtest);
   return RPC_RRLtest;
 };
+
 export const getProvider = async () => {
-  const RPC_URL = await getRPC_URLtest();
-  let web3;
-  if (RPC_URL == "https://network.bouncecode.net/") {
-    web3 = new Web3(new Web3.providers.HttpProvider(RPC_URL));
-  } else {
-    web3 = new Web3(new Web3.providers.WebsocketProvider(RPC_URL));
+  if (cachedWeb3Instance) {
+    // 이미 캐시된 인스턴스가 있는 경우, 해당 인스턴스를 반환
+    return cachedWeb3Instance;
   }
-  return web3;
+
+  const RPC_URL = await getRPC_URLtest();
+
+  if (RPC_URL == "https://network.bouncecode.net/") {
+    cachedWeb3Instance = new Web3(new Web3.providers.HttpProvider(RPC_URL));
+  } else {
+    cachedWeb3Instance = new Web3(
+      new Web3.providers.WebsocketProvider(RPC_URL)
+    );
+  }
+
+  return cachedWeb3Instance;
 };

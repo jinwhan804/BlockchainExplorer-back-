@@ -63,7 +63,8 @@ const CreateTxTest = async (
   getcoderesultTO: string,
   sigEvaluateresult: string,
   timestamp?: bigint,
-  bolocknum?: number
+  block_id?: number,
+  blocknumber?: number
 ): Promise<void> => {
   try {
     const {
@@ -120,7 +121,8 @@ const CreateTxTest = async (
       value,
       Method: parts[2] || sigEvaluateresult, // parts[2]가 존재하면 parts[2]를 사용, 그렇지 않으면 sigEvaluateresult 사용
       Timestamp: timestamp,
-      block_id: bolocknum,
+      block_id: block_id,
+      blocknumber,
     });
 
     if (getcoderesultFrom == getcoderesultTO) {
@@ -196,8 +198,7 @@ const viewAllTxs = async (next: NextFunction) => {
 
 const viewOneTx = async (id: number, next: NextFunction) => {
   try {
-    const tx = await db.models.Tx.findOne({ where: { id } });
-
+    const tx = await db.models.Tx.findOne({ where: { id: id } });
     return tx;
   } catch (error) {
     next(error);

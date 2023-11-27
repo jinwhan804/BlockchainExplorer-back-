@@ -32,6 +32,7 @@ export interface TxData {
   v: bigint;
   value: bigint;
   Method: string;
+  blocknumber: number;
   Timestamp: bigint;
 }
 
@@ -152,6 +153,11 @@ export class Tx extends Model implements TxData {
     allowNull: true, // 테스트용으로 잠시 true로 한다
   })
   Timestamp!: bigint;
+  @Column({
+    type: DataType.INTEGER,
+    defaultValue: 0,
+  })
+  blocknumber!: number;
 
   // foreign key 연결 구간
   @BelongsTo(() => NFT, "NFT_id")
