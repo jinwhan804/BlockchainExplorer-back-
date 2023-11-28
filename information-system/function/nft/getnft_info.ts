@@ -27,7 +27,7 @@ interface NFTInfo {
 export const getnftinfo = async () => {
   try {
     let web3: any = await getProvider();
-    const jsonFilePath = path.join(DIRNAME, "erc721public.json");
+    const jsonFilePath = path.join(DIRNAME, "erc721.json");
     const jsonData = await readjson(jsonFilePath);
     const result: any = await CAservice.findCAtype();
 
@@ -52,7 +52,7 @@ export const getnftinfo = async () => {
               fromBlock: Number(tmp.dataValues.number) - 100,
               toBlock: Number(tmp.dataValues.number),
             });
-            console.log(pastEvents);
+            // console.log(pastEvents);
 
             const tmparr2: { [tokenId: string]: NFTInfo } = {};
             for (const pastEvent of pastEvents) {
@@ -75,7 +75,7 @@ export const getnftinfo = async () => {
               try {
                 const tokenURI: any = await cm.tokenURI(value.tokenId).call();
                 let httpURI: string = "";
-                console.log(tokenURI);
+                // console.log(tokenURI);
                 if (
                   tokenURI.includes("http://") ||
                   tokenURI.includes("ipfs:")
@@ -87,7 +87,7 @@ export const getnftinfo = async () => {
                   try {
                     const regex = /^ipfs:\/\/([^/]+)\/([^/]+)$/;
                     const match = tokenURI.match(regex);
-                    const hash = match[1];
+                    const hash = match[1] || "";
                     const filename = match[2];
                     httpURI = hash;
                   } catch (error) {
@@ -105,12 +105,14 @@ export const getnftinfo = async () => {
                   Owner: value.owner,
                   transactionhash: value.transactionhash,
                 };
+                console.log("!@#!@#!@#", data);
                 const isDuplicate = await NFTService.isDuplicateNFT(
                   data.tokenId.toString(),
                   data.name,
                   data.Owner
                 );
                 console.log("중복인가?", isDuplicate, tmparr);
+                //중복이 아니면 추가한다.
                 if (!isDuplicate) {
                   tmparr.push(data);
                 }

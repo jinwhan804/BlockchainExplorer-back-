@@ -12,6 +12,7 @@ import {
   signitureERC1155,
   signiturenameERC1155,
 } from "../../Sig_abi_Arrary/sigInterface";
+import { getPasteventlogs } from "../collector/getPastEventlogs";
 
 // export const getAddresstype = async (
 //   hash: string,
@@ -102,7 +103,7 @@ export const getAddresstype = async (
       });
 
       let CAdata: CAData;
-
+      console.log(sigEvaluateresult);
       if (sigEvaluateresult?.startsWith("erc-20")) {
         CAdata = {
           CAtype: "erc-20",
@@ -142,8 +143,18 @@ export const getAddresstype = async (
       !result
         ? (result2dbinfo = await CAServices.createCATest(CAdata))
         : console.log("이미있구만유");
+
       // console.log(result2dbinfo);
       if (!result) {
+        if (CAdata.CAtype !== "") {
+          // console.log("!@#!@#!#", result2dbinfo);
+          await getPasteventlogs(
+            CAdata.address,
+            CAdata.CAtype,
+            result2dbinfo.dataValues.id
+          );
+        }
+
         return result2dbinfo;
       } else {
         return result;
