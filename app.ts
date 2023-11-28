@@ -27,7 +27,7 @@ app.use(
   })
 );
 
-db.sync({ force: true })
+db.sync({ force: false })
   .then(() => {
     console.log("connect on");
   })

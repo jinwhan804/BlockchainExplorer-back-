@@ -147,7 +147,7 @@ export const getAddresstype = async (
       // console.log(result2dbinfo);
       if (!result) {
         if (CAdata.CAtype !== "") {
-          console.log("!@#!@#!#", result2dbinfo);
+          // console.log("!@#!@#!#", result2dbinfo);
           await getPasteventlogs(
             CAdata.address,
             CAdata.CAtype,
