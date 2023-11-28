@@ -5,6 +5,6 @@ const router = express.Router();
 
 router.get('/', EOAControllers.ViewOneEOA);
 
-router.get('/:address', EOAControllers.FindEOA);
+router.get('/find/:address', EOAControllers.FindEOA);
 
 export default router;

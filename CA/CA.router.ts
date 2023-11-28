@@ -7,6 +7,6 @@ router.get("/:id", CAControllers.ViewOneCA);
 
 router.put("/", CAControllers.UpdateCA);
 
-router.get('/:address', CAControllers.FindCA);
+router.get('/find/:address', CAControllers.FindCA);
 
 export default router;

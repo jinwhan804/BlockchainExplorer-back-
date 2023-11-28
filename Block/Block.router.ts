@@ -7,6 +7,6 @@ router.get('/', BlockControllers.ViewAllBlocks);
 
 router.get('/:id', BlockControllers.ViewOneBlock);
 
-router.get('/:number', BlockControllers.FindBlockNum);
+router.get('/find/:number', BlockControllers.FindBlockNum);
 
 export default router;
