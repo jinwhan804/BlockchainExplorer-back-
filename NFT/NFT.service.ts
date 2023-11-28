@@ -92,90 +92,39 @@ const isExist = async (tokenId: number) => {
 };
 // NFT.service.ts
 
-// const isDuplicateNFT = async (
-//   tokenId: string,
-//   newOwner: string
-// ): Promise<boolean> => {
-//   try {
-//     console.log("tokenID,newOwner", tokenId, newOwner);
-//     const tokenID = tokenId;
-//     const existingNFT: any = await db.models.NFT.findOne({
-//       where: {
-//         token_id: tokenID,
-//       },
-//     });
-
-//     if (existingNFT) {
-//       // NFT가 이미 존재하는 경우
-
-//       if (existingNFT.Owner !== newOwner) {
-//         // 소유자가 변경된 경우에만 업데이트
-//         await existingNFT.update({ owner: newOwner });
-//       }
-
-//       return true; // 이미 존재하는 NFT
-//     }
-
-//     return false; // 존재하지 않는 NFT
-//   } catch (error) {
-//     console.log("isDuplicateNFT", error);
-//     return false; // 오류 발생 시 중복으로 처리하지 않도록 false 반환
-//   }
-// };
-// const isDuplicateNFT = async (
-//   id: string,
-//   name: string,
-//   newOwner: string
-// ): Promise<boolean> => {
-//   try {
-//     console.log("id, name, newOwner", id, name, newOwner);
-//     // 동일한 ID 또는 이름을 가진 NFT 중에서 소유자가 변경된 경우에만 업데이트
-//     const existingNFTs: any[] = await db.models.NFT.findAll({
-//       where: {
-//         [Op.or]: [{ tokenId: id }, { name: name }],
-//       },
-//     });
-
-//     for (const existingNFT of existingNFTs) {
-//       if (existingNFT.Owner !== newOwner) {
-//         // 소유자가 변경된 경우에만 업데이트
-//         await existingNFT.update({ Owner: newOwner });
-//       }
-//     }
-
-//     return existingNFTs.length > 0; // 존재하는 NFT 여부 반환
-//   } catch (error) {
-//     console.log("isDuplicateNFT", error);
-//     return false; // 오류 발생 시 중복으로 처리하지 않도록 false 반환
-//   }
-// };
-
 const isDuplicateNFT = async (
   id: string,
   name: string,
   newOwner: string
 ): Promise<boolean> => {
   try {
-    console.log("id, name, newOwner", id, name, newOwner);
     // 동일한 ID 또는 이름을 가진 NFT 중에서 소유자가 변경된 경우에만 업데이트
     const existingNFTs: any[] = await db.models.NFT.findAll({
       where: {
         [Op.or]: [{ tokenId: id }, { name: name }],
-        Owner: { [Op.ne]: newOwner }, // 소유자가 newOwner와 다른 경우만 필터링
       },
     });
 
-    for (const existingNFT of existingNFTs) {
-      // 소유자가 변경된 경우에만 업데이트
-      await existingNFT.update({ Owner: newOwner });
+    if (existingNFTs.length === 0) {
+      // 중복된 항목이 없으면 false 반환
+      return false;
     }
 
-    return existingNFTs.length > 0; // 존재하는 NFT 여부 반환
+    // 중복된 항목이 있는 경우
+    for (const existingNFT of existingNFTs) {
+      if (existingNFT.Owner !== newOwner) {
+        // 소유자가 변경된 경우에만 업데이트
+        await existingNFT.update({ Owner: newOwner });
+      }
+    }
+
+    return true; // 중복된 NFT가 있고 업데이트를 수행했을 때 true 반환
   } catch (error) {
     console.log("isDuplicateNFT", error);
     return false; // 오류 발생 시 중복으로 처리하지 않도록 false 반환
   }
 };
+
 export default {
   createNFT,
   createNFTTest,

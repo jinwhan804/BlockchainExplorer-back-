@@ -17,7 +17,7 @@ export default class TxDTO extends BaseDTO implements TxData {
   public transactionIndex: bigint;
   public type: bigint;
   public v: bigint;
-  public value: bigint;
+  public value: string;
   public Method: string;
   public Timestamp: bigint;
   public blocknumber: number;

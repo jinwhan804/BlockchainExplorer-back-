@@ -1,9 +1,12 @@
 import Web3 from "web3";
 
-const contractAddress2: string = "0xAA4D7b4F1a54c492c60A06A9CE27A3399aAf0de5";
+const contractAddress2: string = "0xd19dB9F1c36Fa67a5EF55D225e934Aa5fADC2247";
 
-const RPC_URL = "https://network.bouncecode.net/";
-const web3 = new Web3(new Web3.providers.HttpProvider(RPC_URL));
+const RPC_URL =
+  "wss://sepolia.infura.io/ws/v3/d22607d7f58545f99e3c0eadcbf00eb4";
+// const RPC_URL = "https://network.bouncecode.net/";
+// const web3 = new Web3(new Web3.providers.HttpProvider(RPC_URL));
+const web3 = new Web3(new Web3.providers.WebsocketProvider(RPC_URL));
 interface EventLog {
   address: string;
   blockHash: string;

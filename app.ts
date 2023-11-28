@@ -27,7 +27,7 @@ app.use(
   })
 );
 
-db.sync({ force: false })
+db.sync({ force: true })
   .then(() => {
     console.log("connect on");
   })
@@ -53,10 +53,10 @@ app.listen(8080, async () => {
   // await getnftinfo();
 
   // await getEoainfo();
-  // if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
-  //   CollectStart_http();
-  // } else {
-  //   subscribetest();
-  // }
+  if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
+    CollectStart_http();
+  } else {
+    subscribetest();
+  }
   console.log("테스트 구문 끝");
 });

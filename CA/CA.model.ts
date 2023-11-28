@@ -8,6 +8,8 @@ import {
 } from "sequelize-typescript";
 import { TxCA } from "../TxCA/TxCA.model";
 import { Tx } from "../Tx/Tx.model";
+import { EventLog } from "../Eventlog/Eventlog.model";
+import { CAEventLog } from "../CaEventlog/CaEventlog.model";
 
 export interface CAData {
   address: string;
@@ -61,4 +63,6 @@ export class CA extends Model implements CAData {
   // transactionAssociations!: Tx[];
   @BelongsToMany(() => Tx, () => TxCA)
   txs!: Tx[];
+  @BelongsToMany(() => EventLog, () => CAEventLog)
+  eventLogs!: EventLog[];
 }

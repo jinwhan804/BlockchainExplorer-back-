@@ -8,6 +8,8 @@ import { Block } from "../Block/Block.model";
 import { CA } from "../CA/CA.model";
 import { TxCA } from "../TxCA/TxCA.model";
 import { TxEOA } from "../TxEOA/TxEOA.model";
+import { EventLog } from "../Eventlog/Eventlog.model";
+import { CAEventLog } from "../CaEventlog/CaEventlog.model";
 
 const db = new Sequelize(
   config.dev.database,
@@ -16,7 +18,7 @@ const db = new Sequelize(
   {
     host: config.dev.host,
     dialect: "postgres",
-    models: [Tx, NFT, Token, EOA, CA, Block, TxCA, TxEOA],
+    models: [Tx, NFT, Token, EOA, CA, Block, TxCA, TxEOA, EventLog, CAEventLog],
   }
 );
 
