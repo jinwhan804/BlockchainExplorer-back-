@@ -37,6 +37,16 @@ const updateCA = async (data: CADTO, next: NextFunction) => {
   }
 };
 
+const findCA = async (address : string, next : NextFunction) => {
+  try {
+    const ca = await db.models.CA.findOne({where : {address}});
+
+    return ca;
+  } catch (error) {
+    next(error);
+  }
+}
+
 const findCAtype = async () => {
   try {
     const result = await db.models.CA.findAll({
@@ -156,4 +166,5 @@ export default {
   findTxByCAType,
   postjson,
   CAtxnsMethodsUpdate,
+  findCA
 };

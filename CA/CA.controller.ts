@@ -37,4 +37,15 @@ const UpdateCA = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { CreateCA, ViewOneCA, UpdateCA };
+const FindCA = async (req : Request, res : Response, next : NextFunction) => {
+  try {
+    const address = req.params.address.toString();
+    const data = await CAServices.findCA(address, next);
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { CreateCA, ViewOneCA, UpdateCA, FindCA };

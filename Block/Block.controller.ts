@@ -56,4 +56,15 @@ const UpdateTxNum = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default { CreateBlock, ViewAllBlocks, ViewOneBlock, UpdateTxNum };
+const FindBlockNum = async (req : Request, res : Response, next : NextFunction) => {
+  try {
+    const number = Number(req.params.number);
+    const data = await BlockServices.findBlockNum(number, next);
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { CreateBlock, ViewAllBlocks, ViewOneBlock, UpdateTxNum, FindBlockNum };

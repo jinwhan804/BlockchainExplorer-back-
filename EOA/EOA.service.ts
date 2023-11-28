@@ -42,6 +42,16 @@ const updateEOA = async (id: number, data: EOADTO, next: NextFunction) => {
   }
 };
 
+const findEOA = async (address : string, next : NextFunction) => {
+  try {
+    const eoa = await db.models.EOA.findOne({where : {address}});
+
+    return eoa;
+  } catch (error) {
+    next(error);
+  }
+}
+
 const createEOATest = async (data: EOAData) => {
   try {
     const { address, token, ethBalance } = data;
@@ -107,4 +117,5 @@ export default {
   updateEOA,
   updateEoaethBalance,
   findTxByEOA,
+  findEOA
 };

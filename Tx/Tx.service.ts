@@ -212,6 +212,16 @@ const updateTx = async (id: number, data: TxDTO, next: NextFunction) => {
   }
 };
 
+const findTx = async (hash : string, next : NextFunction) => {
+  try {
+    const tx = await db.models.Tx.findOne({where : {hash}})
+
+    return tx;
+  } catch (error) {
+    next(error);
+  }
+}
+
 export default {
   createTx,
   CreateTxTest,
@@ -219,4 +229,5 @@ export default {
   viewOneTx,
   getFindone,
   updateTx,
+  findTx
 };

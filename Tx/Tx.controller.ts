@@ -45,4 +45,15 @@ const UpdateTx = async (req : Request, res : Response, next : NextFunction) => {
   }
 }
 
-export default { CreateTx, ViewAllTxs, ViewOneTx, UpdateTx };
+const FindTx = async (req : Request, res : Response, next : NextFunction) => {
+  try {
+    const hash = req.params.hash.toString();
+    const data = await TxServices.findTx(hash, next);
+
+    res.json(data);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { CreateTx, ViewAllTxs, ViewOneTx, UpdateTx, FindTx };

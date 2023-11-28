@@ -3,8 +3,10 @@ import CAControllers from "./CA.controller";
 
 const router = express.Router();
 
-router.get("/", CAControllers.ViewOneCA);
+router.get("/:id", CAControllers.ViewOneCA);
 
 router.put("/", CAControllers.UpdateCA);
+
+router.get('/:address', CAControllers.FindCA);
 
 export default router;

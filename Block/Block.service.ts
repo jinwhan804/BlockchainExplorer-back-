@@ -51,6 +51,16 @@ const viewOneBlock = async (id: number, next: NextFunction) => {
   }
 };
 
+const findBlockNum = async (number: number, next: NextFunction) => {
+  try {
+    const block = await db.models.Block.findOne({ where: { number } });
+
+    return block;
+  } catch (error) {
+    next(error);
+  }
+};
+
 const updateTxNum = async (id: number, txnum: number, next: NextFunction) => {
   try {
     await db.models.Block.update({ txNumber: txnum }, { where: { id } });
@@ -124,4 +134,5 @@ export default {
   viewOneBlock,
   updateTxNum,
   findOneblock,
+  findBlockNum
 };

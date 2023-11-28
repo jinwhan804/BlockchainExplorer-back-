@@ -7,4 +7,6 @@ router.get('/', TxControllers.ViewAllTxs);
 
 router.get('/:id', TxControllers.ViewOneTx);
 
+router.get('/:hash', TxControllers.FindTx);
+
 export default router;

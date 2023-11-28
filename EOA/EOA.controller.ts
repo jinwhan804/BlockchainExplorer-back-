@@ -37,4 +37,15 @@ const UpdateEOA = async (req : Request, res : Response, next : NextFunction) => 
     }
 }
 
-export default { CreateEOA, ViewOneEOA, UpdateEOA };
+const FindEOA = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const address = req.params.address.toString();
+        const data = await EOAServices.findEOA(address, next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateEOA, ViewOneEOA, UpdateEOA, FindEOA };
