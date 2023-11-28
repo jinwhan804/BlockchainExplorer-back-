@@ -8,7 +8,7 @@ import { Block } from "../Block/Block.model";
 import { CA } from "../CA/CA.model";
 import { TxCA } from "../TxCA/TxCA.model";
 import { TxEOA } from "../TxEOA/TxEOA.model";
-import { EventLog } from "../Eventlog/Eventlog.model";
+import { EventLog } from "../Eventlog/Event_log.model";
 import { CAEventLog } from "../CaEventlog/CaEventlog.model";
 
 const db = new Sequelize(

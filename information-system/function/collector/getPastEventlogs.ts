@@ -3,7 +3,7 @@ import Web3 from "web3";
 import { DIRNAME } from "../../JSON";
 import { readjson } from "./getAbiAndAddress";
 import { getProvider } from "../config";
-import { createEventlog } from "../../../Eventlog/Eventlog.service";
+import { createEventlog } from "../../../Eventlog/Event_log.service";
 import { createCaEvnetlog } from "../../../CaEventlog/CaEventlog.service";
 // const RPC_URL =
 //   "wss://sepolia.infura.io/ws/v3/d22607d7f58545f99e3c0eadcbf00eb4";

@@ -8,7 +8,7 @@ import {
   ForeignKey,
 } from "sequelize-typescript";
 import { CA } from "../CA/CA.model";
-import { EventLog } from "../Eventlog/Eventlog.model";
+import { EventLog } from "../Eventlog/Event_log.model";
 
 @Table({
   timestamps: true,
