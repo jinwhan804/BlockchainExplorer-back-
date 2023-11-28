@@ -51,7 +51,8 @@ app.listen(8080, async () => {
   console.log("server open");
   // await saveABIandAddress();
   // await getnftinfo();
-  await getEoainfo();
+
+  // await getEoainfo();
   // if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
   //   CollectStart_http();
   // } else {

@@ -16,7 +16,7 @@ const CreateEOA = async (req : Request, res : Response, next : NextFunction) => 
 
 const ViewOneEOA = async (req : Request, res : Response, next : NextFunction) => {
     try {
-        const id = Number(req.params);
+        const id = Number(req.params.id);
         const data = await EOAServices.viewOneEOA(id, next);
 
         res.json(data);
@@ -27,7 +27,7 @@ const ViewOneEOA = async (req : Request, res : Response, next : NextFunction) =>
 
 const UpdateEOA = async (req : Request, res : Response, next : NextFunction) => {
     try {
-        const id = Number(req.params);
+        const id = Number(req.params.id);
         const reqDTO = new EOADTO(req.body);
         await EOAServices.updateEOA(id, reqDTO ,next);
 

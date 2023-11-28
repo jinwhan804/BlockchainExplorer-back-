@@ -33,7 +33,7 @@ const createBlock = async (data: BlockDTO, next: NextFunction) => {
 
 const viewAllBlocks = async (next: NextFunction) => {
   try {
-    const blocks = await db.models.Block.findAll({});
+    const blocks = await db.models.Block.findAll({order : [[ 'timestamp', 'DESC' ]]});
 
     return blocks;
   } catch (error) {

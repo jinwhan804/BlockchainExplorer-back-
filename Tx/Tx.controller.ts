@@ -26,7 +26,7 @@ const ViewAllTxs = async (req : Request, res : Response, next : NextFunction) =>
 
 const ViewOneTx = async (req : Request, res : Response, next : NextFunction) => {
   try {
-    const id = Number(req.params)
+    const id = Number(req.params.id)
     const data = await TxServices.viewOneTx(id, next);
 
     res.json(data);
@@ -37,7 +37,7 @@ const ViewOneTx = async (req : Request, res : Response, next : NextFunction) => 
 
 const UpdateTx = async (req : Request, res : Response, next : NextFunction) => {
   try {
-    const id = Number(req.params);
+    const id = Number(req.params.id);
     const reqDTO = new TxDTO(req.body);
     await TxServices.updateTx(id, reqDTO, next);
   } catch (error) {

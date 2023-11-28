@@ -188,7 +188,7 @@ const getFindone = async (tmp: string) => {
 };
 const viewAllTxs = async (next: NextFunction) => {
   try {
-    const txs = await db.models.Tx.findAll({});
+    const txs = await db.models.Tx.findAll({order : [['Timestamp', 'DESC']]});
 
     return txs;
   } catch (error) {
