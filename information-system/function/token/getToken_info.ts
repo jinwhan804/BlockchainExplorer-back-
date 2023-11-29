@@ -1,13 +1,3 @@
-import {
-  pokemonstestabi,
-  erc1155abi,
-  erc721abi,
-  erc721abipublic,
-  erc1155abipublic,
-  erc20abipublic,
-  erc20abi,
-} from "../../Sig_abi_Arrary/testabiinfo";
-// Sepolia 테스트넷의 WebSocket RPC URL 설정
 import { readjson } from "../collector/getAbiAndAddress";
 import { getProvider } from "../config";
 import CAservice from "../../../CA/CA.service";
@@ -91,21 +81,6 @@ export const getTokeninfo = async () => {
       console.error(" 오류 발생:", error);
     }
   });
-  // const contract = new web3.eth.Contract(jsonData, address);
-
-  // try {
-  //   const data: TokenData = {
-  //     name: await contract.methods.name().call(),
-  //     contract_address: address,
-  //     symbol: await contract.methods.symbol().call(),
-  //     owner_address: "",
-  //     decimal: await contract.methods.decimals().call(),
-  //     circulating_supply: await contract.methods.totalSupply().call(),
-  //   };
-  //   Tokenservice.createTokentest(data);
-  // } catch (error) {
-  //   console.error(" 오류 발생:", error);
-  // }
 };
 
 // getTokeninfo();

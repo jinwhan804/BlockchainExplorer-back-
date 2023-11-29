@@ -108,6 +108,16 @@ const findTxByEOA = async () => {
     console.log("findTxByEOA", error);
   }
 };
+const findEOAone = async (address: string) => {
+  try {
+    const eoa: any = await db.models.EOA.findOne({
+      where: { address: address },
+    });
+    return eoa;
+  } catch (error) {
+    console.log("findEOAoneerror", error);
+  }
+};
 
 export default {
   createEOA,
@@ -118,4 +128,5 @@ export default {
   updateEoaethBalance,
   findTxByEOA,
   findEOA,
+  findEOAone,
 };
