@@ -8,6 +8,8 @@ import {
 } from "sequelize-typescript";
 import { Tx } from "../Tx/Tx.model";
 import { TxEOA } from "../TxEOA/TxEOA.model";
+import { Token } from "../Token/Token.model";
+import { TokenEOA } from "../TokenEoa/Token_EOA.model";
 
 export interface EOAData {
   address: string;
@@ -47,4 +49,7 @@ export class EOA extends Model implements EOAData {
   // N:M 관계 설정
   @BelongsToMany(() => Tx, () => TxEOA)
   txs!: Tx[];
+
+  @BelongsToMany(() => Token, () => TokenEOA)
+  tokens!: Token[];
 }

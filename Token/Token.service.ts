@@ -3,7 +3,7 @@ import db from "../database";
 import { TokenData } from "./Token.model";
 import { NextFunction } from "express";
 
-const createToken = async (data: TokenDTO, next : NextFunction) => {
+const createToken = async (data: TokenDTO, next: NextFunction) => {
   try {
     const {
       contractAddress,
@@ -27,7 +27,7 @@ const createToken = async (data: TokenDTO, next : NextFunction) => {
   }
 };
 
-const viewAllTokens = async (next : NextFunction) => {
+const viewAllTokens = async (next: NextFunction) => {
   try {
     const tokens = await db.models.Token.findAll();
 
@@ -35,9 +35,9 @@ const viewAllTokens = async (next : NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
-const viewOneToken = async (id : number, next : NextFunction) => {
+const viewOneToken = async (id: number, next: NextFunction) => {
   try {
     const token = await db.models.Token.findOne({where : {id}, include : {model : db.models.Tx}});
 
@@ -45,7 +45,21 @@ const viewOneToken = async (id : number, next : NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
+
+const getAllTokens = async () => {
+  try {
+    const tokens = await db.models.Token.findAll({
+      include: {
+        model: db.models.Tx,
+      },
+    });
+
+    return tokens;
+  } catch (error) {
+    console.log("getAllTokens", error);
+  }
+};
 
 const createTokentest = async (data: TokenData, contractAddress: any) => {
   try {
@@ -95,13 +109,16 @@ const isExist = async (address: string) => {
   }
 };
 
-const updateToken = async (id : number, data : TokenDTO, next : NextFunction) => {
+const updateToken = async (id: number, data: TokenDTO, next: NextFunction) => {
   try {
-    await db.models.Token.update({circulatingSupply : data.circulatingSupply},{where : {id}})
+    await db.models.Token.update(
+      { circulatingSupply: data.circulatingSupply },
+      { where: { id } }
+    );
   } catch (error) {
     next(error);
   }
-}
+};
 
 const findToken = async (name : string, next : NextFunction) => {
   try {

@@ -1,5 +1,14 @@
-import { Table, Model, Column, DataType, HasMany } from "sequelize-typescript";
+import {
+  Table,
+  Model,
+  Column,
+  DataType,
+  HasMany,
+  BelongsToMany,
+} from "sequelize-typescript";
 import { Tx } from "../Tx/Tx.model";
+import { EOA } from "../EOA/EOA.model";
+import { TokenEOA } from "../TokenEoa/Token_EOA.model";
 
 export interface TokenData {
   contractAddress: string;
@@ -59,4 +68,6 @@ export class Token extends Model implements TokenData {
   // foreign key 연결 구간
   @HasMany(() => Tx, "token_id")
   txs!: Tx[];
+  @BelongsToMany(() => EOA, () => TokenEOA)
+  EOAs!: EOA[];
 }

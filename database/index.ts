@@ -10,6 +10,7 @@ import { TxCA } from "../TxCA/TxCA.model";
 import { TxEOA } from "../TxEOA/TxEOA.model";
 import { EventLog } from "../Eventlog/Event_log.model";
 import { CAEventLog } from "../CaEventlog/CaEventlog.model";
+import { TokenEOA } from "../TokenEoa/Token_EOA.model";
 
 const db = new Sequelize(
   config.dev.database,
@@ -18,7 +19,19 @@ const db = new Sequelize(
   {
     host: config.dev.host,
     dialect: "postgres",
-    models: [Tx, NFT, Token, EOA, CA, Block, TxCA, TxEOA, EventLog, CAEventLog],
+    models: [
+      Tx,
+      NFT,
+      Token,
+      EOA,
+      CA,
+      Block,
+      TxCA,
+      TxEOA,
+      EventLog,
+      CAEventLog,
+      TokenEOA,
+    ],
   }
 );
 

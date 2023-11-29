@@ -74,7 +74,7 @@ export async function getBlockInfo(blockNumber: number) {
 }
 
 // 가져올 블록 번호를 지정합니다.
-// const blockNumberToRetrieve = 4619878; // 원하는 블록 번호로 변경
+// const blockNumberToRetrieve = 3404791; // 원하는 블록 번호로 변경
 
-// 특정 블록 정보 가져오기
+// // 특정 블록 정보 가져오기
 // getBlockInfo(blockNumberToRetrieve);

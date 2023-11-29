@@ -42,7 +42,7 @@ const updateEOA = async (id: number, data: EOADTO, next: NextFunction) => {
   }
 };
 
-const findEOA = async (address : string, next : NextFunction) => {
+const findEOA = async (address: string, next: NextFunction) => {
   try {
     const eoa = await db.models.EOA.findOne({where : {address}, include : {model : db.models.Tx} });
 
@@ -50,7 +50,7 @@ const findEOA = async (address : string, next : NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 const createEOATest = async (data: EOAData) => {
   try {
@@ -108,6 +108,16 @@ const findTxByEOA = async () => {
     console.log("findTxByEOA", error);
   }
 };
+const findEOAone = async (address: string) => {
+  try {
+    const eoa: any = await db.models.EOA.findOne({
+      where: { address: address },
+    });
+    return eoa;
+  } catch (error) {
+    console.log("findEOAoneerror", error);
+  }
+};
 
 export default {
   createEOA,
@@ -117,5 +127,6 @@ export default {
   updateEOA,
   updateEoaethBalance,
   findTxByEOA,
-  findEOA
+  findEOA,
+  findEOAone,
 };
