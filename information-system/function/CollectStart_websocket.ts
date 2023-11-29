@@ -55,6 +55,7 @@ export const subscribetest = async () => {
     subscription.on("data", async (data: any) => {
       myQueue.enqueue(data);
       console.log(myQueue.size());
+      console.log(data);
       for (let i = 0; i < analyzeDatajudgement.length; i++) {
         if (analyzeDatajudgement[i] == true) {
           try {

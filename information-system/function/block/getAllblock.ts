@@ -1,10 +1,12 @@
-import Web3 from "web3";
 import { BlockData } from "../CollectStart_websocket";
+import { analyzeData } from "../analyzer/analyzeData";
+import { Queue } from "../queue/getQueue";
 import { getProvider } from "../config";
 
 const CHAIN_ID = 18328;
+const myQueue = new Queue<BlockData>();
 
-const getallblack = async () => {
+export const getallblock = async () => {
   const web3 = await getProvider();
 
   const latestBlock: BlockData = await web3.eth.getBlock("latest", true);
@@ -12,21 +14,13 @@ const getallblack = async () => {
   let latestBlockNumber: bigint | undefined;
   if (latestBlock.number !== undefined) {
     latestBlockNumber = latestBlock.number;
-    for (let i = 450000; i <= latestBlockNumber; i++) {
+    for (let i = 3404784; i <= Number(latestBlockNumber) - 1; i++) {
       // console.log(i);
-      const block = await web3.eth.getBlock(i, true);
+      const block = await web3.eth.getBlock(i);
+      await analyzeData(block);
       if (block.transactions) {
-        console.log("야스", block);
-        console.log(block.transactions);
+        // console.log(block.transactions);
       }
     }
   }
-
-  // const block = await web3.eth.getBlock(1231233, true);
-  // console.log(`Block ${2}:`, block);
-  // web3.eth.getTransaction("asd", (error, transaction) => {
-  //   console.log(transaction);
-  // });
 };
-
-getallblack();
