@@ -45,4 +45,15 @@ const UpdateToken = async (req : Request, res : Response, next : NextFunction) =
     }
 };
 
-export default { CreateToken, ViewAllTokens, ViewOneToken, UpdateToken };
+const FindToken = async (req : Request, res : Response, next : NextFunction) => {
+    try {
+        const name = req.params.name.toString();
+        const data = await TokenServices.findToken(name, next);
+
+        res.json(data);
+    } catch (error) {
+        next(error);
+    }
+}
+
+export default { CreateToken, ViewAllTokens, ViewOneToken, UpdateToken, FindToken };

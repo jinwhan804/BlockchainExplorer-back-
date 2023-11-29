@@ -7,4 +7,6 @@ router.get('/', TokenControllers.ViewAllTokens);
 
 router.get('/:id', TokenControllers.ViewOneToken);
 
+router.get('/find/:name', TokenControllers.FindToken);
+
 export default router;

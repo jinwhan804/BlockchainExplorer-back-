@@ -103,4 +103,14 @@ const updateToken = async (id : number, data : TokenDTO, next : NextFunction) =>
   }
 }
 
-export default { createToken, createTokentest, isExist, viewAllTokens, viewOneToken, updateToken };
+const findToken = async (name : string, next : NextFunction) => {
+  try {
+    const token = await db.models.Token.findOne({where : {name}});
+
+    return token;
+  } catch (error) {
+    next(error);
+  }
+}
+
+export default { createToken, createTokentest, isExist, viewAllTokens, viewOneToken, updateToken, findToken };
