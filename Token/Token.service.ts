@@ -105,7 +105,7 @@ const updateToken = async (id : number, data : TokenDTO, next : NextFunction) =>
 
 const findToken = async (name : string, next : NextFunction) => {
   try {
-    const token = await db.models.Token.findOne({where : {name}});
+    const token = await db.models.Token.findOne({where : {name}, include : {model : db.models.Tx}});
 
     return token;
   } catch (error) {

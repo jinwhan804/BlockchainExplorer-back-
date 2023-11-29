@@ -44,7 +44,7 @@ const updateEOA = async (id: number, data: EOADTO, next: NextFunction) => {
 
 const findEOA = async (address : string, next : NextFunction) => {
   try {
-    const eoa = await db.models.EOA.findOne({where : {address}});
+    const eoa = await db.models.EOA.findOne({where : {address}, include : {model : db.models.Tx} });
 
     return eoa;
   } catch (error) {

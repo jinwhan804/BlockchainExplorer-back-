@@ -39,7 +39,7 @@ const updateCA = async (data: CADTO, next: NextFunction) => {
 
 const findCA = async (address : string, next : NextFunction) => {
   try {
-    const ca = await db.models.CA.findOne({where : {address}});
+    const ca = await db.models.CA.findOne({where : {address}, include : {model : db.models.Tx}});
 
     return ca;
   } catch (error) {
