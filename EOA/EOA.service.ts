@@ -19,7 +19,7 @@ const createEOA = async (data: EOADTO, next: NextFunction) => {
 
 const viewOneEOA = async (id: number, next: NextFunction) => {
   try {
-    const eoa = await db.models.EOA.findOne({ where: { id } });
+    const eoa = await db.models.EOA.findOne({ where: { id }, include : {model : db.models.Tx} });
 
     return eoa;
   } catch (error) {

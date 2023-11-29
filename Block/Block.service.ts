@@ -43,7 +43,7 @@ const viewAllBlocks = async (next: NextFunction) => {
 
 const viewOneBlock = async (id: number, next: NextFunction) => {
   try {
-    const block = await db.models.Block.findOne({ where: { id } });
+    const block = await db.models.Block.findOne({ where: { id }, include : {model : db.models.Tx} });
 
     return block;
   } catch (error) {

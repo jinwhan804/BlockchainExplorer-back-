@@ -33,7 +33,7 @@ const viewAllNFTs = async (next: NextFunction) => {
 
 const viewOneNFT = async (id: number, next: NextFunction) => {
   try {
-    const nft = await db.models.NFT.findOne({ where: { id } });
+    const nft = await db.models.NFT.findOne({ where: { id }, include : {model : db.models.Tx} });
 
     return nft;
   } catch (error) {

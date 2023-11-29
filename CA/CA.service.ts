@@ -18,7 +18,7 @@ const createCA = async (data: CADTO, next: NextFunction) => {
 
 const viewOneCA = async (id: number, next: NextFunction) => {
   try {
-    const ca = await db.models.CA.findOne({ where: { id } });
+    const ca = await db.models.CA.findOne({ where: { id }, include : {model : db.models.Tx} });
 
     return ca;
   } catch (error) {

@@ -39,7 +39,7 @@ const viewAllTokens = async (next : NextFunction) => {
 
 const viewOneToken = async (id : number, next : NextFunction) => {
   try {
-    const token = await db.models.Token.findOne({where : {id}});
+    const token = await db.models.Token.findOne({where : {id}, include : {model : db.models.Tx}});
 
     return token;
   } catch (error) {
