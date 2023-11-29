@@ -3,7 +3,7 @@ import EOAControllers from "./EOA.controller";
 
 const router = express.Router();
 
-router.get('/', EOAControllers.ViewOneEOA);
+router.get('/:id', EOAControllers.ViewOneEOA);
 
 router.get('/find/:address', EOAControllers.FindEOA);
 
