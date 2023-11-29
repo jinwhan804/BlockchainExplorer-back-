@@ -18,6 +18,8 @@ import { getEoainfo } from "./information-system/function/eoa/getEoa_info";
 import { saveABIandAddress } from "./information-system/function/collector/getAbiAndAddress";
 import { getBlockInfo } from "./information-system/function/analyzer/getBlockInfo";
 import { getallblock } from "./information-system/function/block/getAllblock";
+import { getTokeninfo } from "./information-system/function/token/getToken_info";
+import EOAService from "./EOA/EOA.service";
 dotenv.config();
 
 const app = express();
@@ -52,10 +54,11 @@ app.listen(8080, async () => {
   console.log("server open");
   // await saveABIandAddress();
   // await getnftinfo();
-
+  // await getTokeninfo();
   // await getEoainfo();
   // await getBlockInfo(3404791);
-  await getallblock();
+  // await getallblock();
+  // await EOAService.findTxByEOA();
   if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
     CollectStart_http();
   } else {
