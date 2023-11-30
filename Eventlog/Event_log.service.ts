@@ -1,3 +1,4 @@
+import { NextFunction } from "express";
 import db from "../database";
 interface InputData {
   "0": string;
@@ -10,8 +11,31 @@ interface InputData {
 }
 
 const result: Record<string, any> = {};
-
-export const createEventlog = async (eventdata: any) => {
+const viewOneEventlog = async (id: number, next: NextFunction) => {
+  try {
+    const log = await db.models.EventLog.findOne({
+      where: { id },
+      // include: { model: db.models.Tx },
+    });
+    return log;
+  } catch (error) {
+    console.log("ViewOneEventlogerr");
+    next(error);
+  }
+};
+const viewAllEventlog = async (address: string, next: NextFunction) => {
+  try {
+    const log = await db.models.EventLog.findAll({
+      where: { address },
+      // include: { model: db.models.Tx },
+    });
+    return log;
+  } catch (error) {
+    console.log("ViewAllEventlogerr");
+    next(error);
+  }
+};
+const createEventlog = async (eventdata: any) => {
   try {
     // console.log("createEventlog", eventdata);
     const {
@@ -35,21 +59,6 @@ export const createEventlog = async (eventdata: any) => {
       return value;
     });
 
-    // console.log(
-    //   "hahsdhahdsha",
-    //   address,
-    //   blockHash,
-    //   blockNumber,
-    //   data,
-    //   logIndex,
-    //   removed,
-    //   topics,
-    //   transactionHash,
-    //   transactionIndex,
-    //   returnValues,
-    //   event,
-    //   signature
-    // );
     const result = await db.models.EventLog.create({
       address,
       blockHash,
@@ -70,3 +79,4 @@ export const createEventlog = async (eventdata: any) => {
     console.log("createEventlog 오류발생", error);
   }
 };
+export default { createEventlog, viewOneEventlog, viewAllEventlog };

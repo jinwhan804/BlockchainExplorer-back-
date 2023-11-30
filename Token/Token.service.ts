@@ -39,7 +39,10 @@ const viewAllTokens = async (next: NextFunction) => {
 
 const viewOneToken = async (id: number, next: NextFunction) => {
   try {
-    const token = await db.models.Token.findOne({where : {id}, include : {model : db.models.Tx}});
+    const token = await db.models.Token.findOne({
+      where: { id },
+      include: { model: db.models.Tx },
+    });
 
     return token;
   } catch (error) {
@@ -120,14 +123,26 @@ const updateToken = async (id: number, data: TokenDTO, next: NextFunction) => {
   }
 };
 
-const findToken = async (name : string, next : NextFunction) => {
+const findToken = async (name: string, next: NextFunction) => {
   try {
-    const token = await db.models.Token.findOne({where : {name}, include : {model : db.models.Tx}});
+    const token = await db.models.Token.findOne({
+      where: { name },
+      include: { model: db.models.Tx },
+    });
 
     return token;
   } catch (error) {
     next(error);
   }
-}
+};
 
-export default { createToken, createTokentest, isExist, viewAllTokens, viewOneToken, updateToken, findToken, getAllTokens };
+export default {
+  createToken,
+  createTokentest,
+  isExist,
+  viewAllTokens,
+  viewOneToken,
+  updateToken,
+  findToken,
+  getAllTokens,
+};
