@@ -8,6 +8,7 @@ import txRouter from "./Tx/Tx.router";
 import blockRouter from "./Block/Block.router";
 import EOARouter from "./EOA/EOA.router";
 import CARouter from "./CA/CA.router";
+import EventRouter from "./Eventlog/Event_log.router";
 import cors from "cors"; // cors 패키지 추가
 import { CollectStart_http } from "./information-system/function/CollectStart_http";
 import { subscribetest } from "./information-system/function/CollectStart_websocket";
@@ -43,6 +44,7 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(express.json());
 
+app.use("/eventlog", EventRouter);
 app.use("/nft", nftRouter);
 app.use("/token", tokenRouter);
 app.use("/tx", txRouter);
