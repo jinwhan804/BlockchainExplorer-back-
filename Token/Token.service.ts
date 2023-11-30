@@ -130,4 +130,4 @@ const findToken = async (name : string, next : NextFunction) => {
   }
 }
 
-export default { createToken, createTokentest, isExist, viewAllTokens, viewOneToken, updateToken, findToken };
+export default { createToken, createTokentest, isExist, viewAllTokens, viewOneToken, updateToken, findToken, getAllTokens };
