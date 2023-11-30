@@ -21,6 +21,7 @@ const Tx_router_1 = __importDefault(require("./Tx/Tx.router"));
 const Block_router_1 = __importDefault(require("./Block/Block.router"));
 const EOA_router_1 = __importDefault(require("./EOA/EOA.router"));
 const CA_router_1 = __importDefault(require("./CA/CA.router"));
+const Event_log_router_1 = __importDefault(require("./Eventlog/Event_log.router"));
 const cors_1 = __importDefault(require("cors")); // cors 패키지 추가
 const errorExcept_1 = require("./database/errorExcept");
 dotenv_1.default.config();
@@ -38,6 +39,7 @@ database_1.default.sync({ force: false })
 });
 app.use(express_1.default.urlencoded({ extended: false }));
 app.use(express_1.default.json());
+app.use("/eventlog", Event_log_router_1.default);
 app.use("/nft", NFT_router_1.default);
 app.use("/token", Token_router_1.default);
 app.use("/tx", Tx_router_1.default);
