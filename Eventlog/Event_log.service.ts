@@ -26,7 +26,7 @@ const viewOneEventlog = async (id: number, next: NextFunction) => {
 const viewAllEventlog = async (address: string, next: NextFunction) => {
   try {
     const log = await db.models.EventLog.findAll({
-      where: { address },
+      where: { transactionHash: address },
       // include: { model: db.models.Tx },
     });
     return log;
