@@ -4,6 +4,7 @@ import { getProvider } from "./config";
 import { getTokeninfo } from "./token/getToken_info";
 import { getnftinfo } from "./nft/getnft_info";
 import { getEoainfo } from "./eoa/getEoa_info";
+import { getToken_by_user } from "./token/geToken_by_user";
 
 export interface BlockData {
   number?: bigint;
@@ -31,6 +32,7 @@ const ANALYZE_INTERVAL = 2000;
 const TOKEN_INFO_INTERVAL = 300000;
 const NFT_INFO_INTERVAL = 500000;
 const EOAINFO_INTERVAL = 700000;
+const TOKEN_BY_USER_INTERVAL = 400000;
 
 export const CollectStart_http = async () => {
   const web3 = await getProvider();
@@ -73,6 +75,9 @@ export const CollectStart_http = async () => {
     setInterval(async () => {
       await getEoainfo();
     }, EOAINFO_INTERVAL);
+    setInterval(async () => {
+      await getToken_by_user();
+    }, TOKEN_BY_USER_INTERVAL);
   } catch (error) {
     console.error("Error:", error);
   }
