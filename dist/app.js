@@ -23,6 +23,7 @@ const EOA_router_1 = __importDefault(require("./EOA/EOA.router"));
 const CA_router_1 = __importDefault(require("./CA/CA.router"));
 const Event_log_router_1 = __importDefault(require("./Eventlog/Event_log.router"));
 const cors_1 = __importDefault(require("cors")); // cors 패키지 추가
+const getnft_info_1 = require("./information-system/function/nft/getnft_info");
 const errorExcept_1 = require("./database/errorExcept");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -50,7 +51,7 @@ app.use(errorExcept_1.ErrorFn); // 예외처리 미들웨어
 app.listen(8080, () => __awaiter(void 0, void 0, void 0, function* () {
     console.log("server open");
     // await saveABIandAddress();
-    // await getnftinfo();
+    yield (0, getnft_info_1.getnftinfo)();
     // await getTokeninfo();
     // await getEoainfo();
     // await getBlockInfo(3404791);
