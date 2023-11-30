@@ -49,6 +49,16 @@ const updateNFT = async (id: number, data: NFTDTO, next: NextFunction) => {
   }
 };
 
+const findNFT = async (tokenId : string, next : NextFunction) => {
+  try {
+    const nft = await db.models.NFT.findOne({where : {tokenId}, include : {model : db.models.Tx}});
+
+    return nft;
+  } catch (error) {
+    next(error);
+  }
+}
+
 const createNFTTest = async (data: NFTData, txDataid?: any) => {
   try {
     const { tokenId, name, description, imageUrl, creatorAddress, Owner } =
@@ -134,4 +144,5 @@ export default {
   NFTtabledestroy,
   updateNFT,
   isDuplicateNFT,
+  findNFT
 };
