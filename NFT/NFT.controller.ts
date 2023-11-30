@@ -45,15 +45,4 @@ const UpdateNFT = async (req : Request, res : Response, next : NextFunction) => 
     }
 }
 
-const FindNFT = async (req : Request, res : Response, next : NextFunction) => {
-    try {
-        const tokenId = req.params.tokenid.toString();
-        const data = await NFTServices.findNFT(tokenId, next);
-
-        res.json(data);
-    } catch (error) {
-        next(error);
-    }
-}
-
-export default { CreateNFT, ViewAllNFTs, ViewOneNFT, UpdateNFT, FindNFT };
+export default { CreateNFT, ViewAllNFTs, ViewOneNFT, UpdateNFT };
