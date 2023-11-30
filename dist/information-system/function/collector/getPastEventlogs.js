@@ -17,7 +17,7 @@ const path_1 = __importDefault(require("path"));
 const JSON_1 = require("../../JSON");
 const getAbiAndAddress_1 = require("./getAbiAndAddress");
 const config_1 = require("../config");
-const Event_log_service_1 = require("../../../Eventlog/Event_log.service");
+const Event_log_service_1 = __importDefault(require("../../../Eventlog/Event_log.service"));
 const CaEventlog_service_1 = require("../../../CaEventlog/CaEventlog.service");
 // const RPC_URL =
 //   "wss://sepolia.infura.io/ws/v3/d22607d7f58545f99e3c0eadcbf00eb4";
@@ -51,7 +51,7 @@ const getPasteventlogs = (address, type, caId) => __awaiter(void 0, void 0, void
             toBlock: "latest",
         });
         for (const pastEvent of pastEvents) {
-            const result = yield (0, Event_log_service_1.createEventlog)(pastEvent);
+            const result = yield Event_log_service_1.default.createEventlog(pastEvent);
             yield (0, CaEventlog_service_1.createCaEvnetlog)(caId, result === null || result === void 0 ? void 0 : result.dataValues.id);
         }
     }

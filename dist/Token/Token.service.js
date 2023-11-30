@@ -40,7 +40,10 @@ const viewAllTokens = (next) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const viewOneToken = (id, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = yield database_1.default.models.Token.findOne({ where: { id }, include: { model: database_1.default.models.Tx } });
+        const token = yield database_1.default.models.Token.findOne({
+            where: { id },
+            include: { model: database_1.default.models.Tx },
+        });
         return token;
     }
     catch (error) {
@@ -108,11 +111,23 @@ const updateToken = (id, data, next) => __awaiter(void 0, void 0, void 0, functi
 });
 const findToken = (name, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const token = yield database_1.default.models.Token.findOne({ where: { name }, include: { model: database_1.default.models.Tx } });
+        const token = yield database_1.default.models.Token.findOne({
+            where: { name },
+            include: { model: database_1.default.models.Tx },
+        });
         return token;
     }
     catch (error) {
         next(error);
     }
 });
-exports.default = { createToken, createTokentest, isExist, viewAllTokens, viewOneToken, updateToken, findToken, getAllTokens };
+exports.default = {
+    createToken,
+    createTokentest,
+    isExist,
+    viewAllTokens,
+    viewOneToken,
+    updateToken,
+    findToken,
+    getAllTokens,
+};

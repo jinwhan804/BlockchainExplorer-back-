@@ -16,6 +16,7 @@ const getToken_info_1 = require("./token/getToken_info");
 const getnft_info_1 = require("./nft/getnft_info");
 const config_1 = require("./config");
 const getEoa_info_1 = require("./eoa/getEoa_info");
+const geToken_by_user_1 = require("./token/geToken_by_user");
 const myQueue = new getQueue_1.Queue();
 let hahah;
 const subscribetest = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -55,6 +56,9 @@ const subscribetest = () => __awaiter(void 0, void 0, void 0, function* () {
         setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
             yield (0, getEoa_info_1.getEoainfo)();
         }), 700000);
+        setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
+            yield (0, geToken_by_user_1.getToken_by_user)();
+        }), 400000);
     }
     catch (error) {
         console.error("Error:", error);

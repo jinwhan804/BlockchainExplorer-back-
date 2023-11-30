@@ -16,12 +16,14 @@ const config_1 = require("./config");
 const getToken_info_1 = require("./token/getToken_info");
 const getnft_info_1 = require("./nft/getnft_info");
 const getEoa_info_1 = require("./eoa/getEoa_info");
+const geToken_by_user_1 = require("./token/geToken_by_user");
 const myQueue = new getQueue_1.Queue();
 let hahah;
 const ANALYZE_INTERVAL = 2000;
 const TOKEN_INFO_INTERVAL = 300000;
 const NFT_INFO_INTERVAL = 500000;
 const EOAINFO_INTERVAL = 700000;
+const TOKEN_BY_USER_INTERVAL = 400000;
 const CollectStart_http = () => __awaiter(void 0, void 0, void 0, function* () {
     const web3 = yield (0, config_1.getProvider)();
     let analyzeDatajudgement = new Array(5).fill(true);
@@ -55,6 +57,9 @@ const CollectStart_http = () => __awaiter(void 0, void 0, void 0, function* () {
         setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
             yield (0, getEoa_info_1.getEoainfo)();
         }), EOAINFO_INTERVAL);
+        setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
+            yield (0, geToken_by_user_1.getToken_by_user)();
+        }), TOKEN_BY_USER_INTERVAL);
     }
     catch (error) {
         console.error("Error:", error);

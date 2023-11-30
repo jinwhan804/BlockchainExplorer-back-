@@ -12,9 +12,34 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createEventlog = void 0;
 const database_1 = __importDefault(require("../database"));
 const result = {};
+const viewOneEventlog = (id, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const log = yield database_1.default.models.EventLog.findOne({
+            where: { id },
+            // include: { model: db.models.Tx },
+        });
+        return log;
+    }
+    catch (error) {
+        console.log("ViewOneEventlogerr");
+        next(error);
+    }
+});
+const viewAllEventlog = (address, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const log = yield database_1.default.models.EventLog.findAll({
+            where: { transactionHash: address },
+            // include: { model: db.models.Tx },
+        });
+        return log;
+    }
+    catch (error) {
+        console.log("ViewAllEventlogerr");
+        next(error);
+    }
+});
 const createEventlog = (eventdata) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // console.log("createEventlog", eventdata);
@@ -25,21 +50,6 @@ const createEventlog = (eventdata) => __awaiter(void 0, void 0, void 0, function
             }
             return value;
         });
-        // console.log(
-        //   "hahsdhahdsha",
-        //   address,
-        //   blockHash,
-        //   blockNumber,
-        //   data,
-        //   logIndex,
-        //   removed,
-        //   topics,
-        //   transactionHash,
-        //   transactionIndex,
-        //   returnValues,
-        //   event,
-        //   signature
-        // );
         const result = yield database_1.default.models.EventLog.create({
             address,
             blockHash,
@@ -61,4 +71,4 @@ const createEventlog = (eventdata) => __awaiter(void 0, void 0, void 0, function
         console.log("createEventlog 오류발생", error);
     }
 });
-exports.createEventlog = createEventlog;
+exports.default = { createEventlog, viewOneEventlog, viewAllEventlog };
