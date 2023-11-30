@@ -3,7 +3,7 @@ import Web3 from "web3";
 import { DIRNAME } from "../../JSON";
 import { readjson } from "./getAbiAndAddress";
 import { getProvider } from "../config";
-import { createEventlog } from "../../../Eventlog/Event_log.service";
+import Event_logService from "../../../Eventlog/Event_log.service";
 import { createCaEvnetlog } from "../../../CaEventlog/CaEventlog.service";
 // const RPC_URL =
 //   "wss://sepolia.infura.io/ws/v3/d22607d7f58545f99e3c0eadcbf00eb4";
@@ -44,7 +44,7 @@ export const getPasteventlogs = async (
       toBlock: "latest",
     });
     for (const pastEvent of pastEvents) {
-      const result = await createEventlog(pastEvent);
+      const result = await Event_logService.createEventlog(pastEvent);
       await createCaEvnetlog(caId, result?.dataValues.id);
     }
   } catch (error) {

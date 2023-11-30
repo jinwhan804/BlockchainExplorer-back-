@@ -9,6 +9,20 @@ import {
 } from "sequelize-typescript";
 import { CA } from "../CA/CA.model";
 import { CAEventLog } from "../CaEventlog/CaEventlog.model";
+export interface Event_log {
+  address: string;
+  blockHash: string;
+  blockNumber: bigint;
+  data: string;
+  logIndex: bigint;
+  removed: boolean;
+  transactionHash: string;
+  transactionIndex: bigint;
+  event: string;
+  signature: string;
+  topics: string[];
+  returnValues: string[];
+}
 
 @Table({
   timestamps: true,
