@@ -9,6 +9,8 @@ import { DIRNAME } from "../../JSON";
 import path from "path";
 import NFTService from "../../../NFT/NFT.service";
 import BlockService from "../../../Block/Block.service";
+import { URL } from "url"; // Node.js에서 URL 모듈을 사용하기 위해 import
+
 // BlockService.findOneblock 함수에서 반환되는 값에 대한 타입 확인
 interface BlockInfo {
   blockNumber: number;
@@ -17,6 +19,7 @@ interface BlockInfo {
 
 // getnftinfo 함수 내에서 사용할 타입
 interface NFTInfo {
+  address: string;
   tokenId: string;
   creator: string;
   owner: string;
@@ -64,18 +67,20 @@ export const getnftinfo = async () => {
                     creator: pastEvent.returnValues.to,
                     owner: pastEvent.returnValues.to,
                     transactionhash: pastEvent.transactionHash,
+                    address: pastEvent.address,
                   };
                 } else {
                   tmparr2[tokenId].owner = pastEvent.returnValues.to;
                 }
               }
             }
+            console.log(tmparr2);
             const tmparr3 = Object.values(tmparr2);
             for (const value of tmparr3) {
               try {
                 const tokenURI: any = await cm.tokenURI(value.tokenId).call();
                 let httpURI: string = "";
-                // console.log(tokenURI);
+                console.log("tmparr3,value", tokenURI);
                 if (
                   tokenURI.includes("http://") ||
                   tokenURI.includes("ipfs:")
@@ -97,24 +102,44 @@ export const getnftinfo = async () => {
 
                 const metadata: any = await fetchDataWithDelay(httpURI);
                 const data: NFTData = {
-                  tokenId: value.tokenId || metadata.edition,
-                  name: metadata.name,
-                  description: metadata.description,
-                  imageUrl: metadata.image_data || metadata.image,
-                  creatorAddress: value.creator,
-                  Owner: value.owner,
-                  transactionhash: value.transactionhash,
+                  tokenId: value.tokenId || "",
+                  name: metadata.name || "",
+                  description: metadata.description || "",
+                  imageUrl: metadata.imageUrl || "",
+                  creatorAddress: value.creator || "",
+                  Owner: value.owner || "",
+                  transactionhash: value.transactionhash || "",
+                  address: value.address || "",
                 };
-                console.log("!@#!@#!@#", data);
+                console.log("데이터입니다!!", data);
+                const tokenId = data.tokenId?.toString() || "";
+                const name = data.name || "";
+                const Owner = value.owner || "";
+                const address = data.address || "";
+
                 const isDuplicate = await NFTService.isDuplicateNFT(
-                  data.tokenId.toString(),
-                  data.name,
-                  data.Owner
+                  tokenId,
+                  address,
+                  Owner
                 );
                 console.log("중복인가?", isDuplicate, tmparr);
                 //중복이 아니면 추가한다.
+
                 if (!isDuplicate) {
-                  tmparr.push(data);
+                  // tmparr.push(data);
+                  if (data.transactionhash) {
+                    const txDataid = await TxService.getFindone(
+                      data.transactionhash
+                    );
+                    try {
+                      await NFTservice.createNFTTest(
+                        data,
+                        txDataid?.dataValues.id
+                      );
+                    } catch (error) {
+                      console.log("getnftinfo", error);
+                    }
+                  }
                 }
               } catch (error) {
                 console.log("getnftinfo", error);
@@ -123,19 +148,19 @@ export const getnftinfo = async () => {
           }
         }
       }
-      console.log("!@#!@#!", tmparr);
-      if (tmparr.length > 0) {
-        for (const data of tmparr) {
-          if (data.transactionhash) {
-            const txDataid = await TxService.getFindone(data.transactionhash);
-            try {
-              await NFTservice.createNFTTest(data, txDataid?.dataValues.id);
-            } catch (error) {
-              console.log("getnftinfo", error);
-            }
-          }
-        }
-      }
+      // console.log("!@#!@#!", tmparr);
+      // if (tmparr.length > 0) {
+      //   for (const data of tmparr) {
+      //     if (data.transactionhash) {
+      //       const txDataid = await TxService.getFindone(data.transactionhash);
+      //       try {
+      //         await NFTservice.createNFTTest(data, txDataid?.dataValues.id);
+      //       } catch (error) {
+      //         console.log("getnftinfo", error);
+      //       }
+      //     }
+      //   }
+      // }
     }
   } catch (error) {
     console.log("getnftinfo", error);
@@ -144,6 +169,10 @@ export const getnftinfo = async () => {
 
 async function fetchDataWithDelay(tokenURI: string): Promise<any> {
   try {
+    // URL을 구문 분석하고 유효성을 확인
+
+    const parsedUrl = new URL(tokenURI);
+
     console.log("fetchDataWithDelay", tokenURI);
     await new Promise((resolve) => setTimeout(resolve, 1000));
     const response = await fetch(tokenURI);
@@ -151,6 +180,12 @@ async function fetchDataWithDelay(tokenURI: string): Promise<any> {
     return data;
   } catch (error) {
     console.error("Failed to fetch data:", error);
-    throw error;
+    const errresponse = {
+      name: `Failed to fetch data`,
+      description: "Failed to fetch data",
+      imageUrl: "failed",
+    };
+
+    return errresponse;
   }
 }
