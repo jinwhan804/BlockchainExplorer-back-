@@ -56,7 +56,7 @@ app.use(ErrorFn); // 예외처리 미들웨어
 app.listen(8080, async () => {
   console.log("server open");
   // await saveABIandAddress();
-  // await getnftinfo();
+  await getnftinfo();
   // await getTokeninfo();
   // await getEoainfo();
   // await getBlockInfo(3404791);

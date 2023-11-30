@@ -11,12 +11,12 @@ export default class NFTDTO extends BaseDTO implements NFTData {
 
   constructor(body: NFTData) {
     super();
-    this.tokenId = body.tokenId;
-    this.name = body.name;
-    this.description = body.description;
-    this.imageUrl = body.imageUrl;
-    this.creatorAddress = body.creatorAddress;
-    this.Owner = body.Owner;
+    this.tokenId = body.tokenId || "";
+    this.name = body.name || "";
+    this.description = body.description || "";
+    this.imageUrl = body.imageUrl || "";
+    this.creatorAddress = body.creatorAddress || "";
+    this.Owner = body.Owner || "";
     this.createDTO(this);
   }
 }
