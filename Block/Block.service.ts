@@ -33,7 +33,9 @@ const createBlock = async (data: BlockDTO, next: NextFunction) => {
 
 const viewAllBlocks = async (next: NextFunction) => {
   try {
-    const blocks = await db.models.Block.findAll({order : [[ 'timestamp', 'DESC' ]]});
+    const blocks = await db.models.Block.findAll({
+      order: [["timestamp", "DESC"]],
+    });
 
     return blocks;
   } catch (error) {
@@ -43,7 +45,10 @@ const viewAllBlocks = async (next: NextFunction) => {
 
 const viewOneBlock = async (id: number, next: NextFunction) => {
   try {
-    const block = await db.models.Block.findOne({ where: { id }, include : {model : db.models.Tx} });
+    const block = await db.models.Block.findOne({
+      where: { id },
+      include: { model: db.models.Tx },
+    });
 
     return block;
   } catch (error) {
@@ -53,7 +58,10 @@ const viewOneBlock = async (id: number, next: NextFunction) => {
 
 const findBlockNum = async (number: number, next: NextFunction) => {
   try {
-    const block = await db.models.Block.findOne({ where: { number }, include : {model : db.models.Tx} });
+    const block = await db.models.Block.findOne({
+      where: { number },
+      include: { model: db.models.Tx },
+    });
 
     return block;
   } catch (error) {
@@ -81,50 +89,54 @@ const findOneblock = async (id: number) => {
   }
 };
 const createBlocktest = async (data: BlockData, txnscount: number) => {
-  console.log("createBlocktest");
-  const {
-    number,
-    hash,
-    parentHash,
-    sha3Uncles,
-    logsBloom,
-    transactionsRoot,
-    stateRoot,
-    receiptsRoot,
-    miner,
-    difficulty,
-    extraData,
-    gasLimit,
-    gasUsed,
-    timestamp,
-    baseFeePerGas,
-    withdrawalsRoot,
-    nonce,
-    mixHash,
-  } = data;
-  const value = await db.models.Block.create({
-    number,
-    hash,
-    parentHash,
-    sha3Uncles,
-    logsBloom,
-    transactionsRoot,
-    stateRoot,
-    receiptsRoot,
-    miner,
-    difficulty,
-    extraData,
-    gasLimit,
-    gasUsed,
-    timestamp,
-    baseFeePerGas: 0,
-    withdrawalsRoot: 0,
-    nonce,
-    mixHash,
-    txcount: txnscount,
-  });
-  // console.log("밸류밸류밸류밸류", value);
-  return value;
+  try {
+    console.log("createBlocktest");
+    const {
+      number,
+      hash,
+      parentHash,
+      sha3Uncles,
+      logsBloom,
+      transactionsRoot,
+      stateRoot,
+      receiptsRoot,
+      miner,
+      difficulty,
+      extraData,
+      gasLimit,
+      gasUsed,
+      timestamp,
+      baseFeePerGas,
+      withdrawalsRoot,
+      nonce,
+      mixHash,
+    } = data;
+    const value = await db.models.Block.create({
+      number,
+      hash,
+      parentHash,
+      sha3Uncles,
+      logsBloom,
+      transactionsRoot,
+      stateRoot,
+      receiptsRoot,
+      miner,
+      difficulty,
+      extraData,
+      gasLimit,
+      gasUsed,
+      timestamp,
+      baseFeePerGas: 0,
+      withdrawalsRoot: 0,
+      nonce,
+      mixHash,
+      txcount: txnscount,
+    });
+    // console.log("밸류밸류밸류밸류", value);
+    return value;
+  } catch (error) {
+    console.log("Error");
+  }
 };
 
 export default {
@@ -134,5 +146,5 @@ export default {
   viewOneBlock,
   updateTxNum,
   findOneblock,
-  findBlockNum
+  findBlockNum,
 };
