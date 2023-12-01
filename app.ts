@@ -32,7 +32,7 @@ app.use(
   })
 );
 
-db.sync({ force: false })
+db.sync({ force: true })
   .then(() => {
     console.log("connect on");
   })
@@ -56,7 +56,7 @@ app.use(ErrorFn); // 예외처리 미들웨어
 app.listen(8080, async () => {
   console.log("server open");
   // await saveABIandAddress();
-  await getnftinfo();
+  // await getnftinfo();
   // await getTokeninfo();
   // await getEoainfo();
   // await getBlockInfo(3404791);
@@ -64,10 +64,10 @@ app.listen(8080, async () => {
   // await EOAService.findTxByEOA();
   // await getToken_by_user();
 
-  // if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
-  //   CollectStart_http();
-  // } else {
-  //   subscribetest();
-  // }
+  if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
+    CollectStart_http();
+  } else {
+    subscribetest();
+  }
   console.log("테스트 구문 끝");
 });
