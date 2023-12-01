@@ -28,7 +28,10 @@ const createCA = (data, next) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const viewOneCA = (id, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const ca = yield database_1.default.models.CA.findOne({ where: { id }, include: { model: database_1.default.models.Tx } });
+        const ca = yield database_1.default.models.CA.findOne({
+            where: { id },
+            include: { model: database_1.default.models.Tx },
+        });
         return ca;
     }
     catch (error) {
@@ -48,7 +51,10 @@ const updateCA = (data, next) => __awaiter(void 0, void 0, void 0, function* () 
 });
 const findCA = (address, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const ca = yield database_1.default.models.CA.findOne({ where: { address }, include: { model: database_1.default.models.Tx } });
+        const ca = yield database_1.default.models.CA.findOne({
+            where: { address },
+            include: { model: database_1.default.models.Tx },
+        });
         return ca;
     }
     catch (error) {
@@ -119,6 +125,7 @@ const postjson = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 abiSigniture: data.abiSigniture,
                 signitureNames: data.signitureNames,
                 abi: data.abi,
+                CAtype: data.CAtype,
             }, { where: { address: data.address } });
         }
         else {
@@ -127,6 +134,7 @@ const postjson = (data) => __awaiter(void 0, void 0, void 0, function* () {
                 abiSigniture: data.abiSigniture,
                 signitureNames: data.signitureNames,
                 abi: data.abi,
+                CAtype: data.CAtype,
             });
         }
     }
@@ -164,5 +172,5 @@ exports.default = {
     findTxByCAType,
     postjson,
     CAtxnsMethodsUpdate,
-    findCA
+    findCA,
 };

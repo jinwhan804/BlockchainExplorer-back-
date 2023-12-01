@@ -40,7 +40,10 @@ const viewAllNFTs = (next) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const viewOneNFT = (id, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const nft = yield database_1.default.models.NFT.findOne({ where: { id }, include: { model: database_1.default.models.Tx } });
+        const nft = yield database_1.default.models.NFT.findOne({
+            where: { id },
+            include: { model: database_1.default.models.Tx },
+        });
         return nft;
     }
     catch (error) {
@@ -57,7 +60,7 @@ const updateNFT = (id, data, next) => __awaiter(void 0, void 0, void 0, function
 });
 const createNFTTest = (data, txDataid) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { tokenId, name, description, imageUrl, creatorAddress, Owner } = data;
+        const { tokenId, name, description, imageUrl, creatorAddress, Owner, address, } = data;
         const result = yield database_1.default.models.NFT.create({
             tokenId,
             name,
@@ -65,6 +68,7 @@ const createNFTTest = (data, txDataid) => __awaiter(void 0, void 0, void 0, func
             imageUrl,
             creatorAddress,
             Owner,
+            address,
         });
         const asd = yield database_1.default.models.Tx.update({ NFT_id: result.dataValues.id }, { where: { id: txDataid } });
         console.log("asdasdsad", asd);
@@ -94,12 +98,12 @@ const isExist = (tokenId) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 // NFT.service.ts
-const isDuplicateNFT = (id, name, newOwner) => __awaiter(void 0, void 0, void 0, function* () {
+const isDuplicateNFT = (id, address, newOwner) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // 동일한 ID 또는 이름을 가진 NFT 중에서 소유자가 변경된 경우에만 업데이트
         const existingNFTs = yield database_1.default.models.NFT.findAll({
             where: {
-                [sequelize_1.Op.or]: [{ tokenId: id }, { name: name }],
+                [sequelize_1.Op.or]: [{ tokenId: id }, { address: address }],
             },
         });
         if (existingNFTs.length === 0) {
@@ -128,5 +132,5 @@ exports.default = {
     viewOneNFT,
     NFTtabledestroy,
     updateNFT,
-    isDuplicateNFT,
+    isDuplicateNFT
 };
