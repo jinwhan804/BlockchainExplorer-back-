@@ -3,6 +3,7 @@ import db from "../database";
 import { CAData } from "./CA.model";
 import { NextFunction } from "express";
 import sequelize, { Op, where } from "sequelize";
+import { CAInstance } from "../information-system/Interface/CA_dbresult_interface";
 
 const createCA = async (data: CADTO, next: NextFunction) => {
   try {
@@ -18,7 +19,10 @@ const createCA = async (data: CADTO, next: NextFunction) => {
 
 const viewOneCA = async (id: number, next: NextFunction) => {
   try {
-    const ca = await db.models.CA.findOne({ where: { id }, include : {model : db.models.Tx} });
+    const ca = await db.models.CA.findOne({
+      where: { id },
+      include: { model: db.models.Tx },
+    });
 
     return ca;
   } catch (error) {
@@ -37,15 +41,18 @@ const updateCA = async (data: CADTO, next: NextFunction) => {
   }
 };
 
-const findCA = async (address : string, next : NextFunction) => {
+const findCA = async (address: string, next: NextFunction) => {
   try {
-    const ca = await db.models.CA.findOne({where : {address}, include : {model : db.models.Tx}});
+    const ca = await db.models.CA.findOne({
+      where: { address },
+      include: { model: db.models.Tx },
+    });
 
     return ca;
   } catch (error) {
     next(error);
   }
-}
+};
 
 const findCAtype = async () => {
   try {
@@ -113,6 +120,7 @@ const postjson = async (data: any) => {
           abiSigniture: data.abiSigniture,
           signitureNames: data.signitureNames,
           abi: data.abi,
+          CAtype: data.CAtype,
         },
         { where: { address: data.address } }
       );
@@ -122,6 +130,7 @@ const postjson = async (data: any) => {
         abiSigniture: data.abiSigniture,
         signitureNames: data.signitureNames,
         abi: data.abi,
+        CAtype: data.CAtype,
       });
     }
   } catch (error) {
@@ -166,5 +175,5 @@ export default {
   findTxByCAType,
   postjson,
   CAtxnsMethodsUpdate,
-  findCA
+  findCA,
 };
