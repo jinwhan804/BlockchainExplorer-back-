@@ -20,7 +20,7 @@ function getBlockInfo(blockNumber) {
             const block = yield web3.eth.getBlock(blockNumber, true);
             if (block) {
                 if (block.transactions) {
-                    // console.log(block);
+                    // console.log(block.transactions);
                 }
                 return block;
             }

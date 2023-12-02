@@ -62,7 +62,7 @@ export async function getBlockInfo(blockNumber: number) {
 
     if (block) {
       if (block.transactions) {
-        // console.log(block);
+        // console.log(block.transactions);
       }
       return block;
     } else {

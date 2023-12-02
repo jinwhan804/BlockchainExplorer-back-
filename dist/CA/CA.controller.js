@@ -37,11 +37,14 @@ const ViewOneCA = (req, res, next) => __awaiter(void 0, void 0, void 0, function
 const UpdateCA = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         // const id = Number(req.params.id);
-        const data = new CA_dto_1.default(req.body);
+        const tempBodyData = req.body;
+        const bodyData = Object.assign(Object.assign({}, tempBodyData), { abi: JSON.parse(tempBodyData.abi), abiSigniture: JSON.parse(tempBodyData.abiSigniture), signitureNames: JSON.parse(tempBodyData.signitureNames) });
+        const data = new CA_dto_1.default(bodyData);
         yield CA_service_1.default.updateCA(data, next);
         res.send();
     }
     catch (error) {
+        console.log(error);
         next(error);
     }
 });

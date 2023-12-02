@@ -37,7 +37,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.saveABIandAddress = exports.readjson = void 0;
 const fs = __importStar(require("fs"));
-const testabiinfo_1 = require("../../Sig_abi_Arrary/testabiinfo");
 const config_1 = require("../config");
 const JSON_1 = require("../../JSON");
 const path_1 = __importDefault(require("path"));
@@ -65,13 +64,10 @@ const readjson = (filePath) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.readjson = readjson;
 const saveABIandAddress = () => __awaiter(void 0, void 0, void 0, function* () {
-    // const contractAddress2 = "0x1D41745c4f64e60b7c77FFaf613a3D0330ae4e79";
     const contractAddress2 = "0x39A9B4456651db823Ff19fB341E591ae153AdB17";
     const web3 = yield (0, config_1.getProvider)();
-    const newcontract = new web3.eth.Contract(testabiinfo_1.erc20abi, contractAddress2);
     const jsonFilePath = path_1.default.join(JSON_1.DIRNAME, "test.json");
     const jsonData = yield (0, exports.readjson)(jsonFilePath);
-    // console.log(jsonData);
     const arr = [];
     const namearr = [];
     for (let i = 0; i < jsonData.length; i++) {

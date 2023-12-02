@@ -152,8 +152,8 @@ const CAtxnsMethodsUpdate = (address, data) => __awaiter(void 0, void 0, void 0,
         yield Promise.all(transactions.map((value) => __awaiter(void 0, void 0, void 0, function* () {
             console.log(value.dataValues.Method);
             for (let i = 0; i < data.signitureNames.length; i++) {
-                if (data.signiture[i] === value.dataValues.Method) {
-                    yield database_1.default.models.Tx.update({ method: data.signitureNames[i] }, { where: { id: value.id } });
+                if (data.abiSigniture[i] === value.dataValues.Method) {
+                    yield database_1.default.models.Tx.update({ Method: data.signitureNames[i] }, { where: { id: value.id } });
                 }
             }
         })));

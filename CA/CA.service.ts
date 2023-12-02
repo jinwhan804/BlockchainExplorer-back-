@@ -145,14 +145,13 @@ const CAtxnsMethodsUpdate = async (address: any, data: any) => {
         [Op.or]: [{ from: address }, { to: address }],
       },
     });
-
     await Promise.all(
       transactions.map(async (value: any) => {
         console.log(value.dataValues.Method);
         for (let i = 0; i < data.signitureNames.length; i++) {
-          if (data.signiture[i] === value.dataValues.Method) {
+          if (data.abiSigniture[i] === value.dataValues.Method) {
             await db.models.Tx.update(
-              { method: data.signitureNames[i] },
+              { Method: data.signitureNames[i] },
               { where: { id: value.id } }
             );
           }

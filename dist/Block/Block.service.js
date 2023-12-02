@@ -42,7 +42,9 @@ const createBlock = (data, next) => __awaiter(void 0, void 0, void 0, function* 
 });
 const viewAllBlocks = (next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const blocks = yield database_1.default.models.Block.findAll({ order: [['timestamp', 'DESC']] });
+        const blocks = yield database_1.default.models.Block.findAll({
+            order: [["timestamp", "DESC"]],
+        });
         return blocks;
     }
     catch (error) {
@@ -51,7 +53,10 @@ const viewAllBlocks = (next) => __awaiter(void 0, void 0, void 0, function* () {
 });
 const viewOneBlock = (id, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const block = yield database_1.default.models.Block.findOne({ where: { id }, include: { model: database_1.default.models.Tx } });
+        const block = yield database_1.default.models.Block.findOne({
+            where: { id },
+            include: { model: database_1.default.models.Tx },
+        });
         return block;
     }
     catch (error) {
@@ -60,7 +65,10 @@ const viewOneBlock = (id, next) => __awaiter(void 0, void 0, void 0, function* (
 });
 const findBlockNum = (number, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const block = yield database_1.default.models.Block.findOne({ where: { number }, include: { model: database_1.default.models.Tx } });
+        const block = yield database_1.default.models.Block.findOne({
+            where: { number },
+            include: { model: database_1.default.models.Tx },
+        });
         return block;
     }
     catch (error) {
@@ -89,31 +97,36 @@ const findOneblock = (id) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 const createBlocktest = (data, txnscount) => __awaiter(void 0, void 0, void 0, function* () {
-    console.log("createBlocktest");
-    const { number, hash, parentHash, sha3Uncles, logsBloom, transactionsRoot, stateRoot, receiptsRoot, miner, difficulty, extraData, gasLimit, gasUsed, timestamp, baseFeePerGas, withdrawalsRoot, nonce, mixHash, } = data;
-    const value = yield database_1.default.models.Block.create({
-        number,
-        hash,
-        parentHash,
-        sha3Uncles,
-        logsBloom,
-        transactionsRoot,
-        stateRoot,
-        receiptsRoot,
-        miner,
-        difficulty,
-        extraData,
-        gasLimit,
-        gasUsed,
-        timestamp,
-        baseFeePerGas: 0,
-        withdrawalsRoot: 0,
-        nonce,
-        mixHash,
-        txcount: txnscount,
-    });
-    // console.log("밸류밸류밸류밸류", value);
-    return value;
+    try {
+        console.log("createBlocktest");
+        const { number, hash, parentHash, sha3Uncles, logsBloom, transactionsRoot, stateRoot, receiptsRoot, miner, difficulty, extraData, gasLimit, gasUsed, timestamp, baseFeePerGas, withdrawalsRoot, nonce, mixHash, } = data;
+        const value = yield database_1.default.models.Block.create({
+            number,
+            hash,
+            parentHash,
+            sha3Uncles,
+            logsBloom,
+            transactionsRoot,
+            stateRoot,
+            receiptsRoot,
+            miner,
+            difficulty,
+            extraData,
+            gasLimit,
+            gasUsed,
+            timestamp,
+            baseFeePerGas: 0,
+            withdrawalsRoot: 0,
+            nonce,
+            mixHash,
+            txcount: txnscount,
+        });
+        // console.log("밸류밸류밸류밸류", value);
+        return value;
+    }
+    catch (error) {
+        console.log("Error");
+    }
 });
 exports.default = {
     createBlock,
@@ -122,5 +135,5 @@ exports.default = {
     viewOneBlock,
     updateTxNum,
     findOneblock,
-    findBlockNum
+    findBlockNum,
 };
