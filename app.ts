@@ -64,10 +64,10 @@ app.listen(8080, async () => {
   // await EOAService.findTxByEOA();
   // await getToken_by_user();
 
-  if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
-    CollectStart_http();
-  } else {
-    subscribetest();
-  }
+  // if ((await getRPC_URLtest()) === "https://network.bouncecode.net/") {
+  //   CollectStart_http();
+  // } else {
+  //   subscribetest();
+  // }
   console.log("테스트 구문 끝");
 });

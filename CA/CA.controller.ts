@@ -28,16 +28,25 @@ const ViewOneCA = async (req: Request, res: Response, next: NextFunction) => {
 const UpdateCA = async (req: Request, res: Response, next: NextFunction) => {
   try {
     // const id = Number(req.params.id);
-    const data = new CADTO(req.body);
-    await CAServices.updateCA(data, next);
+    const tempBodyData = req.body;
 
+    const bodyData = {
+      ...tempBodyData,
+      abi: JSON.parse(tempBodyData.abi),
+      abiSigniture: JSON.parse(tempBodyData.abiSigniture),
+      signitureNames: JSON.parse(tempBodyData.signitureNames),
+    };
+
+    const data = new CADTO(bodyData);
+    await CAServices.updateCA(data, next);
     res.send();
   } catch (error) {
+    console.log(error);
     next(error);
   }
 };
 
-const FindCA = async (req : Request, res : Response, next : NextFunction) => {
+const FindCA = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const address = req.params.address.toString();
     const data = await CAServices.findCA(address, next);
@@ -46,6 +55,6 @@ const FindCA = async (req : Request, res : Response, next : NextFunction) => {
   } catch (error) {
     next(error);
   }
-}
+};
 
 export default { CreateCA, ViewOneCA, UpdateCA, FindCA };

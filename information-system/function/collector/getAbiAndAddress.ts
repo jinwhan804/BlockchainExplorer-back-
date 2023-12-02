@@ -35,16 +35,12 @@ export const readjson = async (filePath: string): Promise<any> => {
 };
 
 export const saveABIandAddress = async () => {
-  // const contractAddress2 = "0x1D41745c4f64e60b7c77FFaf613a3D0330ae4e79";
   const contractAddress2 = "0x39A9B4456651db823Ff19fB341E591ae153AdB17";
 
   const web3 = await getProvider();
-  const newcontract = new web3.eth.Contract(erc20abi, contractAddress2);
   const jsonFilePath = path.join(DIRNAME, "test.json");
 
   const jsonData = await readjson(jsonFilePath);
-
-  // console.log(jsonData);
 
   const arr = [];
   const namearr = [];
