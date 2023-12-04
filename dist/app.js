@@ -27,8 +27,8 @@ const errorExcept_1 = require("./database/errorExcept");
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)({
-    // origin: "https://bouncexplorer.site",
-    origin: "*"
+    origin: "https://bouncexplorer.site",
+    // origin : "*"
 }));
 database_1.default.sync({ force: false })
     .then(() => {

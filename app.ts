@@ -27,8 +27,8 @@ dotenv.config();
 const app = express();
 app.use(
   cors({
-    // origin: "https://bouncexplorer.site",
-    origin : "*"
+    origin: "https://bouncexplorer.site",
+    // origin : "*"
   })
 );
 
