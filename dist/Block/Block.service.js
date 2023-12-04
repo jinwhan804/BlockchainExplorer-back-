@@ -45,7 +45,8 @@ const viewAllBlocks = (next) => __awaiter(void 0, void 0, void 0, function* () {
         const blocks = yield database_1.default.models.Block.findAll({
             order: [["timestamp", "DESC"]],
         });
-        return blocks;
+        const blockDatas = blocks.splice(0, 100);
+        return blockDatas;
     }
     catch (error) {
         next(error);
