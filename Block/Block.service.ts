@@ -37,7 +37,9 @@ const viewAllBlocks = async (next: NextFunction) => {
       order: [["timestamp", "DESC"]],
     });
 
-    return blocks;
+    const blockDatas = blocks.splice(0,100);
+
+    return blockDatas;
   } catch (error) {
     next(error);
   }
